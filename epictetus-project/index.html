@@ -1,7 +1,6 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <!-- Google tag (gtag.js) -->
+  <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EL87YCY7WW"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -21,52 +20,13 @@
     <meta property="og:url" content="https://epictetusproject.com">
 
     <title>Epictetus Project</title>
-    <link rel="icon" type="image/png" href="imgs/favicon.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="styles.css">
-</head>
-
-<body>
-
-<header>
-    <div class="logo">
-        <a href="./">Epictetus Project</a>
-    </div>
-
-    <nav>
-        <a href="#about">About</a>
-        <a href="#join" class="button secondary">Join</a>
-    </nav>
-</header>
-
-<main>
-</main>
-
-
-
-<footer>
-
-    <p>
-        Contact:
-        <a href="mailto:hello@epictetusproject.com">
-            hello@epictetusproject.com
-        </a>
-    </p>
-
-    <p>
-        © Project Epictetus. All rights reserved.
-    </p>
-    <br>
-    <a href="#" class="button secondary" id="share-button">
-        Share
-    </a>
-</footer>
-<button id="share-fab" aria-label="Share">
-    <img src="imgs/share-icon.png" alt="">
-</button>
-<script type="module" src="share.js"></script>
-</body>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
