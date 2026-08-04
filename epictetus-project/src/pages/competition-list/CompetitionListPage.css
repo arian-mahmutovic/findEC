@@ -1,0 +1,284 @@
+/* =========================
+   COMPETITION LIST PAGE
+========================= */
+
+.competition-page {
+
+    min-height: 100vh;
+
+    background: var(--bg);
+
+    padding: 5rem 2rem;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.competition-header {
+
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    text-align: center;
+
+}
+
+.competition-header h1 {
+
+    font-size: 3.5rem;
+
+    line-height: 1.15;
+
+    font-weight: 700;
+
+}
+
+.competition-header p {
+
+    margin-top: 1.5rem;
+
+    color: var(--muted);
+
+    font-size: 1.2rem;
+
+    max-width: 700px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+
+/* =========================
+   GRID
+========================= */
+
+.competition-grid {
+
+    max-width: 1250px;
+
+    margin: 4rem auto 0;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 2rem;
+
+}
+
+
+/* =========================
+   COMPETITION CARD
+========================= */
+
+.competition-card {
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    padding: 2rem;
+
+    display: flex;
+
+    flex-direction: column;
+    
+    justify-content: space-between;
+
+    transition: .25s ease;
+
+}
+
+
+.competition-card:hover {
+
+    transform: translateY(-5px);
+
+    border-color: var(--accent);
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.12);
+
+}
+
+
+/* =========================
+   CATEGORY BADGE
+========================= */
+
+.badge {
+
+    width: fit-content;
+
+    background: var(--accent-soft);
+
+    color: var(--accent-text);
+
+    padding: .4rem .9rem;
+
+    border-radius: 999px;
+
+    font-size: .85rem;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.competition-card h2 {
+
+    margin-top: 1.5rem;
+
+    font-size: 1.5rem;
+
+    line-height: 1.3;
+
+}
+
+
+/* =========================
+   DESCRIPTION
+========================= */
+
+.competition-card > p {
+
+    margin-top: 1rem;
+
+    color: var(--muted);
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================
+   INFO SECTION
+========================= */
+
+.competition-info {
+
+    margin-top: 1.5rem;
+
+    padding-top: 1.5rem;
+
+    border-top: 1px solid var(--border);
+
+}
+
+
+.competition-info p {
+
+    color: var(--muted);
+
+    font-size: .95rem;
+
+    margin-bottom: .5rem;
+
+}
+
+
+.competition-info strong {
+
+    color: var(--text);
+
+}
+
+
+/* =========================
+   BUTTONS and DIV
+========================= */
+
+.competition-card .competition-buttons-container {
+    display: flex;
+    justify-content: space-between
+}
+
+.competition-card button {
+
+    margin-top: auto;
+
+    margin-top: 2rem;
+
+    padding: .85rem 1.5rem;
+
+    border-radius: 10px;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    font-weight: 600;
+
+    transition: .2s;
+
+}
+
+
+.competition-card button:hover {
+
+    background: var(--accent);
+
+    border-color: var(--accent);
+
+    color: white;
+
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width: 1000px) {
+
+    .competition-grid {
+
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+
+    .competition-header h1 {
+
+        font-size: 3rem;
+
+    }
+
+}
+
+
+@media(max-width: 700px) {
+
+    .competition-page {
+
+        padding: 3rem 1rem;
+
+    }
+
+
+    .competition-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .competition-header h1 {
+
+        font-size: 2.3rem;
+
+    }
+
+}

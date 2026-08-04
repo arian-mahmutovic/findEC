@@ -1,0 +1,115 @@
+
+/* =====================================================
+   Theme Variables
+===================================================== */
+
+:root{
+    --bg:#ffffff;
+    --surface:#ffffff;
+    --surface-2:#f7f7f7;
+
+    --border:#e5e5e5;
+
+    --text:#181818;
+    --muted:#6b7280;
+
+    --accent:#7EBB82;
+    --accent-hover:#6AAA6F;
+
+    --accent-soft:#E5F6E7;
+    --accent-text:#4E8F54;
+}
+
+@media (prefers-color-scheme:dark){
+:root{
+    --bg:#0d0d0d;
+    --surface:#161616;
+    --surface-2:#1f1f1f;
+
+    --border:#2e2e2e;
+
+    --text:#efefef;
+    --muted:#9b9b9b;
+
+    --accent:#7EBB82;
+    --accent-hover:#6AAA6F;
+
+    --accent-soft:#213223;
+    --accent-text:#A9E0AD;
+}}
+
+/* NAV */
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 6rem;background:var(--surface);border-bottom:1px solid var(--border)}
+nav h1{font-size:1.7rem;font-weight:700}
+nav div{display:flex;gap:2rem;font-weight:500}
+nav a:hover{color:var(--accent)}
+nav button{background:var(--accent);color:#fff;padding:.8rem 1.5rem;border:none;border-radius:10px}
+nav button:hover{background:var(--accent-hover)}
+
+/* HERO */
+.hero{max-width:1200px;margin:auto;padding:7rem 2rem;display:flex;flex-direction:column;align-items:center;text-align:center}
+.hero-tag{background:var(--accent-soft);color:var(--accent-text);padding:.5rem 1rem;border-radius:999px;font-size:.9rem;font-weight:600}
+.hero h1{margin-top:2rem;font-size:4rem;line-height:1.15;max-width:900px}
+.hero p{margin-top:2rem;font-size:1.25rem;max-width:700px;color:var(--muted)}
+
+/* SEARCH */
+.search-container{margin-top:3rem;display:flex;width:100%;max-width:800px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.search-container input{flex:1;padding:1.3rem 1.5rem;border:none;outline:none;background:transparent;color:var(--text)}
+.search-container input::placeholder{color:var(--muted)}
+.search-container button{background:var(--accent);color:#fff;padding:0 2rem;border:none}
+.search-container button:hover{background:var(--accent-hover)}
+
+/* CATEGORIES */
+.categories{margin-top:2rem;display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center}
+.categories button{background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:999px;padding:.65rem 1.2rem}
+.categories button:hover{background:var(--surface-2)}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;background:var(--surface-2);padding:4rem 6rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stats h2{font-size:2.5rem}
+.stats p{margin-top:.75rem;color:var(--muted)}
+
+/* FEATURES */
+.features{max-width:1250px;margin:auto;padding:7rem 2rem}
+.features h2,.competitions h2{text-align:center;font-size:2.5rem}
+.feature-grid,.competition-grid{margin-top:4rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.feature-card,.competition-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem;transition:.25s}
+.feature-card:hover,.competition-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.08)}
+.feature-card h3{margin-bottom:1rem}
+.feature-card p,.competition-card p,.cta p,footer{color:var(--muted)}
+
+/* COMPETITIONS */
+.competitions{background:var(--surface-2);padding:7rem 2rem}
+.competition-grid{max-width:1250px;margin-inline:auto}
+.badge{display:inline-block;background:var(--accent-soft);color:var(--accent-text);padding:.35rem .8rem;border-radius:999px;font-size:.85rem;font-weight:600}
+.competition-card h3{margin-top:1.5rem;font-size:1.5rem}
+.competition-card p{margin-top:1rem}
+.competition-card button{margin-top:2rem;background:var(--surface);color:var(--text);border:1px solid var(--border);padding:.75rem 1.4rem;border-radius:10px}
+.competition-card button:hover{background:var(--surface-2)}
+
+/* CTA */
+.cta{max-width:900px;margin:auto;text-align:center;padding:7rem 2rem}
+.cta h2{font-size:3rem;line-height:1.2}
+.cta p{margin:2rem auto;max-width:650px}
+.cta button{margin-top:1rem;background:var(--accent);color:#fff;padding:1rem 2.5rem;border:none;border-radius:12px;font-size:1.05rem}
+.cta button:hover{background:var(--accent-hover)}
+
+footer{border-top:1px solid var(--border);text-align:center;padding:2.5rem}
+.start-preparing{color:var(--accent)}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+nav{padding:1.5rem 2rem}
+.stats{grid-template-columns:repeat(2,1fr);gap:2rem}
+.feature-grid,.competition-grid{grid-template-columns:repeat(2,1fr)}
+.hero h1{font-size:3rem}
+}
+@media(max-width:700px){
+nav{flex-direction:column;gap:1.5rem}
+nav div{flex-wrap:wrap;justify-content:center}
+.search-container{flex-direction:column}
+.search-container button{padding:1rem}
+.stats,.feature-grid,.competition-grid{grid-template-columns:1fr}
+.hero h1{font-size:2.4rem}
+.cta h2{font-size:2.25rem}
+}
