@@ -1,0 +1,996 @@
+/* =====================================================
+   HOME PAGE (LOGGED IN)
+   PART 1
+===================================================== */
+
+.dashboard-page{
+
+    min-height:100vh;
+
+    background:var(--bg);
+
+    color:var(--text);
+
+}
+
+
+/* ==========================================
+   NAVIGATION
+========================================== */
+
+.dashboard-nav{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:1.25rem 3rem;
+
+    background:var(--surface);
+
+    border-bottom:1px solid var(--border);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+}
+
+.dashboard-nav h1{
+
+    font-size:1.5rem;
+
+    color:var(--accent);
+
+    font-weight:700;
+
+}
+
+.dashboard-nav-links{
+
+    display:flex;
+
+    gap:2rem;
+
+}
+
+.dashboard-nav-links a{
+
+    color:var(--muted);
+
+    text-decoration:none;
+
+    transition:.2s;
+
+}
+
+.dashboard-nav-links a:hover{
+
+    color:var(--accent);
+
+}
+
+.dashboard-user{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:1rem;
+
+    font-size:1.3rem;
+
+}
+
+.profile-circle{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    background:var(--accent);
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-weight:700;
+
+}
+
+
+/* ==========================================
+   HERO
+========================================== */
+
+.dashboard-hero{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:5rem 2rem 4rem;
+
+    text-align:center;
+
+}
+
+.dashboard-hero h1{
+
+    font-size:3.5rem;
+
+    color:var(--accent);
+
+    margin-bottom:1rem;
+
+}
+
+.dashboard-hero p{
+
+    color:var(--muted);
+
+    font-size:1.15rem;
+
+    margin-bottom:3rem;
+
+}
+
+
+/* ==========================================
+   SEARCH
+========================================== */
+
+.dashboard-search{
+
+    display:flex;
+
+    max-width:900px;
+
+    margin:auto;
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.25);
+
+}
+
+.dashboard-search input{
+
+    flex:1;
+
+    padding:1.2rem 1.5rem;
+
+    background:transparent;
+
+    border:none;
+
+    color:var(--text);
+
+    outline:none;
+
+    font-size:1rem;
+
+}
+
+.dashboard-search input::placeholder{
+
+    color:var(--muted);
+
+}
+
+.dashboard-search button{
+
+    padding:0 2rem;
+
+    border:none;
+
+    background:var(--accent);
+
+    color:white;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.dashboard-search button:hover{
+
+    background:var(--accent-hover);
+
+}
+
+
+/* ==========================================
+   STATS
+========================================== */
+
+.dashboard-stats{
+
+    max-width:1200px;
+
+    margin:0 auto 5rem;
+
+    padding:0 2rem;
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:1.5rem;
+
+}
+
+.dashboard-stat-card{
+
+    background:linear-gradient(
+        180deg,
+        rgba(126,187,130,.08),
+        var(--surface)
+    );
+
+    border:1px solid rgba(126,187,130,.18);
+
+    border-radius:18px;
+
+    padding:2rem;
+
+    text-align:center;
+
+    transition:.25s;
+
+}
+
+.dashboard-stat-card:hover{
+
+    transform:translateY(-5px);
+
+    border-color:var(--accent);
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.3);
+
+}
+
+.dashboard-stat-card h3{
+
+    color:var(--muted);
+
+    font-size:.95rem;
+
+    margin-bottom:.8rem;
+
+    text-transform:uppercase;
+
+    letter-spacing:.08em;
+
+}
+
+.dashboard-stat-card p{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:var(--accent);
+
+}
+
+
+/* ==========================================
+   MAIN GRID
+========================================== */
+
+.dashboard-grid{
+
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:0 2rem 5rem;
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:2rem;
+
+}
+
+.dashboard-main{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:2rem;
+
+}
+
+.dashboard-sidebar{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:2rem;
+
+}
+
+
+/* ==========================================
+   SHARED SECTION
+========================================== */
+
+.dashboard-section{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    padding:2rem;
+
+}
+
+.dashboard-section h2{
+
+    color:var(--accent);
+
+    margin-bottom:2rem;
+
+    font-size:2rem;
+
+}
+
+.dashboard-widget{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    padding:2rem;
+
+}
+
+.dashboard-widget h3{
+
+    color:var(--accent);
+
+    margin-bottom:1.5rem;
+
+}
+
+/* ==========================================
+   CONTINUE LEARNING
+========================================== */
+
+.continue-card{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:2rem;
+
+    background:var(--surface-2);
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    padding:1.5rem;
+
+    margin-bottom:1rem;
+
+    transition:.25s;
+
+}
+
+.continue-card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:var(--accent);
+
+}
+
+
+.continue-card h3{
+
+    font-size:1.25rem;
+
+    margin-bottom:.5rem;
+
+}
+
+
+.continue-card p{
+
+    color:var(--muted);
+
+}
+
+
+/* ==========================================
+   PROGRESS BAR
+========================================== */
+
+.progress-wrapper{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:1rem;
+
+    flex:1;
+
+    max-width:300px;
+
+}
+
+
+.progress-bar{
+
+    height:10px;
+
+    flex:1;
+
+    background:#2a2a2a;
+
+    border-radius:999px;
+
+    overflow:hidden;
+
+}
+
+
+.progress-fill{
+
+    height:100%;
+
+    background:var(--accent);
+
+    border-radius:999px;
+
+    transition:.4s;
+
+}
+
+
+.progress-wrapper span{
+
+    color:var(--accent);
+
+    font-weight:700;
+
+    min-width:45px;
+
+}
+
+
+/* ==========================================
+   RESUME BUTTON
+========================================== */
+
+.continue-card button{
+
+    background:var(--accent);
+
+    color:white;
+
+    border:none;
+
+    padding:.75rem 1.5rem;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.2s;
+
+}
+
+
+.continue-card button:hover{
+
+    background:var(--accent-hover);
+
+    transform:translateY(-2px);
+
+}
+
+
+/* ==========================================
+   RECOMMENDATIONS
+========================================== */
+
+.recommendation-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:1.5rem;
+
+}
+
+
+.recommendation-card{
+
+    background:var(--surface-2);
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    padding:1.5rem;
+
+    transition:.25s;
+
+}
+
+
+.recommendation-card:hover{
+
+    transform:translateY(-5px);
+
+    border-color:var(--accent);
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.25);
+
+}
+
+
+.recommendation-card span{
+
+    display:inline-block;
+
+    background:rgba(126,187,130,.12);
+
+    border:1px solid rgba(126,187,130,.25);
+
+    color:var(--accent);
+
+    padding:.35rem .8rem;
+
+    border-radius:999px;
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+}
+
+
+.recommendation-card h3{
+
+    margin-top:1.5rem;
+
+    font-size:1.25rem;
+
+    min-height:60px;
+
+}
+
+
+.recommendation-card button{
+
+    width:100%;
+
+    margin-top:1.5rem;
+
+    padding:.8rem;
+
+    border-radius:10px;
+
+    background:transparent;
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.recommendation-card button:hover{
+
+    border-color:var(--accent);
+
+    color:var(--accent);
+
+    background:rgba(126,187,130,.08);
+
+}
+
+
+/* ==========================================
+   CARD TITLES
+========================================== */
+
+.dashboard-section h2{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.75rem;
+
+}
+
+
+.dashboard-section h2::after{
+
+    content:"";
+
+    height:1px;
+
+    flex:1;
+
+    background:var(--border);
+
+}
+
+/* ==========================================
+   DEADLINES
+========================================== */
+
+.deadline-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:1rem 0;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+
+.deadline-item:last-child{
+
+    border-bottom:none;
+
+}
+
+
+.deadline-item strong{
+
+    display:block;
+
+    font-size:.95rem;
+
+}
+
+
+.deadline-item p{
+
+    margin-top:.4rem;
+
+    color:var(--accent);
+
+    font-weight:700;
+
+}
+
+
+/* ==========================================
+   SAVED COMPETITIONS
+========================================== */
+
+.saved-item{
+
+    padding:.9rem 1rem;
+
+    margin-bottom:.75rem;
+
+    background:var(--surface-2);
+
+    border:1px solid transparent;
+
+    border-radius:10px;
+
+    color:var(--muted);
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.saved-item:hover{
+
+    border-color:var(--accent);
+
+    color:var(--text);
+
+    background:rgba(126,187,130,.08);
+
+}
+
+
+/* ==========================================
+   QUICK RESOURCES
+========================================== */
+
+.resource-button{
+
+    width:100%;
+
+    text-align:left;
+
+    padding:1rem;
+
+    margin-bottom:.75rem;
+
+    background:var(--surface-2);
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.resource-button:hover{
+
+    border-color:var(--accent);
+
+    color:var(--accent);
+
+    transform:translateX(4px);
+
+}
+
+
+/* ==========================================
+   SIDEBAR ENHANCEMENTS
+========================================== */
+
+.dashboard-sidebar .dashboard-widget{
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+
+.dashboard-sidebar .dashboard-widget::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:150px;
+
+    height:150px;
+
+    right:-70px;
+
+    top:-70px;
+
+    background:rgba(126,187,130,.08);
+
+    border-radius:50%;
+
+}
+
+
+/* ==========================================
+   GENERAL BUTTON RESET
+========================================== */
+
+button{
+
+    font-family:inherit;
+
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:1100px){
+
+    .dashboard-stats{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+
+    .dashboard-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .recommendation-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+
+    .dashboard-sidebar{
+
+        display:grid;
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+
+@media(max-width:800px){
+
+    .dashboard-nav{
+
+        flex-direction:column;
+
+        gap:1.5rem;
+
+        padding:1.5rem;
+
+    }
+
+
+    .dashboard-nav-links{
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+
+        gap:1rem;
+
+    }
+
+
+    .dashboard-hero h1{
+
+        font-size:2.5rem;
+
+    }
+
+
+    .dashboard-search{
+
+        flex-direction:column;
+
+    }
+
+
+    .dashboard-search button{
+
+        padding:1rem;
+
+    }
+
+
+    .dashboard-stats{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .continue-card{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+
+    .progress-wrapper{
+
+        width:100%;
+
+        max-width:none;
+
+    }
+
+
+    .continue-card button{
+
+        width:100%;
+
+    }
+
+
+    .recommendation-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .dashboard-sidebar{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+
+@media(max-width:500px){
+
+    .dashboard-page section{
+
+        padding-left:1rem;
+
+        padding-right:1rem;
+
+    }
+
+
+    .dashboard-section,
+    .dashboard-widget{
+
+        padding:1.25rem;
+
+    }
+
+
+    .dashboard-hero h1{
+
+        font-size:2rem;
+
+    }
+
+
+    .dashboard-stat-card p{
+
+        font-size:1.6rem;
+
+    }
+
+}

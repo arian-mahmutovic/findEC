@@ -1,0 +1,517 @@
+/* ==========================================
+   SETTINGS PAGE
+========================================== */
+
+.settings-page{
+
+    min-height:100vh;
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    padding-bottom:6rem;
+
+}
+
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.settings-header{
+
+    max-width:1000px;
+
+    margin:auto;
+
+    text-align:center;
+
+    padding:5rem 2rem 3rem;
+
+}
+
+
+.settings-header h1{
+
+    font-size:3.2rem;
+
+    color:var(--accent);
+
+}
+
+
+.settings-header p{
+
+    margin-top:1rem;
+
+    color:var(--muted);
+
+    font-size:1.15rem;
+
+}
+
+
+
+/* ==========================================
+   SETTINGS CONTAINER
+========================================== */
+
+.settings-container{
+
+    max-width:900px;
+
+    margin:auto;
+
+    padding:0 2rem;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:2rem;
+
+}
+
+
+
+/* ==========================================
+   SETTINGS CARD
+========================================== */
+
+.settings-card{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    padding:2.5rem;
+
+    transition:.25s;
+
+}
+
+
+.settings-card:hover{
+
+    border-color:rgba(126,187,130,.5);
+
+}
+
+
+.settings-card h2{
+
+    font-size:1.6rem;
+
+    margin-bottom:1.5rem;
+
+    color:var(--accent);
+
+}
+
+
+.settings-description{
+
+    color:var(--muted);
+
+    margin-bottom:1.5rem;
+
+}
+
+
+
+/* ==========================================
+   PROFILE
+========================================== */
+
+.profile-preview{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:1.25rem;
+
+    margin-bottom:2rem;
+
+}
+
+
+.profile-avatar{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:50%;
+
+    background:var(--accent);
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:1.5rem;
+
+    font-weight:700;
+
+}
+
+
+.profile-preview p{
+
+    color:var(--muted);
+
+}
+
+
+
+/* ==========================================
+   INPUTS
+========================================== */
+
+.settings-card label{
+
+    display:block;
+
+    margin-top:1.25rem;
+
+    margin-bottom:.5rem;
+
+    color:var(--muted);
+
+    font-size:.9rem;
+
+}
+
+
+.settings-card input,
+.settings-card select{
+
+    width:100%;
+
+    background:var(--surface-2);
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    padding:1rem;
+
+    font-size:1rem;
+
+    outline:none;
+
+}
+
+
+.settings-card input:focus,
+.settings-card select:focus{
+
+    border-color:var(--accent);
+
+}
+
+
+
+/* ==========================================
+   INTEREST BUTTONS
+========================================== */
+
+.interest-grid{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:.75rem;
+
+}
+
+
+.interest-grid button{
+
+    background:var(--surface-2);
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+    border-radius:999px;
+
+    padding:.7rem 1.2rem;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.interest-grid button:hover{
+
+    border-color:var(--accent);
+
+}
+
+
+.interest-active{
+
+    background:rgba(126,187,130,.15) !important;
+
+    border-color:var(--accent) !important;
+
+    color:var(--accent) !important;
+
+}
+
+
+
+/* ==========================================
+   CHECKBOXES
+========================================== */
+
+.checkbox-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:1rem;
+
+}
+
+
+.checkbox-list label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.8rem;
+
+    color:var(--text);
+
+    margin:0;
+
+    cursor:pointer;
+
+}
+
+
+.checkbox-list input{
+
+    width:18px;
+
+    height:18px;
+
+    accent-color:var(--accent);
+
+}
+
+
+
+/* ==========================================
+   TOGGLES
+========================================== */
+
+.toggle-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:1rem 0;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+
+.toggle-row:last-child{
+
+    border-bottom:none;
+
+}
+
+
+.toggle{
+
+    width:60px;
+
+    height:32px;
+
+    border-radius:999px;
+
+    border:1px solid var(--border);
+
+    background:var(--surface-2);
+
+    color:var(--muted);
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+
+.toggle.active{
+
+    background:var(--accent);
+
+    color:white;
+
+    border-color:var(--accent);
+
+}
+
+
+
+/* ==========================================
+   ACCOUNT ACTIONS
+========================================== */
+
+.danger-zone{
+
+    border-color:#4a2424;
+
+}
+
+
+.save-button,
+.logout-button,
+.delete-button{
+
+    width:100%;
+
+    padding:1rem;
+
+    border-radius:12px;
+
+    margin-top:1rem;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.2s;
+
+}
+
+
+
+/* SAVE */
+
+.save-button{
+
+    background:var(--accent);
+
+    color:white;
+
+    border:none;
+
+}
+
+
+.save-button:hover{
+
+    background:var(--accent-hover);
+
+}
+
+
+
+/* LOGOUT */
+
+.logout-button{
+
+    background:var(--surface-2);
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+}
+
+
+.logout-button:hover{
+
+    border-color:var(--accent);
+
+}
+
+
+
+/* DELETE */
+
+.delete-button{
+
+    background:transparent;
+
+    color:#e57373;
+
+    border:1px solid #5a3030;
+
+}
+
+
+.delete-button:hover{
+
+    background:#3a1b1b;
+
+}
+
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:700px){
+
+
+    .settings-header h1{
+
+        font-size:2.3rem;
+
+    }
+
+
+    .settings-container{
+
+        padding:0 1rem;
+
+    }
+
+
+    .settings-card{
+
+        padding:1.5rem;
+
+    }
+
+
+    .toggle-row{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:1rem;
+
+    }
+
+
+}
