@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import "./CompetitionPage.css";
+// import CompetitionList from "../../components/CompetitionList";
 
 
 export default function CompetitionPage() {

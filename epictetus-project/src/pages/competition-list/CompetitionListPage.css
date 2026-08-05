@@ -64,7 +64,7 @@
 
     display: grid;
 
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
 
     gap: 2rem;
 
@@ -130,6 +130,24 @@
 
 }
 
+.competition-badges .closed {
+    background-color: rgb(255, 108, 108);
+    color: rgb(255, 255, 255);
+}
+
+.competition-badges .open {
+    background-color: var(--accent-text);
+    color: var(--surface);
+}
+
+.competition-badges {
+
+    display: flex;
+
+    gap: 1rem;
+
+}
+
 
 /* =========================
    TITLE
@@ -157,6 +175,16 @@
     color: var(--muted);
 
     line-height: 1.6;
+
+}
+
+.competition-card .competition-organization {
+
+    margin-top: .5rem;
+
+    color: var(--accent-text);
+
+    font-size: 1rem;
 
 }
 
@@ -200,7 +228,28 @@
 
 .competition-card .competition-buttons-container {
     display: flex;
-    justify-content: space-between
+    gap: 1rem;
+}
+
+.competition-dates, .competition-details {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: top;
+    max-height: 200px;
+}
+
+.competition-dates { 
+    padding-bottom: 1rem;   
+}
+
+.competition-details {
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+}
+
+.competition-registration-dates, .competition-period-dates, .competition-eligibility, .competition-team-requirement {
+    flex: 1;
 }
 
 .competition-card button {
@@ -223,6 +272,12 @@
 
     transition: .2s;
 
+}
+
+.competition-card .competition-card-button {
+    background: var(--accent);
+
+    color: var(--surface);
 }
 
 

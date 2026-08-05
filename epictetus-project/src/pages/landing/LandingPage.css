@@ -1,42 +1,4 @@
 
-/* =====================================================
-   Theme Variables
-===================================================== */
-
-:root{
-    --bg:#ffffff;
-    --surface:#ffffff;
-    --surface-2:#f7f7f7;
-
-    --border:#e5e5e5;
-
-    --text:#181818;
-    --muted:#6b7280;
-
-    --accent:#7EBB82;
-    --accent-hover:#6AAA6F;
-
-    --accent-soft:#E5F6E7;
-    --accent-text:#4E8F54;
-}
-
-@media (prefers-color-scheme:dark){
-:root{
-    --bg:#0d0d0d;
-    --surface:#161616;
-    --surface-2:#1f1f1f;
-
-    --border:#2e2e2e;
-
-    --text:#efefef;
-    --muted:#9b9b9b;
-
-    --accent:#7EBB82;
-    --accent-hover:#6AAA6F;
-
-    --accent-soft:#213223;
-    --accent-text:#A9E0AD;
-}}
 
 /* NAV */
 nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 6rem;background:var(--surface);border-bottom:1px solid var(--border)}
