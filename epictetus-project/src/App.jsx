@@ -1,24 +1,33 @@
-import './App.css'
-import LandingPage from './pages/landing/LandingPage'
-import HomePage from './pages/home/HomePage'
-import CompetitionListPage from './pages/competition-list/CompetitionListPage'
-import { Routes, Route } from 'react-router'
-import CompetitionPage from './pages/competition/CompetitionPage'
-import CompetitionGuidePage from './pages/competition-guide/CompetitionGuidePage'
-import UserSettingsPage from './pages/settings/UserSettingsPage'
+import { useEffect } from "react";
+import { supabase } from "./supabase";
 
 function App() {
 
+  useEffect(() => {
+
+    async function testConnection(){
+
+      const { data, error } = await supabase
+        .from("competitions")
+        .select("*");
+
+
+      console.log("DATA:", data);
+      console.log("ERROR:", error);
+
+    }
+
+
+    testConnection();
+
+  }, []);
+
+
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/home" element={<HomePage />} />
-      <Route path="/settings" element={<UserSettingsPage />} />
-      <Route path="/competitions" element={<CompetitionListPage />} />
-      <Route path="/competition" element={<CompetitionPage />} /> 
-      <Route path="/competition-guide" element={<CompetitionGuidePage />} /> 
-    </Routes>
-  )
+    <div>
+      <h1>Supabase Test</h1>
+    </div>
+  );
 }
 
-export default App
+export default App;
