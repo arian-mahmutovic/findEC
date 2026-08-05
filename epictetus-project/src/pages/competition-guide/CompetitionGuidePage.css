@@ -1,0 +1,760 @@
+/* ==========================================
+   GUIDE PAGE
+========================================== */
+
+.guide-page{
+
+    min-height:100vh;
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    padding-bottom:6rem;
+
+}
+
+
+/* ==========================================
+   HERO
+========================================== */
+
+.guide-hero{
+
+    max-width:1000px;
+
+    margin:auto;
+
+    padding:6rem 2rem 4rem;
+
+    text-align:center;
+
+}
+
+.guide-badge{
+
+    display:inline-block;
+
+    background:var(--surface-2);
+
+    color:var(--accent);
+
+    border:1px solid var(--border);
+
+    padding:.55rem 1rem;
+
+    border-radius:999px;
+
+    font-weight:600;
+
+    letter-spacing:.08em;
+
+}
+
+.guide-hero h1{
+
+    margin-top:2rem;
+
+    font-size:3.5rem;
+
+    line-height:1.15;
+
+}
+
+.guide-hero p{
+
+    margin:2rem auto;
+
+    max-width:750px;
+
+    color:var(--muted);
+
+    font-size:1.15rem;
+
+    line-height:1.8;
+
+}
+
+.hero-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:1rem;
+
+}
+
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.primary-button{
+
+    background:var(--accent);
+
+    color:white;
+
+    border:none;
+
+    padding:1rem 2rem;
+
+    border-radius:12px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.primary-button:hover{
+
+    background:var(--accent-hover);
+
+}
+
+.secondary-button{
+
+    background:var(--surface);
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+    padding:1rem 2rem;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.secondary-button:hover{
+
+    background:var(--surface-2);
+
+}
+
+
+/* ==========================================
+   STATS
+========================================== */
+
+.guide-stats{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:1.5rem;
+
+    padding:0 2rem 5rem;
+
+}
+
+.stat-card{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    padding:2rem;
+
+    text-align:center;
+
+    transition:.25s;
+
+}
+
+.stat-card:hover{
+
+    border-color:var(--accent);
+
+    transform:translateY(-4px);
+
+}
+
+.stat-card h3{
+
+    color:var(--muted);
+
+    margin-bottom:.75rem;
+
+}
+
+.stat-card p{
+
+    font-size:1.25rem;
+
+    font-weight:700;
+
+}
+
+
+/* ==========================================
+   START HERE
+========================================== */
+
+.start-section{
+
+    max-width:1250px;
+
+    margin:auto;
+
+    padding:0 2rem 6rem;
+
+}
+
+.start-section h2{
+
+    font-size:2.5rem;
+
+}
+
+.start-section>p{
+
+    margin-top:1rem;
+
+    color:var(--muted);
+
+}
+
+.roadmap-grid{
+
+    margin-top:3rem;
+
+    display:grid;
+
+    grid-template-columns:repeat(5,1fr);
+
+    gap:1.5rem;
+
+}
+
+.roadmap-card{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    padding:2rem;
+
+    transition:.25s;
+
+}
+
+.roadmap-card:hover{
+
+    transform:translateY(-5px);
+
+    border-color:var(--accent);
+
+    box-shadow:0 12px 30px rgba(0,0,0,.2);
+
+}
+
+.roadmap-number{
+
+    width:46px;
+
+    height:46px;
+
+    border-radius:50%;
+
+    background:var(--accent);
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:700;
+
+    margin-bottom:1.5rem;
+
+}
+
+.roadmap-card h3{
+
+    margin-bottom:.8rem;
+
+}
+
+.roadmap-card p{
+
+    color:var(--muted);
+
+}
+
+.roadmap-card button{
+
+    margin-top:2rem;
+
+    width:100%;
+
+    background:var(--surface-2);
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+    padding:.85rem;
+
+    border-radius:10px;
+
+}
+
+.roadmap-card button:hover{
+
+    border-color:var(--accent);
+
+}
+
+
+/* ==========================================
+   VIDEO
+========================================== */
+
+.video-section{
+
+    max-width:1250px;
+
+    margin:auto;
+
+    padding:0 2rem 6rem;
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:2rem;
+
+}
+
+.featured-video{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+}
+
+.video-placeholder{
+
+    aspect-ratio:16/9;
+
+    background:linear-gradient(
+        135deg,
+        #252525,
+        #111
+    );
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.play-circle{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    background:var(--accent);
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:2rem;
+
+    cursor:pointer;
+
+}
+
+.video-description{
+
+    padding:2rem;
+
+}
+
+.video-description p{
+
+    color:var(--muted);
+
+    margin-top:1rem;
+
+}
+
+.video-playlist{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    padding:2rem;
+
+}
+
+.video-playlist h3{
+
+    margin-bottom:2rem;
+
+}
+
+.playlist-item{
+
+    padding:1rem;
+
+    border-radius:10px;
+
+    border:1px solid transparent;
+
+    color:var(--muted);
+
+    cursor:pointer;
+
+}
+
+.playlist-item:hover{
+
+    background:var(--surface-2);
+
+    border-color:var(--accent);
+
+    color:var(--text);
+
+}
+
+
+/* ==========================================
+   TIMELINE
+========================================== */
+
+.timeline-section{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:0 2rem 6rem;
+
+}
+
+.timeline{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:1.5rem;
+
+    margin-top:3rem;
+
+}
+
+.timeline-card{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    padding:2rem;
+
+    font-weight:700;
+
+}
+
+.timeline-card span{
+
+    display:block;
+
+    margin-top:1rem;
+
+    color:var(--muted);
+
+    font-weight:500;
+
+}
+
+
+/* ==========================================
+   MISTAKES
+========================================== */
+
+.mistakes-section{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:0 2rem 6rem;
+
+}
+
+.mistake-grid{
+
+    margin-top:3rem;
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:1.5rem;
+
+}
+
+.mistake-card {
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-left: 5px solid var(--accent);
+
+    border-radius: 16px;
+
+    padding: 1.5rem;
+
+    line-height: 1.8;
+
+    color: var(--muted);
+
+    transition: .2s;
+
+}
+
+.mistake-card:hover {
+
+    border-color: var(--accent);
+
+    transform: translateY(-3px);
+
+    background: var(--surface-2);
+
+}
+
+/* ==========================================
+   RESOURCES
+========================================== */
+
+.resource-section{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:0 2rem 6rem;
+
+}
+
+.resource-grid{
+
+    margin-top:3rem;
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:2rem;
+
+}
+
+.resource-card{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    padding:2rem;
+
+    transition:.25s;
+
+}
+
+.resource-card:hover{
+
+    transform:translateY(-5px);
+
+    border-color:var(--accent);
+
+}
+
+.resource-icon{
+
+    font-size:2rem;
+
+}
+
+.resource-card h3{
+
+    margin:1rem 0;
+
+}
+
+.resource-card p{
+
+    color:var(--muted);
+
+}
+
+.resource-card button{
+
+    margin-top:2rem;
+
+    width:100%;
+
+    padding:.9rem;
+
+    background:var(--accent);
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+}
+
+.resource-card button:hover{
+
+    background:var(--accent-hover);
+
+}
+
+
+/* ==========================================
+   CTA
+========================================== */
+
+.guide-cta{
+
+    max-width:900px;
+
+    margin:auto;
+
+    text-align:center;
+
+    padding:2rem;
+
+}
+
+.guide-cta h2{
+
+    font-size:2.8rem;
+
+}
+
+.guide-cta p{
+
+    margin:2rem auto;
+
+    max-width:650px;
+
+    color:var(--muted);
+
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:1100px){
+
+    .guide-stats{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .roadmap-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .video-section{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .timeline{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .resource-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:700px){
+
+    .guide-hero h1{
+
+        font-size:2.4rem;
+
+    }
+
+    .hero-buttons{
+
+        flex-direction:column;
+
+    }
+
+    .guide-stats,
+
+    .roadmap-grid,
+
+    .timeline,
+
+    .mistake-grid,
+
+    .resource-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
