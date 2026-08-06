@@ -1,760 +1,648 @@
-/* ==========================================
-   GUIDE PAGE
-========================================== */
-
-.guide-page{
-
-    min-height:100vh;
-
-    background:var(--bg);
-
-    color:var(--text);
-
-    padding-bottom:6rem;
-
-}
+/* CompetitionGuidePage.css */
 
 
-/* ==========================================
-   HERO
-========================================== */
+/* =========================
+   PAGE
+========================= */
 
-.guide-hero{
 
-    max-width:1000px;
+.competition-guide-page {
 
-    margin:auto;
+    min-height: 100vh;
 
-    padding:6rem 2rem 4rem;
+    background: var(--background);
 
-    text-align:center;
-
-}
-
-.guide-badge{
-
-    display:inline-block;
-
-    background:var(--surface-2);
-
-    color:var(--accent);
-
-    border:1px solid var(--border);
-
-    padding:.55rem 1rem;
-
-    border-radius:999px;
-
-    font-weight:600;
-
-    letter-spacing:.08em;
-
-}
-
-.guide-hero h1{
-
-    margin-top:2rem;
-
-    font-size:3.5rem;
-
-    line-height:1.15;
-
-}
-
-.guide-hero p{
-
-    margin:2rem auto;
-
-    max-width:750px;
-
-    color:var(--muted);
-
-    font-size:1.15rem;
-
-    line-height:1.8;
-
-}
-
-.hero-buttons{
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:1rem;
+    color: var(--text-primary);
 
 }
 
 
-/* ==========================================
-   BUTTONS
-========================================== */
 
-.primary-button{
+.competition-guide-content {
 
-    background:var(--accent);
+    max-width: 1000px;
 
-    color:white;
+    margin: 0 auto;
 
-    border:none;
-
-    padding:1rem 2rem;
-
-    border-radius:12px;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:.25s;
-
-}
-
-.primary-button:hover{
-
-    background:var(--accent-hover);
-
-}
-
-.secondary-button{
-
-    background:var(--surface);
-
-    color:var(--text);
-
-    border:1px solid var(--border);
-
-    padding:1rem 2rem;
-
-    border-radius:12px;
-
-    cursor:pointer;
-
-    transition:.25s;
-
-}
-
-.secondary-button:hover{
-
-    background:var(--surface-2);
+    padding: 50px 24px 100px;
 
 }
 
 
-/* ==========================================
-   STATS
-========================================== */
 
-.guide-stats{
+.guide-section {
 
-    max-width:1200px;
-
-    margin:auto;
-
-    display:grid;
-
-    grid-template-columns:repeat(4,1fr);
-
-    gap:1.5rem;
-
-    padding:0 2rem 5rem;
-
-}
-
-.stat-card{
-
-    background:var(--surface);
-
-    border:1px solid var(--border);
-
-    border-radius:16px;
-
-    padding:2rem;
-
-    text-align:center;
-
-    transition:.25s;
-
-}
-
-.stat-card:hover{
-
-    border-color:var(--accent);
-
-    transform:translateY(-4px);
-
-}
-
-.stat-card h3{
-
-    color:var(--muted);
-
-    margin-bottom:.75rem;
-
-}
-
-.stat-card p{
-
-    font-size:1.25rem;
-
-    font-weight:700;
+    margin-bottom: 70px;
 
 }
 
 
-/* ==========================================
-   START HERE
-========================================== */
 
-.start-section{
 
-    max-width:1250px;
 
-    margin:auto;
 
-    padding:0 2rem 6rem;
 
-}
+/* =========================
+   HERO BANNER
+========================= */
 
-.start-section h2{
 
-    font-size:2.5rem;
+.competition-banner {
 
-}
+    max-width: 1200px;
 
-.start-section>p{
+    margin: 40px auto;
 
-    margin-top:1rem;
+    border-radius: 32px;
 
-    color:var(--muted);
+    overflow: hidden;
 
-}
+    position: relative;
 
-.roadmap-grid{
-
-    margin-top:3rem;
-
-    display:grid;
-
-    grid-template-columns:repeat(5,1fr);
-
-    gap:1.5rem;
-
-}
-
-.roadmap-card{
-
-    background:var(--surface);
-
-    border:1px solid var(--border);
-
-    border-radius:18px;
-
-    padding:2rem;
-
-    transition:.25s;
-
-}
-
-.roadmap-card:hover{
-
-    transform:translateY(-5px);
-
-    border-color:var(--accent);
-
-    box-shadow:0 12px 30px rgba(0,0,0,.2);
-
-}
-
-.roadmap-number{
-
-    width:46px;
-
-    height:46px;
-
-    border-radius:50%;
-
-    background:var(--accent);
-
-    color:white;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-weight:700;
-
-    margin-bottom:1.5rem;
-
-}
-
-.roadmap-card h3{
-
-    margin-bottom:.8rem;
-
-}
-
-.roadmap-card p{
-
-    color:var(--muted);
-
-}
-
-.roadmap-card button{
-
-    margin-top:2rem;
-
-    width:100%;
-
-    background:var(--surface-2);
-
-    color:var(--text);
-
-    border:1px solid var(--border);
-
-    padding:.85rem;
-
-    border-radius:10px;
-
-}
-
-.roadmap-card button:hover{
-
-    border-color:var(--accent);
-
-}
-
-
-/* ==========================================
-   VIDEO
-========================================== */
-
-.video-section{
-
-    max-width:1250px;
-
-    margin:auto;
-
-    padding:0 2rem 6rem;
-
-    display:grid;
-
-    grid-template-columns:2fr 1fr;
-
-    gap:2rem;
-
-}
-
-.featured-video{
-
-    background:var(--surface);
-
-    border:1px solid var(--border);
-
-    border-radius:18px;
-
-    overflow:hidden;
-
-}
-
-.video-placeholder{
-
-    aspect-ratio:16/9;
-
-    background:linear-gradient(
-        135deg,
-        #252525,
-        #111
-    );
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-}
-
-.play-circle{
-
-    width:90px;
-
-    height:90px;
-
-    border-radius:50%;
-
-    background:var(--accent);
-
-    color:white;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    font-size:2rem;
-
-    cursor:pointer;
-
-}
-
-.video-description{
-
-    padding:2rem;
-
-}
-
-.video-description p{
-
-    color:var(--muted);
-
-    margin-top:1rem;
-
-}
-
-.video-playlist{
-
-    background:var(--surface);
-
-    border:1px solid var(--border);
-
-    border-radius:18px;
-
-    padding:2rem;
-
-}
-
-.video-playlist h3{
-
-    margin-bottom:2rem;
-
-}
-
-.playlist-item{
-
-    padding:1rem;
-
-    border-radius:10px;
-
-    border:1px solid transparent;
-
-    color:var(--muted);
-
-    cursor:pointer;
-
-}
-
-.playlist-item:hover{
-
-    background:var(--surface-2);
-
-    border-color:var(--accent);
-
-    color:var(--text);
-
-}
-
-
-/* ==========================================
-   TIMELINE
-========================================== */
-
-.timeline-section{
-
-    max-width:1200px;
-
-    margin:auto;
-
-    padding:0 2rem 6rem;
-
-}
-
-.timeline{
-
-    display:grid;
-
-    grid-template-columns:repeat(4,1fr);
-
-    gap:1.5rem;
-
-    margin-top:3rem;
-
-}
-
-.timeline-card{
-
-    background:var(--surface);
-
-    border:1px solid var(--border);
-
-    border-radius:16px;
-
-    padding:2rem;
-
-    font-weight:700;
-
-}
-
-.timeline-card span{
-
-    display:block;
-
-    margin-top:1rem;
-
-    color:var(--muted);
-
-    font-weight:500;
-
-}
-
-
-/* ==========================================
-   MISTAKES
-========================================== */
-
-.mistakes-section{
-
-    max-width:1200px;
-
-    margin:auto;
-
-    padding:0 2rem 6rem;
-
-}
-
-.mistake-grid{
-
-    margin-top:3rem;
-
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:1.5rem;
-
-}
-
-.mistake-card {
-
-    background: var(--surface);
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent-light),
+            var(--card-background)
+        );
 
     border: 1px solid var(--border);
 
-    border-left: 5px solid var(--accent);
+}
 
-    border-radius: 16px;
 
-    padding: 1.5rem;
+
+.competition-banner-image-container {
+
+    width: 100%;
+
+    height: 300px;
+
+}
+
+
+
+.competition-banner-image {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+}
+
+
+
+.competition-banner-content {
+
+    padding: 45px 50px;
+
+    text-align: center;
+
+}
+
+
+
+.competition-title {
+
+    font-size: 44px;
+
+    font-weight: 800;
+
+    max-width: 850px;
+
+    margin: 0 auto 18px;
+
+    line-height: 1.15;
+
+}
+
+
+
+.competition-description {
+
+    max-width: 750px;
+
+    margin: 0 auto;
+
+    font-size: 18px;
+
+    line-height: 1.7;
+
+    color: var(--text-secondary);
+
+}
+
+
+
+
+
+
+
+/* TAGS */
+
+
+.competition-tags {
+
+    margin-top: 30px;
+
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+}
+
+
+
+.competition-tag {
+
+    padding: 9px 18px;
+
+    border-radius: 50px;
+
+    background: white;
+
+    color: var(--accent);
+
+    border: 1px solid var(--border);
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+}
+
+
+
+
+
+
+
+/* ACTIONS */
+
+
+.competition-actions {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    margin-top: 35px;
+
+}
+
+
+
+.bookmark-button,
+.notification-button {
+
+    padding: 13px 26px;
+
+    border-radius: 12px;
+
+    border: none;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+}
+
+
+
+.bookmark-button {
+
+    background: var(--accent);
+
+    color: white;
+
+}
+
+
+
+.notification-button {
+
+    background: white;
+
+    color: var(--accent);
+
+    border: 1px solid var(--accent);
+
+}
+
+
+
+
+
+
+
+/* =========================
+   SECTION HEADERS
+========================= */
+
+
+.section-title {
+
+    font-size: 32px;
+
+    font-weight: 800;
+
+    margin-bottom: 25px;
+
+}
+
+
+
+.section-text {
+
+    font-size: 17px;
 
     line-height: 1.8;
 
-    color: var(--muted);
-
-    transition: .2s;
+    color: var(--text-secondary);
 
 }
 
-.mistake-card:hover {
 
-    border-color: var(--accent);
+
+
+
+
+
+/* =========================
+   REGISTRATION
+========================= */
+
+
+.registration-card {
+
+    background: linear-gradient(
+        135deg,
+        var(--accent-light),
+        var(--card-background)
+    );
+
+    border-radius: 22px;
+
+    padding: 30px;
+
+    border: 1px solid var(--border);
+
+}
+
+
+
+.registration-card p {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 10px 0;
+
+    font-size: 17px;
+
+}
+
+
+
+.primary-button {
+
+    display: inline-block;
+
+    margin-top: 20px;
+
+    padding: 13px 28px;
+
+    border-radius: 12px;
+
+    background: var(--accent);
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+}
+
+
+
+
+
+
+
+/* =========================
+   TIMELINE
+========================= */
+
+
+.timeline-container {
+
+    display: grid;
+
+    gap: 18px;
+
+}
+
+
+
+.timeline-card {
+
+    background: var(--card-background);
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    border-left: 6px solid var(--accent);
+
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+
+}
+
+
+
+.timeline-card:nth-child(even) {
+
+    border-left-color: var(--secondary-accent);
+
+}
+
+
+
+.card-title {
+
+    font-size: 20px;
+
+    margin-bottom: 8px;
+
+}
+
+
+
+.card-text {
+
+    color: var(--text-secondary);
+
+}
+
+
+
+
+
+
+
+/* =========================
+   TIPS + MISTAKES
+========================= */
+
+
+.info-card {
+
+    background: var(--card-background);
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    margin-bottom: 18px;
+
+    border: 1px solid var(--border);
+
+    transition: transform .2s ease;
+
+}
+
+
+
+.info-card:hover {
 
     transform: translateY(-3px);
 
-    background: var(--surface-2);
+}
+
+
+
+.mistake-card {
+
+    border-left: 6px solid #ef4444;
 
 }
 
-/* ==========================================
+
+
+
+
+
+
+/* =========================
    RESOURCES
-========================================== */
+========================= */
 
-.resource-section{
 
-    max-width:1200px;
+.resources-section {
 
-    margin:auto;
+    background: var(--card-background);
 
-    padding:0 2rem 6rem;
+    padding: 35px;
 
-}
-
-.resource-grid{
-
-    margin-top:3rem;
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:2rem;
-
-}
-
-.resource-card{
-
-    background:var(--surface);
-
-    border:1px solid var(--border);
-
-    border-radius:16px;
-
-    padding:2rem;
-
-    transition:.25s;
-
-}
-
-.resource-card:hover{
-
-    transform:translateY(-5px);
-
-    border-color:var(--accent);
-
-}
-
-.resource-icon{
-
-    font-size:2rem;
-
-}
-
-.resource-card h3{
-
-    margin:1rem 0;
-
-}
-
-.resource-card p{
-
-    color:var(--muted);
-
-}
-
-.resource-card button{
-
-    margin-top:2rem;
-
-    width:100%;
-
-    padding:.9rem;
-
-    background:var(--accent);
-
-    color:white;
-
-    border:none;
-
-    border-radius:10px;
-
-}
-
-.resource-card button:hover{
-
-    background:var(--accent-hover);
+    border-radius: 28px;
 
 }
 
 
-/* ==========================================
-   CTA
-========================================== */
 
-.guide-cta{
+.resource-card {
 
-    max-width:900px;
+    background: white;
 
-    margin:auto;
+    border-radius: 18px;
 
-    text-align:center;
+    padding: 25px;
 
-    padding:2rem;
+    margin-bottom: 20px;
 
-}
-
-.guide-cta h2{
-
-    font-size:2.8rem;
-
-}
-
-.guide-cta p{
-
-    margin:2rem auto;
-
-    max-width:650px;
-
-    color:var(--muted);
+    border: 1px solid var(--border);
 
 }
 
 
-/* ==========================================
-   RESPONSIVE
-========================================== */
 
-@media(max-width:1100px){
+.resource-card img {
 
-    .guide-stats{
+    width: 100%;
 
-        grid-template-columns:repeat(2,1fr);
+    border-radius: 14px;
+
+    margin-bottom: 18px;
+
+}
+
+
+
+.resource-card button {
+
+    margin-top: 15px;
+
+    padding: 11px 22px;
+
+    border-radius: 10px;
+
+    border: none;
+
+    background: var(--accent);
+
+    color: white;
+
+    font-weight: 700;
+
+}
+
+
+
+.resource-card a {
+
+    display: inline-block;
+
+    margin-top: 15px;
+
+    color: var(--accent);
+
+    font-weight: 700;
+
+}
+
+
+
+
+
+
+
+/* =========================
+   FAQ
+========================= */
+
+
+.faq-card {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            var(--card-background),
+            var(--accent-light)
+        );
+
+    padding: 24px;
+
+    border-radius: 18px;
+
+    margin-bottom: 15px;
+
+}
+
+
+
+.faq-card h3 {
+
+    margin-bottom: 10px;
+
+}
+
+
+
+.faq-card p {
+
+    color: var(--text-secondary);
+
+    line-height: 1.6;
+
+}
+
+
+
+
+
+
+
+/* =========================
+   OFFICIAL LINK
+========================= */
+
+
+.official-site-section {
+
+    text-align: center;
+
+    padding: 40px;
+
+}
+
+
+
+.official-site-section a {
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+    color: var(--accent);
+
+}
+
+
+
+
+
+
+
+/* =========================
+   MOBILE
+========================= */
+
+
+@media(max-width:700px) {
+
+
+    .competition-title {
+
+        font-size: 32px;
 
     }
 
-    .roadmap-grid{
 
-        grid-template-columns:repeat(2,1fr);
 
-    }
+    .competition-banner-content {
 
-    .video-section{
-
-        grid-template-columns:1fr;
+        padding: 35px 20px;
 
     }
 
-    .timeline{
 
-        grid-template-columns:repeat(2,1fr);
 
-    }
+    .competition-actions {
 
-    .resource-grid{
-
-        grid-template-columns:repeat(2,1fr);
+        flex-direction: column;
 
     }
 
-}
 
-@media(max-width:700px){
 
-    .guide-hero h1{
+    .registration-card p {
 
-        font-size:2.4rem;
+        flex-direction: column;
 
-    }
-
-    .hero-buttons{
-
-        flex-direction:column;
+        gap: 5px;
 
     }
 
-    .guide-stats,
-
-    .roadmap-grid,
-
-    .timeline,
-
-    .mistake-grid,
-
-    .resource-grid{
-
-        grid-template-columns:1fr;
-
-    }
 
 }

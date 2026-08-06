@@ -14,7 +14,7 @@ function App() {
       <Route path="/home" element={<HomePage />} />
       <Route path="/competitions" element={<CompetitionListPage />} />
       <Route path="/competition" element={<CompetitionPage />} /> 
-      <Route path="/competition-guide" element={<CompetitionGuidePage />} /> 
+      <Route path="/competitions/:slug" element={<CompetitionGuidePage />} /> 
     </Routes>
   )
 }

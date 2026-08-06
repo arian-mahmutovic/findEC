@@ -50,19 +50,22 @@ export default function CompetitionCard({
 
 
             {/* Main information */}
+            <div className="competition-card-header">
+                <div>
+                    <h2>
+                        {name}
+                    </h2>
+                    
+                    <p className="competition-organization">
+                        {organization}
+                    </p>
+                </div>
 
-            <h2>
-                {name}
-            </h2>
 
-            <p className="competition-organization">
-                {organization}
-            </p>
-
-
-            <p className="competition-description">
-                {description}
-            </p>
+                <p className="competition-description">
+                    {description}
+                </p>
+            </div>
 
 
 
