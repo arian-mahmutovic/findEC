@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { getCompetitions } from "../../services/competitions";
 import SiteHeader from "../../components/SiteHeader";
 import SiteFooter from "../../components/SiteFooter";
+import BackToTop from "../../components/BackToTop";
 
 export default function CompetitionListPage() {
     const [competitions, setCompetitions] = useState([]);
@@ -174,6 +175,7 @@ export default function CompetitionListPage() {
 
         </main>
         <SiteFooter />
+        <BackToTop />
         </>
     );
 }

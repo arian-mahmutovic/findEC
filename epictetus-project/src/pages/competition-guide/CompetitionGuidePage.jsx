@@ -4,6 +4,7 @@ import { supabase } from "../../supabase";
 import { formatDate } from "../../utils/dates";
 import SiteHeader from "../../components/SiteHeader";
 import SiteFooter from "../../components/SiteFooter";
+import BackToTop from "../../components/BackToTop";
 import './CompetitionGuidePage.css';
 
 export default function CompetitionGuidePage() {
@@ -363,6 +364,7 @@ export default function CompetitionGuidePage() {
             </main>
         </div>
         <SiteFooter />
+        <BackToTop />
         </>
     );
 }
