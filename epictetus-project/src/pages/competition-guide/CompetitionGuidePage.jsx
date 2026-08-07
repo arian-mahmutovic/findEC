@@ -115,16 +115,6 @@ export default function CompetitionGuidePage() {
         <>
         <SiteHeader />
         <div className="competition-guide-page">
-            <div className="bg-icons" aria-hidden="true">
-                <svg className="bg-icon bg-icon-1" viewBox="0 0 24 24"><path d="M4 4h7a3 3 0 0 1 3 3v13a2.5 2.5 0 0 0-2.5-2.5H4Z"/><path d="M20 4h-7a3 3 0 0 0-3 3v13a2.5 2.5 0 0 1 2.5-2.5H20Z"/></svg>
-                <svg className="bg-icon bg-icon-2" viewBox="0 0 24 24"><circle cx="12" cy="15" r="6"/><path d="M9 3h6l-1.5 7h-3Z"/><path d="M10.2 10 8 3M13.8 10 16 3"/></svg>
-                <svg className="bg-icon bg-icon-3" viewBox="0 0 24 24"><path d="M9 2h6M10 2v6l-5 10a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-10V2"/><path d="M7.5 15h9"/></svg>
-                <svg className="bg-icon bg-icon-4" viewBox="0 0 24 24"><path d="m12 2 3 6 6.5.9-4.7 4.6L18 20l-6-3.4L6 20l1.2-6.5L2.5 8.9 9 8Z"/></svg>
-                <svg className="bg-icon bg-icon-5" viewBox="0 0 24 24"><path d="M4 4h7a3 3 0 0 1 3 3v13a2.5 2.5 0 0 0-2.5-2.5H4Z"/><path d="M20 4h-7a3 3 0 0 0-3 3v13a2.5 2.5 0 0 1 2.5-2.5H20Z"/></svg>
-                <svg className="bg-icon bg-icon-6" viewBox="0 0 24 24"><circle cx="12" cy="15" r="6"/><path d="M9 3h6l-1.5 7h-3Z"/><path d="M10.2 10 8 3M13.8 10 16 3"/></svg>
-                <svg className="bg-icon bg-icon-7" viewBox="0 0 24 24"><path d="M9 2h6M10 2v6l-5 10a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-10V2"/><path d="M7.5 15h9"/></svg>
-                <svg className="bg-icon bg-icon-8" viewBox="0 0 24 24"><path d="m12 2 3 6 6.5.9-4.7 4.6L18 20l-6-3.4L6 20l1.2-6.5L2.5 8.9 9 8Z"/></svg>
-            </div>
             <section className="competition-banner">
                 <div className="hero-grid" />
                 <div className="hero-glow hero-glow-cyan" />

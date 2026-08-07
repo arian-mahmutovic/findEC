@@ -15,6 +15,11 @@
     --accent-text:#4E8F54;
 }
 
+::selection{
+    background:#abf910;
+    color:#111111;
+}
+
 @media (prefers-color-scheme:dark){
 :root{
     --bg:#0d0d0d;
