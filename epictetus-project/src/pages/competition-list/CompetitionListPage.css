@@ -1,337 +1,497 @@
 /* =========================
    COMPETITION LIST PAGE
+   Palette: white / black / lime
 ========================= */
 
-.competition-page {
+.competition-list-page {
+    --cg-bg: #ffffff;
+    --cg-surface: #ffffff;
+    --cg-ink: #111111;
+    --cg-muted: #333944;
+    --cg-faint: #5b6270;
+    --cg-border: #111111;
+    --cg-border-strong: #111111;
+    --cg-lime: #abf910;
+    --cg-lime-ink: #111111;
+    --cg-caution: #e0402a;
+    --cg-caution-ink: #ffffff;
+    --cg-amber: #f2a71b;
+    --cg-amber-ink: #111111;
 
     min-height: 100vh;
-
-    background: var(--bg);
-
-    padding: 5rem 2rem;
+    box-sizing: border-box;
+    padding: clamp(28px, 5vw, 64px) clamp(20px, 5vw, 48px) 110px;
+    background: var(--cg-bg);
+    color: var(--cg-ink);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
+.competition-list-page * { box-sizing: border-box; }
 
 /* =========================
-   HEADER
+   HERO
 ========================= */
 
-.competition-header {
-
-    max-width: 900px;
-
+.list-hero {
+    max-width: 780px;
     margin: 0 auto;
-
     text-align: center;
-
 }
 
-.competition-header h1 {
-
-    font-size: 3.5rem;
-
-    line-height: 1.15;
-
-    font-weight: 700;
-
+.list-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    border: 2px solid var(--cg-ink);
+    border-radius: 999px;
+    color: var(--cg-ink);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
-.competition-header p {
-
-    margin-top: 1.5rem;
-
-    color: var(--muted);
-
-    font-size: 1.2rem;
-
-    max-width: 700px;
-
-    margin-left: auto;
-    margin-right: auto;
-
+.list-eyebrow::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cg-lime);
+    border: 1.5px solid var(--cg-ink);
 }
 
+.list-headline {
+    margin: 22px 0 0;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.04;
+    text-wrap: balance;
+}
+
+.list-headline .hl {
+    position: relative;
+    white-space: normal;
+}
+
+.list-headline .hl::after {
+    content: "";
+    position: absolute;
+    left: -3px;
+    right: -3px;
+    bottom: 0.08em;
+    height: 0.32em;
+    background: var(--cg-lime);
+    z-index: -1;
+    border-radius: 2px;
+}
+
+.list-subhead {
+    max-width: 560px;
+    margin: 20px auto 0;
+    color: var(--cg-muted);
+    font-size: 1.08rem;
+    font-weight: 600;
+    line-height: 1.7;
+}
+
+.list-search-shell {
+    margin: 34px auto 0;
+    max-width: 520px;
+}
+
+.list-search-shell input {
+    width: 100%;
+    padding: 16px 22px;
+    border: 2px solid var(--cg-ink);
+    border-radius: 999px;
+    background: var(--cg-surface);
+    color: var(--cg-ink);
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.list-search-shell input::placeholder { color: var(--cg-faint); }
+
+.list-search-shell input:focus {
+    border-color: var(--cg-ink);
+    box-shadow: 3px 3px 0 var(--cg-lime);
+}
+
+.list-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 22px;
+}
+
+.list-chip {
+    padding: 8px 16px;
+    border: 2px solid var(--cg-ink);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--cg-ink);
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.list-chip:hover { border-color: var(--cg-ink); color: var(--cg-ink); }
+
+.list-chip.is-active {
+    background: var(--cg-lime);
+    border-color: var(--cg-lime);
+    color: var(--cg-lime-ink);
+}
+
+/* =========================
+   FILTER BAR
+========================= */
+
+.list-filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    max-width: 1250px;
+    margin: 56px auto 22px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--cg-border);
+}
+
+.list-result-count {
+    font-size: 0.88rem;
+    color: var(--cg-muted);
+}
+
+.list-result-count strong {
+    color: var(--cg-ink);
+    font-variant-numeric: tabular-nums;
+}
+
+.list-clear-btn {
+    border: 0;
+    background: none;
+    padding: 0;
+    color: var(--cg-muted);
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 650;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.list-clear-btn:hover { color: var(--cg-ink); }
+
+/* =========================
+   STATE CARDS (empty / error)
+========================= */
+
+.list-state-card {
+    max-width: 560px;
+    margin: 40px auto 0;
+    padding: 44px 36px;
+    text-align: center;
+    border: 2.5px solid var(--cg-ink);
+    border-radius: 20px;
+    box-shadow: 6px 6px 0 var(--cg-lime);
+}
+
+.list-state-card h2 {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.list-state-card p {
+    margin: 10px 0 0;
+    color: var(--cg-muted);
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+.list-error-card { border-color: var(--cg-caution); background: var(--cg-caution); box-shadow: 6px 6px 0 var(--cg-ink); }
+.list-error-card h2 { color: var(--cg-caution-ink); }
+.list-error-card p { color: var(--cg-caution-ink); opacity: 0.9; }
+
+.list-retry-btn {
+    margin-top: 18px;
+    padding: 10px 20px;
+    border: 2px solid var(--cg-ink);
+    border-radius: 10px;
+    background: var(--cg-ink);
+    color: #fff;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 160ms ease;
+}
+
+.list-error-card .list-retry-btn {
+    background: #ffffff;
+    border-color: var(--cg-ink);
+    color: var(--cg-ink);
+}
+
+.list-retry-btn:hover { transform: translateY(-2px); }
 
 /* =========================
    GRID
 ========================= */
 
 .competition-grid {
-
     max-width: 1250px;
-
-    margin: 4rem auto 0;
-
+    margin: 0 auto;
     display: grid;
-
     grid-template-columns: repeat(2, 1fr);
-
-    gap: 2rem;
-
+    gap: 22px;
 }
 
+/* =========================
+   SKELETON CARD
+========================= */
+
+.skeleton-card {
+    padding: 2rem;
+    border: 2.5px solid var(--cg-ink);
+    border-radius: 16px;
+    background: var(--cg-surface);
+    box-shadow: 5px 5px 0 var(--cg-lime);
+}
+
+.skeleton-line {
+    border-radius: 8px;
+    background: linear-gradient(100deg, #f0f0ee 30%, #e6e6e3 50%, #f0f0ee 70%);
+    background-size: 250% 100%;
+    animation: cg-shimmer 1.6s linear infinite;
+}
+
+.skeleton-badge { width: 90px; height: 20px; border-radius: 999px; }
+.skeleton-title { width: 78%; height: 26px; margin-top: 22px; }
+.skeleton-text { width: 100%; height: 13px; margin-top: 16px; }
+.skeleton-text.short { width: 60%; }
+
+@keyframes cg-shimmer {
+    to { background-position: -150% 0; }
+}
 
 /* =========================
    COMPETITION CARD
 ========================= */
 
 .competition-card {
-
-    background: var(--surface);
-
-    border: 1px solid var(--border);
-
-    border-radius: 16px;
-
+    position: relative;
+    overflow: hidden;
+    background: var(--cg-surface);
+    border: 2.5px solid var(--cg-ink);
+    border-radius: 18px;
     padding: 2rem;
-
-    display: grid;
-    
-    grid-template-rows: auto 1.2fr 1fr;
-
-    transition: .25s ease;
-
+    display: flex;
+    flex-direction: column;
+    box-shadow: 7px 7px 0 var(--cg-lime);
+    transition: transform 160ms ease, box-shadow 160ms ease;
 }
 
+.competition-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 54px;
+    height: 54px;
+    background: var(--cg-lime);
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+    pointer-events: none;
+}
+
+.competition-card:nth-of-type(3n+2) {
+    box-shadow: 7px 7px 0 var(--cg-amber);
+}
+
+.competition-card:nth-of-type(3n+2)::before {
+    background: var(--cg-amber);
+}
 
 .competition-card:hover {
-
-    transform: translateY(-5px);
-
-    border-color: var(--accent);
-
-    box-shadow:
-        0 15px 35px rgba(0,0,0,.12);
-
+    transform: translate(-3px, -3px);
+    box-shadow: 10px 10px 0 var(--cg-lime);
 }
 
-
-/* =========================
-   CATEGORY BADGE
-========================= */
-
-.badge {
-
-    width: fit-content;
-
-    background: var(--accent-soft);
-
-    color: var(--accent-text);
-
-    padding: .4rem .9rem;
-
-    border-radius: 999px;
-
-    font-size: .85rem;
-
-    font-weight: 600;
-
-}
-
-.competition-badges .closed {
-    background-color: rgb(255, 108, 108);
-    color: rgb(255, 255, 255);
-}
-
-.competition-badges .open {
-    background-color: var(--accent-text);
-    color: var(--surface);
+.competition-card:nth-of-type(3n+2):hover {
+    box-shadow: 10px 10px 0 var(--cg-amber);
 }
 
 .competition-badges {
-
     display: flex;
-
-    gap: 1rem;
-
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
+.badge {
+    width: fit-content;
+    padding: 0.4rem 0.85rem;
+    border: 2px solid var(--cg-ink);
+    border-radius: 999px;
+    background: var(--cg-lime);
+    color: var(--cg-ink);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
 
-/* =========================
-   TITLE
-========================= */
+.badge.prestige-badge {
+    background: #ffffff;
+    border: 2px solid var(--cg-ink);
+    color: var(--cg-ink);
+}
+
+.competition-badges .open {
+    background: var(--cg-lime);
+    color: var(--cg-lime-ink);
+}
+
+.competition-badges .closed {
+    background: var(--cg-caution);
+    color: var(--cg-caution-ink);
+}
+
+.competition-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 1.3rem 0 1.3rem;
+}
 
 .competition-card h2 {
-
-    margin-top: 1.5rem;
-
-    font-size: 1.5rem;
-
-    line-height: 1.3;
-
-}
-
-
-/* =========================
-   DESCRIPTION
-========================= */
-
-.competition-card > p {
-
-    color: var(--muted);
-
-    line-height: 1.6;
-
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+    line-height: 1.28;
 }
 
 .competition-card .competition-organization {
-
-
-    color: var(--accent-text);
-
-    font-size: 1rem;
-
+    margin: 0.3rem 0 0;
+    color: var(--cg-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
 }
 
-
-/* =========================
-   INFO SECTION
-========================= */
+.competition-card > .competition-card-header > p.competition-description {
+    margin: 0;
+    color: var(--cg-muted);
+    line-height: 1.6;
+    font-size: 0.92rem;
+}
 
 .competition-info {
-
-    padding-top: 1.5rem;
-
-    border-top: 1px solid var(--border);
-
-}
-
-
-.competition-info p {
-
-    color: var(--muted);
-
-    font-size: .95rem;
-
-}
-
-
-.competition-info strong {
-
-    color: var(--text);
-
-}
-
-.competition-card .competition-card-header {
+    padding-top: 1.3rem;
+    border-top: 1px solid var(--cg-border);
     display: flex;
     flex-direction: column;
-    flex: 1;
-    padding-bottom: 1rem;
-    justify-content: space-between;
-}
-
-/* =========================
-   BUTTONS and DIV
-========================= */
-
-.competition-card .competition-buttons-container {
-    display: flex;
     gap: 1rem;
 }
 
 .competition-dates, .competition-details {
     display: flex;
     gap: 1rem;
-    justify-content: space-between;
-    align-items: top;
-    max-height: 200px;
-}
-
-.competition-dates { 
-    padding-bottom: 1rem;   
 }
 
 .competition-details {
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--cg-border);
     padding-top: 1rem;
 }
 
-.competition-registration-dates, .competition-period-dates, .competition-eligibility, .competition-team-requirement {
+.competition-registration-dates,
+.competition-period-dates,
+.competition-eligibility,
+.competition-team-requirement,
+.competition-prize,
+.competition-location {
     flex: 1;
+    min-width: 0;
+}
+
+.competition-info strong {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: var(--cg-ink);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.competition-info p {
+    margin: 0;
+    color: var(--cg-muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.competition-buttons-container {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.6rem;
 }
 
 .competition-card button {
-
-    margin-top: auto;
-
-    margin-top: 2rem;
-
-    padding: .85rem 1.5rem;
-
+    width: 100%;
+    padding: 0.85rem 1.2rem;
     border-radius: 10px;
-
-    border: 1px solid var(--border);
-
-    background: var(--surface);
-
-    color: var(--text);
-
-    font-weight: 600;
-
-    transition: .2s;
-
+    border: 2.5px solid var(--cg-ink);
+    background: #ffffff;
+    color: var(--cg-ink);
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 160ms ease, box-shadow 160ms ease;
 }
 
 .competition-card .competition-card-button {
-    background: var(--accent);
-
-    color: var(--surface);
+    background: var(--cg-ink);
+    border-color: var(--cg-ink);
+    color: var(--cg-lime);
 }
-
 
 .competition-card button:hover {
-
-    background: var(--accent);
-
-    border-color: var(--accent);
-
-    color: white;
-
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--cg-ink);
 }
 
+.competition-card .competition-card-button:hover {
+    box-shadow: 4px 4px 0 var(--cg-lime);
+}
 
 /* =========================
    RESPONSIVE
 ========================= */
 
-@media(max-width: 1000px) {
-
-    .competition-grid {
-
-        grid-template-columns: repeat(2, 1fr);
-
-    }
-
-
-    .competition-header h1 {
-
-        font-size: 3rem;
-
-    }
-
+@media (max-width: 1000px) {
+    .competition-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+@media (max-width: 700px) {
+    .competition-list-page { padding: 40px 18px 90px; }
+    .competition-grid { grid-template-columns: 1fr; }
+    .competition-dates, .competition-details { flex-direction: column; gap: 0.8rem; }
+    .list-filter-bar { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .competition-buttons-container { flex-direction: column; }
+}
 
-@media(max-width: 700px) {
-
-    .competition-page {
-
-        padding: 3rem 1rem;
-
-    }
-
-
-    .competition-grid {
-
-        grid-template-columns: 1fr;
-
-    }
-
-
-    .competition-header h1 {
-
-        font-size: 2.3rem;
-
-    }
-
+@media (prefers-reduced-motion: reduce) {
+    .skeleton-line { animation: none; }
+    .competition-card, .competition-card button, .list-retry-btn { transition: none; }
 }

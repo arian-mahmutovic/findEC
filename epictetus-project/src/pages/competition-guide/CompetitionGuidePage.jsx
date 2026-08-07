@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { supabase } from "../../supabase";
+import { formatDate } from "../../utils/dates";
+import SiteHeader from "../../components/SiteHeader";
+import SiteFooter from "../../components/SiteFooter";
 import './CompetitionGuidePage.css';
 
 export default function CompetitionGuidePage() {
@@ -77,6 +80,8 @@ export default function CompetitionGuidePage() {
 
     if (loading) {
         return (
+            <>
+            <SiteHeader />
             <div className="loading-page" aria-live="polite" aria-label="Loading competition guide">
                 <div className="loading-orb" />
                 <div className="loading-shell">
@@ -89,21 +94,37 @@ export default function CompetitionGuidePage() {
                     </div>
                 </div>
             </div>
+            </>
         );
     }
 
     if (!competition) {
         return (
+            <>
+            <SiteHeader />
             <div className="error-page">
                 <span className="eyebrow">Guide unavailable</span>
                 <h1>Competition not found.</h1>
                 <p>The competition you requested may have moved or is no longer available.</p>
             </div>
+            </>
         );
     }
 
     return (
+        <>
+        <SiteHeader />
         <div className="competition-guide-page">
+            <div className="bg-icons" aria-hidden="true">
+                <svg className="bg-icon bg-icon-1" viewBox="0 0 24 24"><path d="M4 4h7a3 3 0 0 1 3 3v13a2.5 2.5 0 0 0-2.5-2.5H4Z"/><path d="M20 4h-7a3 3 0 0 0-3 3v13a2.5 2.5 0 0 1 2.5-2.5H20Z"/></svg>
+                <svg className="bg-icon bg-icon-2" viewBox="0 0 24 24"><circle cx="12" cy="15" r="6"/><path d="M9 3h6l-1.5 7h-3Z"/><path d="M10.2 10 8 3M13.8 10 16 3"/></svg>
+                <svg className="bg-icon bg-icon-3" viewBox="0 0 24 24"><path d="M9 2h6M10 2v6l-5 10a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-10V2"/><path d="M7.5 15h9"/></svg>
+                <svg className="bg-icon bg-icon-4" viewBox="0 0 24 24"><path d="m12 2 3 6 6.5.9-4.7 4.6L18 20l-6-3.4L6 20l1.2-6.5L2.5 8.9 9 8Z"/></svg>
+                <svg className="bg-icon bg-icon-5" viewBox="0 0 24 24"><path d="M4 4h7a3 3 0 0 1 3 3v13a2.5 2.5 0 0 0-2.5-2.5H4Z"/><path d="M20 4h-7a3 3 0 0 0-3 3v13a2.5 2.5 0 0 1 2.5-2.5H20Z"/></svg>
+                <svg className="bg-icon bg-icon-6" viewBox="0 0 24 24"><circle cx="12" cy="15" r="6"/><path d="M9 3h6l-1.5 7h-3Z"/><path d="M10.2 10 8 3M13.8 10 16 3"/></svg>
+                <svg className="bg-icon bg-icon-7" viewBox="0 0 24 24"><path d="M9 2h6M10 2v6l-5 10a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-10V2"/><path d="M7.5 15h9"/></svg>
+                <svg className="bg-icon bg-icon-8" viewBox="0 0 24 24"><path d="m12 2 3 6 6.5.9-4.7 4.6L18 20l-6-3.4L6 20l1.2-6.5L2.5 8.9 9 8Z"/></svg>
+            </div>
             <section className="competition-banner">
                 <div className="hero-grid" />
                 <div className="hero-glow hero-glow-cyan" />
@@ -138,7 +159,7 @@ export default function CompetitionGuidePage() {
             <main className="competition-guide-content">
                 <div className="guide-main-column">
                     {guide?.overview && (
-                        <section className="guide-section overview-section">
+                        <section id="overview" className="guide-section overview-section">
                             <div className="section-heading">
                                 <span className="section-index">01</span>
                                 <div>
@@ -153,7 +174,7 @@ export default function CompetitionGuidePage() {
                     )}
 
                     {guide?.timeline?.length > 0 && (
-                        <section className="guide-section timeline-section">
+                        <section id="timeline" className="guide-section timeline-section">
                             <div className="section-heading">
                                 <span className="section-index">02</span>
                                 <div>
@@ -178,7 +199,7 @@ export default function CompetitionGuidePage() {
                     )}
 
                     {(guide?.tips?.length > 0 || guide?.common_mistakes?.length > 0) && (
-                        <section className="guide-section strategy-section">
+                        <section id="prepare" className="guide-section strategy-section">
                             <div className="section-heading">
                                 <span className="section-index">03</span>
                                 <div>
@@ -207,7 +228,7 @@ export default function CompetitionGuidePage() {
                     )}
 
                     {articles.length > 0 && (
-                        <section className="guide-section resources-section">
+                        <section id="guides" className="guide-section resources-section">
                             <div className="section-heading">
                                 <span className="section-index">04</span>
                                 <div>
@@ -231,7 +252,7 @@ export default function CompetitionGuidePage() {
                     )}
 
                     {videos.length > 0 && (
-                        <section className="guide-section resources-section videos-section">
+                        <section id="videos" className="guide-section resources-section videos-section">
                             <div className="section-heading">
                                 <span className="section-index">05</span>
                                 <div>
@@ -262,7 +283,7 @@ export default function CompetitionGuidePage() {
                     )}
 
                     {guide?.faq?.length > 0 && (
-                        <section className="guide-section faq-section">
+                        <section id="faq" className="guide-section faq-section">
                             <div className="section-heading">
                                 <span className="section-index">06</span>
                                 <div>
@@ -275,7 +296,9 @@ export default function CompetitionGuidePage() {
                                     <details key={item.question} className="faq-card">
                                         <summary>
                                             <span>{item.question}</span>
-                                            <span className="faq-toggle" aria-hidden="true">+</span>
+                                            <span className="faq-toggle" aria-hidden="true">
+                                                <svg viewBox="0 0 12 12"><path d="M6 1v10M1 6h10" /></svg>
+                                            </span>
                                         </summary>
                                         <p>{item.answer}</p>
                                     </details>
@@ -286,6 +309,7 @@ export default function CompetitionGuidePage() {
                 </div>
 
                 <aside className="guide-sidebar">
+                    <div className="sidebar-sticky">
                     <div className="command-card">
                         <div className="command-card-topline">
                             <span>Registration</span>
@@ -300,7 +324,7 @@ export default function CompetitionGuidePage() {
 
                         <div className="command-meta">
                             <span>Deadline</span>
-                            <strong>{competition.deadline || 'To be announced'}</strong>
+                            <strong>{formatDate(competition.registration_end_date)}</strong>
                         </div>
                         <div className="command-meta">
                             <span>Guide status</span>
@@ -334,9 +358,21 @@ export default function CompetitionGuidePage() {
                         )}
                     </div>
 
+                    <nav className="section-nav" aria-label="Jump to section">
+                        <a href="#overview">01</a>
+                        <a href="#timeline">02</a>
+                        <a href="#prepare">03</a>
+                        <a href="#guides">04</a>
+                        <a href="#videos">05</a>
+                        <a href="#faq">06</a>
+                    </nav>
+                    </div>
+
                     <p className="sidebar-note">Your command center for every milestone, resource, and detail.</p>
                 </aside>
             </main>
         </div>
+        <SiteFooter />
+        </>
     );
 }
