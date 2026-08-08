@@ -1,0 +1,24 @@
+.auth-loading-screen {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    background: #ffffff;
+}
+
+.auth-loading-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #abf910;
+    border: 2px solid #111111;
+    animation: auth-loading-pulse 900ms ease-in-out infinite;
+}
+
+@keyframes auth-loading-pulse {
+    0%, 100% { transform: scale(0.85); opacity: 0.6; }
+    50% { transform: scale(1.15); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .auth-loading-dot { animation: none; }
+}

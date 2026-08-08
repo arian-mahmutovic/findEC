@@ -58,12 +58,81 @@ nav.site-header-nav {
     color: var(--sh-lime);
 }
 
-@media (max-width: 780px) {
+.site-header-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 10px;
+    margin-left: 12px;
+}
+
+.site-header-actions button {
+    border: 2px solid var(--sh-ink);
+    border-radius: 999px;
+    padding: 9px 18px;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+.site-header-actions .site-header-login {
+    background: transparent;
+    color: var(--sh-ink);
+}
+
+.site-header-actions .site-header-login:hover {
+    background: rgba(17, 17, 17, 0.08);
+}
+
+.site-header-actions .site-header-signup {
+    background: var(--sh-ink);
+    color: var(--sh-lime);
+    box-shadow: 3px 3px 0 rgba(17, 17, 17, 0.35);
+}
+
+.site-header-actions .site-header-signup:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 rgba(17, 17, 17, 0.35);
+}
+
+.site-header-avatar {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--sh-ink);
+    border-radius: 50%;
+    background: var(--sh-ink);
+    color: var(--sh-lime);
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.site-header-actions .site-header-signout {
+    background: transparent;
+    color: var(--sh-ink);
+}
+
+.site-header-actions .site-header-signout:hover {
+    background: rgba(17, 17, 17, 0.08);
+}
+
+@media (max-width: 920px) {
     nav.site-header-nav {
         display: none;
     }
 
     .site-header-inner {
         padding: 16px 0;
+    }
+
+    .site-header-actions {
+        margin-left: auto;
+    }
+
+    .site-header-actions .site-header-login {
+        display: none;
     }
 }

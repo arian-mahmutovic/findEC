@@ -1,11 +1,13 @@
 import { Link } from "react-router";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 import "./SiteFooter.css";
 
 const CONTACT_EMAIL = "hello@epictetusproject.com";
 const YOUTUBE_URL = "https://www.youtube.com/results?search_query=Flamingo";
 
 export default function SiteFooter() {
+    const { user } = useAuth();
     const [shared, setShared] = useState(false);
 
     async function handleShare() {
@@ -31,7 +33,7 @@ export default function SiteFooter() {
     return (
         <footer className="site-footer">
             <div className="site-footer-inner">
-                <Link to="/" className="site-footer-brand">Epictetus Project</Link>
+                <Link to={user ? "/home" : "/"} className="site-footer-brand">Epictetus Project</Link>
 
                 <span className="site-footer-copy">&copy; {new Date().getFullYear()}</span>
 

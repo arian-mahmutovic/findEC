@@ -1,0 +1,22 @@
+export const INTEREST_TAGS = [
+    "STEM",
+    "Research",
+    "Writing",
+    "Business",
+    "Entrepreneurship",
+    "Finance",
+    "Computer Science",
+    "Robotics",
+    "Debate",
+    "Public Speaking",
+    "Arts",
+    "Music",
+    "Community Service",
+    "Leadership",
+    "Math",
+    "Science Olympiad",
+    "Model UN",
+    "Law & Policy",
+    "Medicine & Health",
+    "Environmental Science"
+];

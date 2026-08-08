@@ -1,63 +1,119 @@
 import "./HomePage.css";
+import { useEffect, useMemo, useState } from "react";
+import { Link, useNavigate } from "react-router";
+import dayjs from "dayjs";
+import { useAuth } from "../../context/AuthContext";
+import { signOut } from "../../services/auth";
+import { getCompetitions, getRecentGuideArticles } from "../../services/competitions";
+import { getUserPreferences, getUserProfile } from "../../services/preferences";
+import { getSavedCompetitions, saveCompetition, unsaveCompetition } from "../../services/savedCompetitions";
+import OnboardingModal from "../../components/OnboardingModal";
+import BackToTop from "../../components/BackToTop";
+import { formatDate } from "../../utils/dates";
 
 export default function HomePage() {
+    const { user } = useAuth();
+    const navigate = useNavigate();
 
-    const continueLearning = [
-        {
-            title: "Wharton Investment Competition",
-            lesson: "Lesson 4 • Building Your Portfolio",
-            progress: 65
-        },
-        {
-            title: "Blue Ocean Competition",
-            lesson: "Lesson 2 • Customer Discovery",
-            progress: 25
+    const [profile, setProfile] = useState(null);
+    const [preferences, setPreferences] = useState(null);
+    const [competitions, setCompetitions] = useState([]);
+    const [saved, setSaved] = useState([]);
+    const [articles, setArticles] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [showOnboarding, setShowOnboarding] = useState(false);
+    const [search, setSearch] = useState("");
+
+    useEffect(() => {
+        if (user) loadDashboard();
+    }, [user]);
+
+    async function loadDashboard() {
+        setLoading(true);
+
+        const [profileRes, prefsRes, compsRes, savedRes, articlesRes] = await Promise.all([
+            getUserProfile(user.id),
+            getUserPreferences(user.id),
+            getCompetitions(),
+            getSavedCompetitions(user.id),
+            getRecentGuideArticles(4)
+        ]);
+
+        setProfile(profileRes.data);
+        setPreferences(prefsRes.data);
+        setShowOnboarding(!prefsRes.data);
+        setCompetitions(compsRes.data || []);
+        setSaved(savedRes.data || []);
+        setArticles(articlesRes.data || []);
+        setLoading(false);
+    }
+
+    function handleOnboardingComplete() {
+        setShowOnboarding(false);
+        loadDashboard();
+    }
+
+    const savedIds = useMemo(
+        () => new Set(saved.map((row) => row.competition_id)),
+        [saved]
+    );
+
+    const interests = useMemo(() => preferences?.interests || [], [preferences]);
+
+    const recommended = useMemo(() => {
+        const byInterest = competitions.filter(
+            (c) => interests.includes(c.category) && !savedIds.has(c.id)
+        );
+        const pool = byInterest.length > 0
+            ? byInterest
+            : competitions.filter((c) => !savedIds.has(c.id));
+        return pool.slice(0, 3);
+    }, [competitions, interests, savedIds]);
+
+    const upcomingDeadlines = useMemo(() => {
+        const today = dayjs();
+        return competitions
+            .filter((c) => c.registration_end_date && dayjs(c.registration_end_date).isAfter(today))
+            .sort((a, b) => new Date(a.registration_end_date) - new Date(b.registration_end_date))
+            .slice(0, 4);
+    }, [competitions]);
+
+    const stats = useMemo(() => ({
+        saved: saved.length,
+        open: competitions.filter((c) => c.registration_status === "Open").length,
+        following: interests.length,
+        total: competitions.length
+    }), [competitions, saved, interests]);
+
+    async function handleToggleSave(competitionId, isSaved) {
+        if (isSaved) {
+            await unsaveCompetition(user.id, competitionId);
+        } else {
+            await saveCompetition(user.id, competitionId);
         }
-    ];
 
-    const recommendations = [
-        {
-            name: "MIT THINK Scholars",
-            category: "STEM"
-        },
-        {
-            name: "Regeneron STS",
-            category: "Research"
-        },
-        {
-            name: "Harvard Crimson Essay",
-            category: "Writing"
-        }
-    ];
+        const result = await getSavedCompetitions(user.id);
+        setSaved(result.data || []);
+    }
 
-    const saved = [
-        "Conrad Challenge",
-        "FBLA National Awards",
-        "ISEF",
-        "Economics Challenge"
-    ];
+    function handleSearchSubmit(e) {
+        e.preventDefault();
+        const query = search.trim();
+        navigate(query ? `/competitions?q=${encodeURIComponent(query)}` : "/competitions");
+    }
 
-    const deadlines = [
-        {
-            event: "Wharton Registration",
-            remaining: "12 days"
-        },
-        {
-            event: "Blue Ocean Submission",
-            remaining: "36 days"
-        },
-        {
-            event: "MIT THINK",
-            remaining: "82 days"
-        }
-    ];
+    async function handleSignOut() {
+        await signOut();
+        navigate("/", { replace: true });
+    }
 
-    const resources = [
-        "Investment Checklist",
-        "Presentation Template",
-        "Research Database",
-        "College Portfolio Guide"
-    ];
+    const fullName = (profile?.full_name || user?.user_metadata?.full_name || "").trim();
+    const firstName = fullName ? fullName.split(" ")[0] : null;
+    const initials = fullName
+        ? fullName.split(" ").filter(Boolean).slice(0, 2).map((part) => part[0].toUpperCase()).join("")
+        : "?";
+
+    if (!user) return null;
 
     return (
 
@@ -69,27 +125,23 @@ export default function HomePage() {
 
             <nav className="dashboard-nav">
 
-                <h1>
-                    Project Epictetus
-                </h1>
+                <Link to="/home" className="dashboard-brand">
+                    Epictetus Project
+                </Link>
 
                 <div className="dashboard-nav-links">
-
-                    <a href="#">Dashboard</a>
-                    <a href="#">Competitions</a>
-                    <a href="#">Learn</a>
-                    <a href="#">Roadmaps</a>
-
+                    <Link to="/home">Dashboard</Link>
+                    <Link to="/competitions">Competitions</Link>
                 </div>
 
                 <div className="dashboard-user">
-
-                    🔔
-
                     <div className="profile-circle">
-                        AM
+                        {initials}
                     </div>
 
+                    <button type="button" className="dashboard-signout" onClick={handleSignOut}>
+                        Sign out
+                    </button>
                 </div>
 
             </nav>
@@ -102,24 +154,22 @@ export default function HomePage() {
             <section className="dashboard-hero">
 
                 <h1>
-                    Good Afternoon.
+                    Good afternoon{firstName ? `, ${firstName}` : ""}.
                 </h1>
 
                 <p>
-                    Continue building your portfolio.
+                    {profile?.school ? `${profile.school} — ` : ""}
+                    Here&rsquo;s what&rsquo;s worth your time right now.
                 </p>
 
-                <div className="dashboard-search">
-
+                <form className="dashboard-search" onSubmit={handleSearchSubmit}>
                     <input
-                        placeholder="Search competitions, scholarships, guides..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder="Search competitions, scholarships, guides…"
                     />
-
-                    <button>
-                        Search
-                    </button>
-
-                </div>
+                    <button type="submit">Search</button>
+                </form>
 
             </section>
 
@@ -131,59 +181,37 @@ export default function HomePage() {
             <section className="dashboard-stats">
 
                 <div className="dashboard-stat-card">
-
-                    <h3>
-                        Saved
-                    </h3>
-
-                    <p>
-                        18
-                    </p>
-
+                    <h3>Saved</h3>
+                    <p>{stats.saved}</p>
                 </div>
 
                 <div className="dashboard-stat-card">
-
-                    <h3>
-                        Guides Finished
-                    </h3>
-
-                    <p>
-                        12
-                    </p>
-
+                    <h3>Open Now</h3>
+                    <p>{stats.open}</p>
                 </div>
 
                 <div className="dashboard-stat-card">
-
-                    <h3>
-                        Applications
-                    </h3>
-
-                    <p>
-                        5
-                    </p>
-
+                    <h3>Following</h3>
+                    <p>{stats.following}</p>
                 </div>
 
                 <div className="dashboard-stat-card">
-
-                    <h3>
-                        Hours Learned
-                    </h3>
-
-                    <p>
-                        87
-                    </p>
-
+                    <h3>Total Opportunities</h3>
+                    <p>{stats.total}</p>
                 </div>
 
             </section>
 
 
-            {/* ===========================
+            {loading ? (
+                <div className="dashboard-loading">
+                    <span className="dashboard-loading-dot" />
+                </div>
+            ) : (
+
+            /* ===========================
                 MAIN GRID
-            =========================== */}
+            =========================== */
 
             <section className="dashboard-grid">
 
@@ -191,103 +219,80 @@ export default function HomePage() {
 
                 <div className="dashboard-main">
 
-                    {/* Continue */}
-
-                    <div className="dashboard-section">
-
-                        <h2>
-                            Continue Learning
-                        </h2>
-
-                        {continueLearning.map(course => (
-
-                            <div
-                                className="continue-card"
-                                key={course.title}
-                            >
-
-                                <div>
-
-                                    <h3>
-                                        {course.title}
-                                    </h3>
-
-                                    <p>
-                                        {course.lesson}
-                                    </p>
-
-                                </div>
-
-                                <div className="progress-wrapper">
-
-                                    <div className="progress-bar">
-
-                                        <div
-                                            className="progress-fill"
-                                            style={{
-                                                width: `${course.progress}%`
-                                            }}
-                                        />
-
-                                    </div>
-
-                                    <span>
-
-                                        {course.progress}%
-
-                                    </span>
-
-                                </div>
-
-                                <button>
-
-                                    Resume
-
-                                </button>
-
-                            </div>
-
-                        ))}
-
-                    </div>
-
-
                     {/* Recommended */}
 
                     <div className="dashboard-section">
 
-                        <h2>
-                            Recommended For You
-                        </h2>
+                        <h2>Recommended For You</h2>
 
-                        <div className="recommendation-grid">
+                        {recommended.length === 0 ? (
+                            <p className="dashboard-empty">
+                                You&rsquo;ve saved everything we&rsquo;d recommend&mdash;nice work.
+                            </p>
+                        ) : (
+                            <div className="recommendation-grid">
 
-                            {recommendations.map(item => (
+                                {recommended.map((competition) => (
 
-                                <div
-                                    className="recommendation-card"
-                                    key={item.name}
-                                >
+                                    <div className="recommendation-card" key={competition.id}>
 
-                                    <span>
-                                        {item.category}
-                                    </span>
+                                        {competition.category && <span>{competition.category}</span>}
 
-                                    <h3>
-                                        {item.name}
-                                    </h3>
+                                        <h3>{competition.name}</h3>
 
-                                    <button>
+                                        <div className="recommendation-card-actions">
+                                            <Link to={`/competitions/${competition.slug}`}>
+                                                <button type="button">View guide</button>
+                                            </Link>
 
-                                        View Competition
+                                            <button
+                                                type="button"
+                                                className="save-toggle"
+                                                onClick={() => handleToggleSave(competition.id, false)}
+                                                aria-label="Save competition"
+                                            >
+                                                &#9733;
+                                            </button>
+                                        </div>
 
-                                    </button>
+                                    </div>
+
+                                ))}
+
+                            </div>
+                        )}
+
+                    </div>
+
+
+                    {/* Latest Guides */}
+
+                    <div className="dashboard-section">
+
+                        <h2>Latest Guides</h2>
+
+                        {articles.length === 0 ? (
+                            <p className="dashboard-empty">No guides published yet.</p>
+                        ) : (
+                            articles.map((article) => (
+
+                                <div className="guide-row" key={article.id}>
+
+                                    <div>
+                                        <h3>{article.title}</h3>
+                                        <p>{article.summary}</p>
+                                    </div>
+
+                                    {article.competitions?.slug && (
+                                        <Link to={`/competitions/${article.competitions.slug}`}>
+                                            <button type="button">Read</button>
+                                        </Link>
+                                    )}
 
                                 </div>
 
-                            ))}
-
-                        </div>
+                            ))
+                        )}
 
                     </div>
 
@@ -300,86 +305,75 @@ export default function HomePage() {
 
                     <div className="dashboard-widget">
 
-                        <h3>
-                            Upcoming Deadlines
-                        </h3>
+                        <h3>Upcoming Deadlines</h3>
 
-                        {deadlines.map(deadline => (
+                        {upcomingDeadlines.length === 0 ? (
+                            <p className="dashboard-empty">No open deadlines right now.</p>
+                        ) : (
+                            upcomingDeadlines.map((competition) => (
 
-                            <div
-                                className="deadline-item"
-                                key={deadline.event}
-                            >
+                                <Link
+                                    to={`/competitions/${competition.slug}`}
+                                    className="deadline-item"
+                                    key={competition.id}
+                                >
+                                    <div>
+                                        <strong>{competition.name}</strong>
+                                        <p>{formatDate(competition.registration_end_date)}</p>
+                                    </div>
 
-                                <div>
+                                    <span className="deadline-days">
+                                        {dayjs(competition.registration_end_date).diff(dayjs(), "day")}d
+                                    </span>
+                                </Link>
 
-                                    <strong>
+                            ))
+                        )}
 
-                                        {deadline.event}
+                    </div>
 
-                                    </strong>
 
-                                    <p>
+                    <div className="dashboard-widget">
 
-                                        {deadline.remaining}
+                        <h3>Saved Competitions</h3>
 
-                                    </p>
+                        {saved.length === 0 ? (
+                            <p className="dashboard-empty">
+                                Nothing saved yet&mdash;star a competition to keep it here.
+                            </p>
+                        ) : (
+                            saved.map((row) => (
 
+                                <div className="saved-item" key={row.id}>
+                                    <Link to={`/competitions/${row.competitions?.slug}`}>
+                                        {row.competitions?.name}
+                                    </Link>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => handleToggleSave(row.competition_id, true)}
+                                        aria-label="Remove from saved"
+                                    >
+                                        &#10005;
+                                    </button>
                                 </div>
 
-                            </div>
-
-                        ))}
-
-                    </div>
-
-
-                    <div className="dashboard-widget">
-
-                        <h3>
-                            Saved Competitions
-                        </h3>
-
-                        {saved.map(item => (
-
-                            <div
-                                className="saved-item"
-                                key={item}
-                            >
-
-                                ★ {item}
-
-                            </div>
-
-                        ))}
-
-                    </div>
-
-
-                    <div className="dashboard-widget">
-
-                        <h3>
-                            Quick Resources
-                        </h3>
-
-                        {resources.map(resource => (
-
-                            <button
-                                className="resource-button"
-                                key={resource}
-                            >
-
-                                {resource}
-
-                            </button>
-
-                        ))}
+                            ))
+                        )}
 
                     </div>
 
                 </aside>
 
             </section>
+
+            )}
+
+            {showOnboarding && (
+                <OnboardingModal userId={user.id} onComplete={handleOnboardingComplete} />
+            )}
+
+            <BackToTop />
 
         </main>
 

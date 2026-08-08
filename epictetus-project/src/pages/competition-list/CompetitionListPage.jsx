@@ -1,16 +1,19 @@
 import CompetitionCard from "./CompetitionCard";
 import './CompetitionListPage.css';
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router";
 import { getCompetitions } from "../../services/competitions";
 import SiteHeader from "../../components/SiteHeader";
 import SiteFooter from "../../components/SiteFooter";
 import BackToTop from "../../components/BackToTop";
 
 export default function CompetitionListPage() {
+    const [searchParams] = useSearchParams();
+
     const [competitions, setCompetitions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState(searchParams.get("q") || "");
     const [activeCategory, setActiveCategory] = useState("All");
 
     useEffect(() => {
