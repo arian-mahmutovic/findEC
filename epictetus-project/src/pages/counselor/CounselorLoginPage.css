@@ -1,0 +1,150 @@
+/* =========================
+   COUNSELOR LOGIN
+   Quiet, professional — no dashboard playfulness
+========================= */
+
+.counselor-login-page {
+    --accent: #7C3AED;
+    --accent-hover: #6D28D9;
+    --accent-soft: #EDE9FE;
+    --accent-text: #6D28D9;
+
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+    background: var(--bg);
+}
+
+@media (prefers-color-scheme: dark) {
+    .counselor-login-page {
+        --accent: #7C3AED;
+        --accent-hover: #6D28D9;
+        --accent-soft: #2E1065;
+        --accent-text: #C4B5FD;
+    }
+}
+
+.counselor-login-card {
+    width: min(100%, 400px);
+    box-sizing: border-box;
+    padding: 2.75rem 2.25rem;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+}
+
+.counselor-login-brand {
+    display: block;
+    color: var(--text);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+}
+
+.counselor-login-eyebrow {
+    display: inline-block;
+    margin-top: 1.5rem;
+    color: var(--accent-text);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.counselor-login-card h1 {
+    margin: 0.6rem 0 0;
+    color: var(--text);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+.counselor-login-card > p {
+    margin: 0.7rem 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.counselor-login-card form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.75rem;
+}
+
+.counselor-login-card label {
+    color: var(--text);
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.counselor-login-card input {
+    box-sizing: border-box;
+    padding: 0.8rem 0.95rem;
+
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    background: var(--bg);
+    color: var(--text);
+    font: inherit;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.92rem;
+    letter-spacing: 0.02em;
+
+    outline: none;
+    transition: border-color 140ms ease;
+}
+
+.counselor-login-card input::placeholder {
+    color: var(--muted);
+    font-weight: 400;
+}
+
+.counselor-login-card input:focus {
+    border-color: var(--accent);
+}
+
+.counselor-login-card button {
+    margin-top: 1.25rem;
+    padding: 0.85rem;
+
+    border: none;
+    border-radius: 9px;
+
+    background: var(--accent);
+    color: #ffffff;
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 140ms ease;
+}
+
+.counselor-login-card button:hover {
+    background: var(--accent-hover);
+}
+
+.counselor-login-help {
+    margin: 1.5rem 0 0;
+    color: var(--muted);
+    font-size: 0.82rem;
+    text-align: center;
+}
+
+.counselor-login-help a {
+    color: var(--accent-text);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.counselor-login-help a:hover {
+    text-decoration: underline;
+}

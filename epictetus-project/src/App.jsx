@@ -9,6 +9,8 @@ import GuideArticlePage from './pages/guide-article/GuideArticlePage'
 import ResetPasswordPage from './pages/reset-password/ResetPasswordPage'
 import NotFoundPage from './pages/not-found/NotFoundPage'
 import RequireAuth from './components/RequireAuth'
+import CounselorLoginPage from './pages/counselor/CounselorLoginPage'
+import CounselorHomePage from './pages/counselor/CounselorHomePage'
 
 function App() {
 
@@ -24,6 +26,9 @@ function App() {
         <Route path="/competitions/:slug" element={<CompetitionGuidePage />} />
         <Route path="/articles/:slug" element={<GuideArticlePage />} />
       </Route>
+
+      <Route path="/counselor" element={<CounselorLoginPage />} />
+      <Route path="/counselor/dashboard" element={<CounselorHomePage />} />
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

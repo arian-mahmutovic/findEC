@@ -1,0 +1,623 @@
+/* =========================
+   COUNSELOR DASHBOARD
+   Quiet, professional — no dashboard playfulness
+========================= */
+
+.counselor-page {
+    --accent: #7C3AED;
+    --accent-hover: #6D28D9;
+    --accent-soft: #EDE9FE;
+    --accent-text: #6D28D9;
+
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    box-sizing: border-box;
+}
+
+.counselor-page * { box-sizing: border-box; }
+
+@media (prefers-color-scheme: dark) {
+    .counselor-page {
+        --accent: #7C3AED;
+        --accent-hover: #6D28D9;
+        --accent-soft: #2E1065;
+        --accent-text: #C4B5FD;
+    }
+}
+
+/* ==========================================
+   NAV
+========================================== */
+
+.counselor-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+
+    padding: 18px clamp(20px, 5vw, 48px);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.counselor-nav-brand {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.counselor-nav-brand a {
+    color: var(--text);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+}
+
+.counselor-nav-brand span {
+    color: var(--accent-text);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.counselor-nav-user {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.counselor-nav-user > span {
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.counselor-nav-user button {
+    padding: 0.55rem 1.1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 140ms ease, background 140ms ease;
+}
+
+.counselor-nav-user button:hover {
+    background: var(--surface-2);
+    border-color: var(--muted);
+}
+
+/* ==========================================
+   CONTENT
+========================================== */
+
+.counselor-content {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: clamp(28px, 5vw, 48px) clamp(20px, 5vw, 48px) 80px;
+}
+
+.counselor-page-header h1 {
+    margin: 0;
+    font-size: clamp(1.6rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.counselor-page-header p {
+    margin: 0.5rem 0 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+/* ==========================================
+   STATS
+========================================== */
+
+.counselor-stats {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.counselor-stat {
+    padding: 1.2rem 1.3rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+}
+
+.counselor-stat span {
+    display: block;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.counselor-stat strong {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+/* ==========================================
+   ROSTER
+========================================== */
+
+.counselor-roster {
+    margin-top: 36px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+    overflow: hidden;
+}
+
+.counselor-roster-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 1.3rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.counselor-roster-header h2 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.counselor-roster-header input {
+    width: 220px;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color 140ms ease;
+}
+
+.counselor-roster-header input:focus {
+    border-color: var(--accent);
+}
+
+.counselor-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.counselor-table-row {
+    display: grid;
+    grid-template-columns: 1.6fr 0.7fr 1.6fr 0.7fr 1fr 24px;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    padding: 0.95rem 1.5rem;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background 120ms ease;
+}
+
+.counselor-table-row:last-child {
+    border-bottom: none;
+}
+
+button.counselor-table-row:hover {
+    background: var(--surface-2);
+}
+
+.counselor-table-head {
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: default;
+    background: var(--surface-2);
+}
+
+.counselor-table-head:hover {
+    background: var(--surface-2);
+}
+
+.counselor-table-row > span {
+    font-size: 0.88rem;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.counselor-table-name {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.counselor-table-interests {
+    white-space: normal !important;
+}
+
+.counselor-table-chevron {
+    justify-self: end;
+    color: var(--muted);
+    font-size: 1.2rem;
+}
+
+.counselor-empty {
+    padding: 2rem 1.5rem;
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* ==========================================
+   INSIGHTS (matching interests + highlight)
+========================================== */
+
+.counselor-insights {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-items: start;
+}
+
+.counselor-panel-card {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+}
+
+.counselor-panel-card h2 {
+    margin: 0 0 1.1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.counselor-empty-inline {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+    font-style: italic;
+}
+
+.match-subsection + .match-subsection {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+}
+
+.match-subsection h3 {
+    margin: 0 0 0.9rem;
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.interest-group-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.interest-group-tag {
+    display: inline-block;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-text);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.interest-group-tag-competition {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+.interest-group p {
+    margin: 0.5rem 0 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.highlighted-student {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1.2rem;
+
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    background: var(--accent-soft);
+
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background 140ms ease;
+}
+
+.highlighted-student:hover {
+    background: var(--accent-soft);
+    filter: brightness(0.97);
+}
+
+.highlighted-student-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.highlighted-student-top strong {
+    color: var(--text);
+    font-size: 0.98rem;
+    font-weight: 700;
+}
+
+.highlighted-student-top span {
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+.highlighted-student > p {
+    margin: 0.6rem 0 0;
+    color: var(--text);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.highlighted-student-cta {
+    display: inline-block;
+    margin-top: 0.9rem;
+    color: var(--accent-text);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+/* ==========================================
+   TIPS
+========================================== */
+
+.counselor-tips {
+    margin-top: 20px;
+}
+
+.tips-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 2rem;
+}
+
+.tips-list li {
+    padding-left: 1.1rem;
+    border-left: 2px solid var(--accent);
+}
+
+.tips-list strong {
+    display: block;
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.tips-list p {
+    margin: 0.4rem 0 0;
+    color: var(--muted);
+    font-size: 0.86rem;
+    line-height: 1.6;
+}
+
+/* ==========================================
+   STUDENT DETAIL PANEL
+========================================== */
+
+.student-panel-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+
+    display: flex;
+    justify-content: flex-end;
+
+    background: rgba(17, 17, 17, 0.35);
+}
+
+.student-panel {
+    position: relative;
+    width: min(100%, 420px);
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    padding: 2.25rem;
+}
+
+.student-panel-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 140ms ease;
+}
+
+.student-panel-close:hover {
+    background: var(--surface-2);
+}
+
+.student-panel-header h2 {
+    margin: 0;
+    padding-right: 2.5rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.student-panel-header p {
+    margin: 0.4rem 0 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.student-panel-email {
+    display: inline-block;
+    margin-top: 0.6rem;
+    color: var(--accent-text);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.student-panel-email:hover {
+    text-decoration: underline;
+}
+
+.student-panel-section {
+    margin-top: 2rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--border);
+}
+
+.student-panel-section h3 {
+    margin: 0 0 1rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.student-panel-empty {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+    font-style: italic;
+}
+
+.student-panel-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.student-panel-tags span {
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-text);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.student-panel-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.student-panel-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.student-panel-list strong {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.student-panel-list li > div > span {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+}
+
+.student-panel-deadline {
+    flex: 0 0 auto;
+    color: var(--muted);
+    font-size: 0.78rem;
+    white-space: nowrap;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 800px) {
+    .counselor-nav-user > span { display: none; }
+    .counselor-stats { grid-template-columns: repeat(2, 1fr); }
+    .counselor-insights { grid-template-columns: 1fr; }
+    .tips-list { grid-template-columns: 1fr; }
+
+    .counselor-roster-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .counselor-roster-header input {
+        width: 100%;
+    }
+
+    .counselor-table-row {
+        grid-template-columns: 1.6fr 0.7fr 0.7fr 24px;
+    }
+
+    .counselor-table-row > span:nth-child(3),
+    .counselor-table-row > span:nth-child(5) {
+        display: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .student-panel {
+        width: 100%;
+    }
+}
