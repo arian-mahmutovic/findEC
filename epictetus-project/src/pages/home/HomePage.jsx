@@ -3,25 +3,28 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import dayjs from "dayjs";
 import { useAuth } from "../../context/AuthContext";
+import { useSavedCompetitions } from "../../context/SavedCompetitionsContext";
 import { signOut } from "../../services/auth";
 import { getCompetitions, getRecentGuideArticles } from "../../services/competitions";
-import { getUserPreferences, getUserProfile } from "../../services/preferences";
-import { getSavedCompetitions, saveCompetition, unsaveCompetition } from "../../services/savedCompetitions";
+import { getUserPreferences } from "../../services/preferences";
 import OnboardingModal from "../../components/OnboardingModal";
+import ProfileModal from "../../components/ProfileModal";
 import BackToTop from "../../components/BackToTop";
+import SiteFooter from "../../components/SiteFooter";
+import SaveStarButton from "../../components/SaveStarButton";
 import { formatDate } from "../../utils/dates";
 
 export default function HomePage() {
-    const { user } = useAuth();
+    const { user, profile } = useAuth();
     const navigate = useNavigate();
+    const { savedRows, savedIds } = useSavedCompetitions();
 
-    const [profile, setProfile] = useState(null);
     const [preferences, setPreferences] = useState(null);
     const [competitions, setCompetitions] = useState([]);
-    const [saved, setSaved] = useState([]);
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showOnboarding, setShowOnboarding] = useState(false);
+    const [showProfile, setShowProfile] = useState(false);
     const [search, setSearch] = useState("");
 
     useEffect(() => {
@@ -31,19 +34,15 @@ export default function HomePage() {
     async function loadDashboard() {
         setLoading(true);
 
-        const [profileRes, prefsRes, compsRes, savedRes, articlesRes] = await Promise.all([
-            getUserProfile(user.id),
+        const [prefsRes, compsRes, articlesRes] = await Promise.all([
             getUserPreferences(user.id),
             getCompetitions(),
-            getSavedCompetitions(user.id),
             getRecentGuideArticles(4)
         ]);
 
-        setProfile(profileRes.data);
         setPreferences(prefsRes.data);
         setShowOnboarding(!prefsRes.data);
         setCompetitions(compsRes.data || []);
-        setSaved(savedRes.data || []);
         setArticles(articlesRes.data || []);
         setLoading(false);
     }
@@ -52,11 +51,6 @@ export default function HomePage() {
         setShowOnboarding(false);
         loadDashboard();
     }
-
-    const savedIds = useMemo(
-        () => new Set(saved.map((row) => row.competition_id)),
-        [saved]
-    );
 
     const interests = useMemo(() => preferences?.interests || [], [preferences]);
 
@@ -79,22 +73,11 @@ export default function HomePage() {
     }, [competitions]);
 
     const stats = useMemo(() => ({
-        saved: saved.length,
+        saved: savedRows.length,
         open: competitions.filter((c) => c.registration_status === "Open").length,
         following: interests.length,
         total: competitions.length
-    }), [competitions, saved, interests]);
-
-    async function handleToggleSave(competitionId, isSaved) {
-        if (isSaved) {
-            await unsaveCompetition(user.id, competitionId);
-        } else {
-            await saveCompetition(user.id, competitionId);
-        }
-
-        const result = await getSavedCompetitions(user.id);
-        setSaved(result.data || []);
-    }
+    }), [competitions, savedRows, interests]);
 
     function handleSearchSubmit(e) {
         e.preventDefault();
@@ -116,6 +99,7 @@ export default function HomePage() {
     if (!user) return null;
 
     return (
+        <>
 
         <main className="dashboard-page">
 
@@ -135,9 +119,14 @@ export default function HomePage() {
                 </div>
 
                 <div className="dashboard-user">
-                    <div className="profile-circle">
+                    <button
+                        type="button"
+                        className="profile-circle"
+                        onClick={() => setShowProfile(true)}
+                        aria-label="Open your profile"
+                    >
                         {initials}
-                    </div>
+                    </button>
 
                     <button type="button" className="dashboard-signout" onClick={handleSignOut}>
                         Sign out
@@ -245,14 +234,7 @@ export default function HomePage() {
                                                 <button type="button">View guide</button>
                                             </Link>
 
-                                            <button
-                                                type="button"
-                                                className="save-toggle"
-                                                onClick={() => handleToggleSave(competition.id, false)}
-                                                aria-label="Save competition"
-                                            >
-                                                &#9733;
-                                            </button>
+                                            <SaveStarButton competitionId={competition.id} className="save-toggle" />
                                         </div>
 
                                     </div>
@@ -337,25 +319,19 @@ export default function HomePage() {
 
                         <h3>Saved Competitions</h3>
 
-                        {saved.length === 0 ? (
+                        {savedRows.length === 0 ? (
                             <p className="dashboard-empty">
                                 Nothing saved yet&mdash;star a competition to keep it here.
                             </p>
                         ) : (
-                            saved.map((row) => (
+                            savedRows.map((row) => (
 
                                 <div className="saved-item" key={row.id}>
                                     <Link to={`/competitions/${row.competitions?.slug}`}>
                                         {row.competitions?.name}
                                     </Link>
 
-                                    <button
-                                        type="button"
-                                        onClick={() => handleToggleSave(row.competition_id, true)}
-                                        aria-label="Remove from saved"
-                                    >
-                                        &#10005;
-                                    </button>
+                                    <SaveStarButton competitionId={row.competition_id} />
                                 </div>
 
                             ))
@@ -373,9 +349,17 @@ export default function HomePage() {
                 <OnboardingModal userId={user.id} onComplete={handleOnboardingComplete} />
             )}
 
+            {showProfile && (
+                <ProfileModal closeForm={() => setShowProfile(false)} />
+            )}
+
             <BackToTop />
 
         </main>
+
+        <SiteFooter />
+
+        </>
 
     );
 

@@ -37,6 +37,10 @@ export default function SiteFooter() {
 
                 <span className="site-footer-copy">&copy; {new Date().getFullYear()}</span>
 
+                <a href={`mailto:${CONTACT_EMAIL}`} className="site-footer-contact">
+                    Contact us
+                </a>
+
                 <div className="site-footer-icons">
                     <button
                         type="button"

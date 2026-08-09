@@ -58,6 +58,25 @@ nav.site-header-nav {
     color: var(--sh-lime);
 }
 
+.site-header-nav-button {
+    border: 0;
+    background: none;
+    cursor: pointer;
+    color: var(--sh-ink);
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 800;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: background 140ms ease, color 140ms ease;
+}
+
+.site-header-nav-button:hover,
+.site-header-nav-button:focus-visible {
+    background: var(--sh-ink);
+    color: var(--sh-lime);
+}
+
 .site-header-actions {
     display: flex;
     flex: 0 0 auto;
@@ -97,17 +116,25 @@ nav.site-header-nav {
     box-shadow: 5px 5px 0 rgba(17, 17, 17, 0.35);
 }
 
-.site-header-avatar {
+.site-header-actions .site-header-avatar {
     display: grid;
     place-items: center;
     width: 36px;
     height: 36px;
+    padding: 0;
     border: 2px solid var(--sh-ink);
     border-radius: 50%;
     background: var(--sh-ink);
     color: var(--sh-lime);
+    font: inherit;
     font-size: 0.78rem;
     font-weight: 800;
+    cursor: pointer;
+    transition: transform 140ms ease;
+}
+
+.site-header-actions .site-header-avatar:hover {
+    transform: scale(1.06);
 }
 
 .site-header-actions .site-header-signout {

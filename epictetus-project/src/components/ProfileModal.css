@@ -1,0 +1,153 @@
+.profile-label {
+    display: block;
+    margin: 1.1rem 0 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #111111;
+}
+
+.profile-label:first-of-type {
+    margin-top: 0;
+}
+
+.profile-label span {
+    color: #5b6270;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.profile-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.profile-tag {
+    padding: 0.5rem 1rem;
+    border: 2px solid #111111;
+    border-radius: 999px;
+    background: transparent;
+    color: #111111;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 140ms ease, transform 140ms ease;
+}
+
+.profile-tag:hover {
+    transform: translateY(-2px);
+}
+
+.profile-tag.is-active {
+    background: #abf910;
+}
+
+.profile-newsletter-row {
+    margin-top: 1.2rem;
+}
+
+.profile-loading {
+    display: grid;
+    place-items: center;
+    padding: 60px 24px;
+}
+
+.profile-loading-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #abf910;
+    border: 2px solid #111111;
+    animation: profile-pulse 900ms ease-in-out infinite;
+}
+
+@keyframes profile-pulse {
+    0%, 100% { transform: scale(0.85); opacity: 0.6; }
+    50% { transform: scale(1.15); opacity: 1; }
+}
+
+/* ---------- Danger zone ---------- */
+
+.profile-danger-zone {
+    margin-top: 2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(17, 17, 17, 0.14);
+}
+
+.profile-delete-link {
+    border: none;
+    background: transparent;
+    padding: 0;
+    color: #9aa1ad;
+    font: inherit;
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.profile-delete-link:hover {
+    color: #e0402a;
+}
+
+.profile-delete-confirm {
+    padding: 0.9rem 1rem;
+    border: 1.5px solid #e0402a;
+    border-radius: 12px;
+    background: rgba(224, 64, 42, 0.06);
+}
+
+.profile-delete-confirm p {
+    margin: 0;
+    color: #333944;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.profile-delete-confirm-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 0.8rem;
+}
+
+.profile-delete-cancel,
+.profile-delete-confirm-button {
+    padding: 0.5rem 0.9rem;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 0.76rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.profile-delete-cancel {
+    border: 1.5px solid #111111;
+    background: #ffffff;
+    color: #111111;
+}
+
+.profile-delete-cancel:hover {
+    background: #f5f6f2;
+}
+
+.profile-delete-confirm-button {
+    border: 1.5px solid #e0402a;
+    background: #e0402a;
+    color: #ffffff;
+}
+
+.profile-delete-confirm-button:hover {
+    background: #c73620;
+}
+
+.profile-delete-cancel:disabled,
+.profile-delete-confirm-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

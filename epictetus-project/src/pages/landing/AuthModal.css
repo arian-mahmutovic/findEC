@@ -1,133 +1,6 @@
 /* =========================
-   AUTH MODAL — white / black / lime
+   AUTH MODAL — extras on top of the shared modal shell
 ========================= */
-
-.signup-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 24px;
-    box-sizing: border-box;
-
-    background: rgba(17, 17, 17, 0.55);
-    backdrop-filter: blur(6px);
-}
-
-.signup-modal {
-    position: relative;
-    width: min(100%, 440px);
-
-    background: #ffffff;
-    color: #111111;
-    border: 2.5px solid #111111;
-    border-radius: 22px;
-    box-shadow: 10px 10px 0 #abf910;
-
-    padding: 2.5rem;
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
-
-.modal-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 12px;
-    border: 2px solid #111111;
-    border-radius: 999px;
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-.modal-eyebrow::before {
-    content: "";
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #abf910;
-    border: 1.5px solid #111111;
-}
-
-.signup-modal h2 {
-    margin: 16px 0 0;
-    font-size: 1.85rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-}
-
-.signup-modal > p {
-    margin-top: 0.6rem;
-    color: #5b6270;
-    font-size: 0.92rem;
-    font-weight: 600;
-    line-height: 1.6;
-}
-
-/* ---------- Close ---------- */
-
-.close-button {
-    position: absolute;
-    top: 1.1rem;
-    right: 1.1rem;
-
-    width: 36px;
-    height: 36px;
-
-    border: 2px solid #111111;
-    border-radius: 50%;
-
-    background: #ffffff;
-    color: #111111;
-
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: background 140ms ease, transform 140ms ease;
-}
-
-.close-button:hover {
-    background: #abf910;
-    transform: rotate(90deg);
-}
-
-/* ---------- Form ---------- */
-
-.signup-modal form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.9rem;
-    margin-top: 1.6rem;
-}
-
-.signup-modal input {
-    width: 100%;
-    padding: 0.95rem 1.1rem;
-    box-sizing: border-box;
-
-    border: 2px solid #111111;
-    border-radius: 12px;
-
-    background: #ffffff;
-    color: #111111;
-    font: inherit;
-    font-weight: 600;
-
-    outline: none;
-    transition: box-shadow 160ms ease;
-}
-
-.signup-modal input::placeholder {
-    color: #5b6270;
-    font-weight: 500;
-}
-
-.signup-modal input:focus {
-    box-shadow: 3px 3px 0 #abf910;
-}
 
 .password-field {
     position: relative;
@@ -192,54 +65,57 @@
     cursor: not-allowed;
 }
 
-.form-error {
-    margin: 0;
-    padding: 0.7rem 0.9rem;
-    border: 2px solid #e0402a;
-    border-radius: 10px;
-    background: rgba(224, 64, 42, 0.08);
-    color: #e0402a;
-    font-size: 0.85rem;
+.resend-confirmation-link {
+    align-self: flex-start;
+    margin-top: -0.2rem;
+
+    border: none;
+    background: transparent;
+    padding: 0;
+
+    color: #5b6270;
+    font: inherit;
+    font-size: 0.8rem;
     font-weight: 700;
-}
-
-.form-notice {
-    margin: 0;
-    padding: 0.7rem 0.9rem;
-    border: 2px solid #111111;
-    border-radius: 10px;
-    background: rgba(171, 249, 16, 0.18);
-    color: #111111;
-    font-size: 0.85rem;
-    font-weight: 700;
-}
-
-/* ---------- Buttons ---------- */
-
-.signup-button {
-    margin-top: 0.3rem;
-    padding: 1rem;
-
-    border: 2px solid #111111;
-    border-radius: 12px;
-
-    background: #111111;
-    color: #abf910;
-    font-weight: 800;
-    font-size: 0.98rem;
     cursor: pointer;
-    transition: transform 160ms ease, box-shadow 160ms ease;
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
-.signup-button:hover:not(:disabled) {
-    transform: translate(-2px, -2px);
-    box-shadow: 4px 4px 0 #abf910;
+.resend-confirmation-link:hover {
+    color: #111111;
 }
 
-.signup-button:disabled {
+.resend-confirmation-link:disabled {
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+/* ---------- Newsletter checkbox ---------- */
+
+.newsletter-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: -0.2rem;
+
+    color: #333944;
+    font-size: 0.83rem;
+    font-weight: 600;
+    line-height: 1.4;
+    cursor: pointer;
+}
+
+.newsletter-checkbox input {
+    width: 16px !important;
+    height: 16px;
+    margin-top: 2px;
+    flex: 0 0 auto;
+    accent-color: #abf910;
+    cursor: pointer;
+}
+
+/* ---------- Buttons ---------- */
 
 .google-button {
     width: 100%;
@@ -306,17 +182,4 @@
 
 .login-link button:hover {
     color: #5b6270;
-}
-
-/* ---------- Mobile ---------- */
-
-@media (max-width: 600px) {
-    .signup-modal {
-        padding: 2rem 1.4rem;
-        border-radius: 18px;
-    }
-
-    .signup-modal h2 {
-        font-size: 1.6rem;
-    }
 }

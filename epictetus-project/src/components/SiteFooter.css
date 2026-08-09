@@ -32,6 +32,19 @@
     font-weight: 800;
 }
 
+.site-footer-contact {
+    flex: 0 0 auto;
+    color: var(--sf-ink);
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.site-footer-contact:hover {
+    opacity: 0.75;
+}
+
 .site-footer-icons {
     display: flex;
     gap: 10px;

@@ -4,7 +4,7 @@ export async function getUserProfile(userId) {
 
     const { data, error } = await supabase
         .from("users")
-        .select("full_name, school, grade")
+        .select("full_name, school, grade, newsletter_opt_in")
         .eq("id", userId)
         .maybeSingle();
 
@@ -24,29 +24,38 @@ export async function getUserPreferences(userId) {
 
 }
 
-export async function saveUserPreferences(userId, { school, grade, interests }) {
+export async function saveUserPreferences(userId, { fullName, school, grade, interests, newsletterOptIn } = {}) {
 
-    const { error: profileError } = await supabase
-        .from("users")
-        .update({
-            school: school || null,
-            grade: grade || null
-        })
-        .eq("id", userId);
+    const profileUpdate = {};
+    if (fullName !== undefined) profileUpdate.full_name = fullName || null;
+    if (school !== undefined) profileUpdate.school = school || null;
+    if (grade !== undefined) profileUpdate.grade = grade || null;
+    if (newsletterOptIn !== undefined) profileUpdate.newsletter_opt_in = newsletterOptIn;
 
-    if (profileError) {
-        return { error: profileError };
+    if (Object.keys(profileUpdate).length > 0) {
+        const { error: profileError } = await supabase
+            .from("users")
+            .update(profileUpdate)
+            .eq("id", userId);
+
+        if (profileError) {
+            return { error: profileError };
+        }
     }
 
-    const { data, error } = await supabase
-        .from("user_preferences")
-        .upsert(
-            { user_id: userId, interests: interests || [] },
-            { onConflict: "user_id" }
-        )
-        .select()
-        .maybeSingle();
+    if (interests !== undefined) {
+        const { data, error } = await supabase
+            .from("user_preferences")
+            .upsert(
+                { user_id: userId, interests: interests || [] },
+                { onConflict: "user_id" }
+            )
+            .select()
+            .maybeSingle();
 
-    return { data, error };
+        return { data, error };
+    }
+
+    return { data: null, error: null };
 
 }

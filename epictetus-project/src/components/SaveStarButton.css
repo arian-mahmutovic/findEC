@@ -1,0 +1,68 @@
+/* !important on sizing: this button drops into pages with their own
+   ambient `.competition-card button { width: 100% }`-style resets that
+   outrank a bare single-class selector — it must render the same size
+   everywhere regardless of where it's mounted. */
+.save-star-button {
+    flex: 0 0 auto !important;
+    display: grid !important;
+    place-items: center;
+    width: 42px !important;
+    height: 42px !important;
+    padding: 0 !important;
+
+    border: 2.5px solid #111111;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #111111;
+    cursor: pointer;
+    transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.save-star-button svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linejoin: round;
+    transition: fill 160ms ease;
+}
+
+.save-star-button:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 3px 3px 0 #abf910;
+}
+
+.save-star-button.is-saved {
+    background: #abf910;
+}
+
+.save-star-button.is-saved svg {
+    fill: #111111;
+}
+
+.save-star-button.save-star-label {
+    width: 100% !important;
+    height: auto !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 38px;
+    padding: 8px 10px !important;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 0.74rem;
+    font-weight: 800;
+}
+
+.save-star-button.save-star-label svg {
+    width: 14px;
+    height: 14px;
+}
+
+.save-star-button.save-star-label:hover {
+    background: #abf910;
+    transform: translateY(-2px);
+    box-shadow: none;
+}

@@ -1,6 +1,6 @@
 import './LandingPage.css';
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import SiteHeader from '../../components/SiteHeader';
 import SiteFooter from '../../components/SiteFooter';
 import BackToTop from '../../components/BackToTop';
@@ -227,13 +227,14 @@ export default function LandingPage() {
                             <CompetitionCard
                                 key={competition.id ?? competition.slug ?? competition.name}
                                 {...competition}
+                                onGuideClick={() => openAuth('signup')}
                             />
                         ))}
                     </div>
 
-                    <Link to="/competitions" className="lp-see-all">
+                    <button type="button" className="lp-see-all" onClick={() => openAuth('signup')}>
                         See all competitions <span>&rarr;</span>
-                    </Link>
+                    </button>
 
                 </section>
             )}
@@ -268,6 +269,20 @@ export default function LandingPage() {
                         <li>Guides written for winning, not just applying.</li>
                         <li>Built for ambitious students, kept free to use.</li>
                     </ul>
+                </div>
+
+                <div className="lp-guides-explainer">
+                    <span className="lp-section-eyebrow lp-about-eyebrow">What&rsquo;s a guide?</span>
+                    <h3>Not just a listing&mdash;a playbook.</h3>
+
+                    <p>
+                        Every competition on Epictetus Project comes with a guide built
+                        specifically for it: a realistic timeline, the tips and mistakes
+                        that actually separate finalists from everyone else, curated
+                        articles and videos, and an FAQ that answers what the official
+                        rules page won&rsquo;t. It&rsquo;s the difference between finding
+                        an opportunity and knowing how to win it.
+                    </p>
                 </div>
 
             </section>

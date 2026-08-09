@@ -99,3 +99,30 @@ export async function signOut() {
     return { error };
 
 }
+
+export async function resendConfirmationEmail(email) {
+
+    const { data, error } =
+    await supabase.auth.resend({
+        type: "signup",
+        email
+    });
+
+    return {
+        data,
+        error
+    };
+
+}
+
+export async function deleteAccount() {
+
+    const { error } = await supabase.rpc("delete_own_account");
+
+    if (!error) {
+        await supabase.auth.signOut();
+    }
+
+    return { error };
+
+}

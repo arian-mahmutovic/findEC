@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { supabase } from "../../supabase";
 import { formatDate } from "../../utils/dates";
 import SiteHeader from "../../components/SiteHeader";
 import SiteFooter from "../../components/SiteFooter";
 import BackToTop from "../../components/BackToTop";
+import SaveStarButton from "../../components/SaveStarButton";
 import './CompetitionGuidePage.css';
 
 export default function CompetitionGuidePage() {
@@ -233,9 +234,9 @@ export default function CompetitionGuidePage() {
                                         <span className="resource-number">{String(index + 1).padStart(2, '0')}</span>
                                         <h3>{article.title}</h3>
                                         <p>{article.summary}</p>
-                                        <button type="button" className="resource-link">
+                                        <Link to={`/articles/${article.slug}`} className="resource-link">
                                             Read guide <span aria-hidden="true">↗</span>
-                                        </button>
+                                        </Link>
                                     </article>
                                 ))}
                             </div>
@@ -338,7 +339,7 @@ export default function CompetitionGuidePage() {
                         )}
 
                         <div className="competition-actions">
-                            <button type="button" className="bookmark-button">Bookmark</button>
+                            <SaveStarButton competitionId={competition.id} variant="label" />
                             <button type="button" className="notification-button">Notify me</button>
                         </div>
 

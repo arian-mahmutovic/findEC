@@ -1,14 +1,20 @@
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { useAuth } from "../context/AuthContext";
 import { signOut } from "../services/auth";
+import NewsletterModal from "./NewsletterModal";
+import ProfileModal from "./ProfileModal";
 import "./SiteHeader.css";
 
 export default function SiteHeader({ actions }) {
-    const { user } = useAuth();
+    const { user, profile } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
 
-    const fullName = user?.user_metadata?.full_name?.trim();
+    const [showNewsletter, setShowNewsletter] = useState(false);
+    const [showProfile, setShowProfile] = useState(false);
+
+    const fullName = (profile?.full_name || user?.user_metadata?.full_name || "").trim();
     const initials = fullName
         ? fullName.split(" ").filter(Boolean).slice(0, 2).map((part) => part[0].toUpperCase()).join("")
         : "?";
@@ -34,15 +40,24 @@ export default function SiteHeader({ actions }) {
                 <Link to={user ? "/home" : "/"} className="site-header-brand">Epictetus Project</Link>
 
                 <nav className="site-header-nav" aria-label="Primary">
+                    {user && <Link to="/home">Dashboard</Link>}
                     {user && <Link to="/competitions">Competitions</Link>}
-                    <a href="#">Guides</a>
-                    <a href="#">Newsletter</a>
+                    <button type="button" className="site-header-nav-button" onClick={() => setShowNewsletter(true)}>
+                        Newsletter
+                    </button>
                     <a href="/#about" onClick={handleAboutClick}>About</a>
                 </nav>
 
                 {user ? (
                     <div className="site-header-actions">
-                        <span className="site-header-avatar" aria-hidden="true">{initials}</span>
+                        <button
+                            type="button"
+                            className="site-header-avatar"
+                            onClick={() => setShowProfile(true)}
+                            aria-label="Open your profile"
+                        >
+                            {initials}
+                        </button>
                         <button type="button" className="site-header-signout" onClick={handleSignOut}>
                             Sign out
                         </button>
@@ -51,6 +66,9 @@ export default function SiteHeader({ actions }) {
                     actions && <div className="site-header-actions">{actions}</div>
                 )}
             </div>
+
+            {showNewsletter && <NewsletterModal closeForm={() => setShowNewsletter(false)} />}
+            {showProfile && <ProfileModal closeForm={() => setShowProfile(false)} />}
         </header>
     );
 }

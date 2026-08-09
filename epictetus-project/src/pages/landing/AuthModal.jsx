@@ -1,7 +1,10 @@
+import '../../styles/modal-shell.css';
 import './AuthModal.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { signup, login, loginWithGoogle, sendPasswordReset } from '../../services/auth';
+import { signup, login, loginWithGoogle, sendPasswordReset, resendConfirmationEmail } from '../../services/auth';
+import { subscribeToNewsletter } from '../../services/newsletter';
+import { saveUserPreferences } from '../../services/preferences';
 
 export default function AuthModal({ mode, setMode, closeForm }) {
     const navigate = useNavigate();
@@ -10,16 +13,20 @@ export default function AuthModal({ mode, setMode, closeForm }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [newsletterOptIn, setNewsletterOptIn] = useState(false);
     const [error, setError] = useState('');
     const [notice, setNotice] = useState('');
     const [loading, setLoading] = useState(false);
     const [resetting, setResetting] = useState(false);
+    const [resending, setResending] = useState(false);
+    const [showResend, setShowResend] = useState(false);
 
     const isSignup = mode === 'signup';
 
     function switchMode(nextMode) {
         setError('');
         setNotice('');
+        setShowResend(false);
         setMode(nextMode);
     }
 
@@ -27,6 +34,7 @@ export default function AuthModal({ mode, setMode, closeForm }) {
         e.preventDefault();
         setError('');
         setNotice('');
+        setShowResend(false);
         setLoading(true);
 
         const result = isSignup
@@ -37,7 +45,16 @@ export default function AuthModal({ mode, setMode, closeForm }) {
 
         if (result.error) {
             setError(result.error.message);
+
+            if (!isSignup && result.error.message?.toLowerCase().includes('email not confirmed')) {
+                setShowResend(true);
+            }
             return;
+        }
+
+        if (isSignup && newsletterOptIn && result.data.user) {
+            await subscribeToNewsletter(email, { userId: result.data.user.id, source: 'signup' });
+            await saveUserPreferences(result.data.user.id, { newsletterOptIn: true });
         }
 
         if (!result.data.session) {
@@ -78,6 +95,21 @@ export default function AuthModal({ mode, setMode, closeForm }) {
         }
 
         setNotice('Password reset link sent! Check your email.');
+    }
+
+    async function handleResendConfirmation() {
+        setError('');
+        setResending(true);
+        const result = await resendConfirmationEmail(email);
+        setResending(false);
+
+        if (result.error) {
+            setError(result.error.message);
+            return;
+        }
+
+        setShowResend(false);
+        setNotice('Confirmation email sent! Check your inbox.');
     }
 
     return (
@@ -155,15 +187,44 @@ export default function AuthModal({ mode, setMode, closeForm }) {
                         </button>
                     )}
 
+                    {isSignup && (
+                        <label className="newsletter-checkbox">
+                            <input
+                                type="checkbox"
+                                checked={newsletterOptIn}
+                                onChange={(e) => setNewsletterOptIn(e.target.checked)}
+                            />
+                            Email me new competitions and guides as they go live
+                        </label>
+                    )}
+
                     {notice && <p className="form-notice">{notice}</p>}
 
                     {error && <p className="form-error">{error}</p>}
+
+                    {showResend && (
+                        <button
+                            type="button"
+                            className="resend-confirmation-link"
+                            onClick={handleResendConfirmation}
+                            disabled={resending}
+                        >
+                            {resending ? 'Sending…' : 'Resend confirmation email'}
+                        </button>
+                    )}
 
                     <button type="submit" className="signup-button" disabled={loading}>
                         {loading
                             ? (isSignup ? 'Creating account…' : 'Logging in…')
                             : (isSignup ? 'Create Account' : 'Log In')}
                     </button>
+
+                    {isSignup && (
+                        <p className="modal-privacy-note">
+                            We&rsquo;ll only use your email for your account and, if checked,
+                            the newsletter&mdash;never shared, never sold.
+                        </p>
+                    )}
 
                 </form>
 

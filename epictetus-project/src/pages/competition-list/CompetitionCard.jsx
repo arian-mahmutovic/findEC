@@ -1,8 +1,10 @@
 import { Link } from "react-router";
 import { formatDate } from "../../utils/dates";
+import SaveStarButton from "../../components/SaveStarButton";
 
 
 export default function CompetitionCard({
+    id,
     slug,
     name,
     organization,
@@ -18,7 +20,8 @@ export default function CompetitionCard({
     team_requirement,
     location_type,
     prize,
-    prestige_level
+    prestige_level,
+    onGuideClick
 }) {
 
     const statusClass =
@@ -102,7 +105,15 @@ export default function CompetitionCard({
 
             <div className="competition-buttons-container">
 
-                <Link to={`/competitions/${slug}`}>
+                <Link
+                    to={`/competitions/${slug}`}
+                    onClick={(e) => {
+                        if (onGuideClick) {
+                            e.preventDefault();
+                            onGuideClick();
+                        }
+                    }}
+                >
                     <button type="button" className="competition-card-button">
                         View guide
                     </button>
@@ -113,6 +124,8 @@ export default function CompetitionCard({
                         <button type="button">Official website</button>
                     </a>
                 )}
+
+                <SaveStarButton competitionId={id} />
 
             </div>
 
