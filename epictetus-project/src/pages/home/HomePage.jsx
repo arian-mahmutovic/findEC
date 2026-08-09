@@ -1,6 +1,6 @@
 import "./HomePage.css";
 import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import dayjs from "dayjs";
 import { useAuth } from "../../context/AuthContext";
 import { useSavedCompetitions } from "../../context/SavedCompetitionsContext";
@@ -14,9 +14,13 @@ import SiteFooter from "../../components/SiteFooter";
 import SaveStarButton from "../../components/SaveStarButton";
 import { formatDate } from "../../utils/dates";
 
+const CONTACT_EMAIL = "hello@epictetusproject.com";
+const YOUTUBE_URL = "https://www.youtube.com/@EpictetusProject";
+
 export default function HomePage() {
     const { user, profile } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
     const { savedRows, savedIds } = useSavedCompetitions();
 
     const [preferences, setPreferences] = useState(null);
@@ -26,10 +30,18 @@ export default function HomePage() {
     const [showOnboarding, setShowOnboarding] = useState(false);
     const [showProfile, setShowProfile] = useState(false);
     const [search, setSearch] = useState("");
+    const [aboutOpen, setAboutOpen] = useState(false);
 
     useEffect(() => {
         if (user) loadDashboard();
     }, [user]);
+
+    useEffect(() => {
+        if (location.hash === "#about" && !loading) {
+            setAboutOpen(true);
+            document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [location.hash, loading]);
 
     async function loadDashboard() {
         setLoading(true);
@@ -114,8 +126,20 @@ export default function HomePage() {
                 </Link>
 
                 <div className="dashboard-nav-links">
-                    <Link to="/home">Dashboard</Link>
                     <Link to="/competitions">Competitions</Link>
+                    <Link to="/home#about">About</Link>
+                    <a href={`mailto:${CONTACT_EMAIL}`}>Contact Us</a>
+
+                    <a
+                        href={YOUTUBE_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="dashboard-icon-btn"
+                        aria-label="Watch on YouTube"
+                        title="YouTube"
+                    >
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9.5v5l4.5-2.5Z" fill="#111111"/></svg>
+                    </a>
                 </div>
 
                 <div className="dashboard-user">
@@ -265,8 +289,8 @@ export default function HomePage() {
                                         <p>{article.summary}</p>
                                     </div>
 
-                                    {article.competitions?.slug && (
-                                        <Link to={`/competitions/${article.competitions.slug}`}>
+                                    {article.slug && (
+                                        <Link to={`/articles/${article.slug}`}>
                                             <button type="button">Read</button>
                                         </Link>
                                     )}
@@ -344,6 +368,72 @@ export default function HomePage() {
             </section>
 
             )}
+
+
+            {/* ===========================
+                ABOUT
+            =========================== */}
+
+            <details
+                id="about"
+                className="dashboard-about"
+                open={aboutOpen}
+                onToggle={(e) => setAboutOpen(e.target.open)}
+            >
+
+                <summary className="dashboard-about-summary">
+                    <span>
+                        <span className="dashboard-about-eyebrow">About</span>
+                        <h2>Why we built Epictetus Project</h2>
+                    </span>
+                    <span className="dashboard-about-chevron" aria-hidden="true">&#9660;</span>
+                </summary>
+
+                <div className="dashboard-about-body">
+
+                    <p>
+                        Epictetus Project started with a simple, frustrating realization: the opportunities
+                        that actually move the needle for ambitious students&mdash;national competitions,
+                        research programs, selective scholarships&mdash;are scattered across a hundred
+                        disconnected websites, and almost none of them tell you how to actually compete for
+                        them. Finding a competition&rsquo;s rules page is easy. Finding out what separates a
+                        finalist from everyone else who read the same rules page is another matter entirely.
+                    </p>
+
+                    <p>
+                        So we built the tool we wished existed: one organized database of high-value
+                        opportunities, paired with guides written the way a knowledgeable upperclassman
+                        would actually explain it to you&mdash;realistic timelines, the mistakes that
+                        quietly sink most applicants, and the habits of people who&rsquo;ve actually won.
+                        Not vague encouragement, and not a repost of the official rules page. An actual plan.
+                    </p>
+
+                    <p>
+                        The name isn&rsquo;t an accident. Epictetus was a Stoic philosopher who taught that
+                        we rarely control the outcome&mdash;a judge&rsquo;s taste, a competitor&rsquo;s
+                        brilliance, plain luck&mdash;but we always control our preparation. That&rsquo;s the
+                        whole premise here: nothing on this platform can guarantee a win, but it can make
+                        sure you walk in more prepared than almost everyone else in the room.
+                    </p>
+
+                    <p>
+                        This is a small, independent project built by students who got tired of learning
+                        things the hard way and figured other students shouldn&rsquo;t have to. It isn&rsquo;t
+                        run by a test-prep company or an admissions consultancy, and there&rsquo;s no
+                        $2,000 package hiding behind a paywall. It stays honest, current, and free, because
+                        the goal was never to build a business&mdash;it was to fix a genuinely annoying problem.
+                    </p>
+
+                    <p>
+                        We&rsquo;re still adding competitions, rewriting guides, and fixing things as we
+                        learn what&rsquo;s actually useful versus what just sounds good on a landing page.
+                        If you spot something wrong or missing, Contact Us above goes straight to us&mdash;not
+                        a support queue.
+                    </p>
+
+                </div>
+
+            </details>
 
             {showOnboarding && (
                 <OnboardingModal userId={user.id} onComplete={handleOnboardingComplete} />

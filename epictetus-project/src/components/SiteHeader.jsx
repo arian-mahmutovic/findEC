@@ -6,6 +6,8 @@ import NewsletterModal from "./NewsletterModal";
 import ProfileModal from "./ProfileModal";
 import "./SiteHeader.css";
 
+const YOUTUBE_URL = "https://www.youtube.com/@EpictetusProject";
+
 export default function SiteHeader({ actions }) {
     const { user, profile } = useAuth();
     const location = useLocation();
@@ -19,13 +21,15 @@ export default function SiteHeader({ actions }) {
         ? fullName.split(" ").filter(Boolean).slice(0, 2).map((part) => part[0].toUpperCase()).join("")
         : "?";
 
+    const aboutPath = user ? "/home" : "/";
+
     function handleAboutClick(e) {
         e.preventDefault();
 
-        if (location.pathname === "/") {
+        if (location.pathname === aboutPath) {
             document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
         } else {
-            navigate("/#about");
+            navigate(`${aboutPath}#about`);
         }
     }
 
@@ -45,7 +49,18 @@ export default function SiteHeader({ actions }) {
                     <button type="button" className="site-header-nav-button" onClick={() => setShowNewsletter(true)}>
                         Newsletter
                     </button>
-                    <a href="/#about" onClick={handleAboutClick}>About</a>
+                    <a href={`${aboutPath}#about`} onClick={handleAboutClick}>About</a>
+
+                    <a
+                        href={YOUTUBE_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="site-header-icon-btn"
+                        aria-label="Watch on YouTube"
+                        title="YouTube"
+                    >
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9.5v5l4.5-2.5Z" fill="#111111"/></svg>
+                    </a>
                 </nav>
 
                 {user ? (

@@ -19,7 +19,7 @@ export async function getRecentGuideArticles(limit = 4) {
 
     const { data, error } = await supabase
         .from("guide_articles")
-        .select("id, title, summary, order_index, competitions(name, slug)")
+        .select("id, title, slug, summary, order_index, competitions(name, slug)")
         .order("created_at", { ascending: false })
         .limit(limit);
 

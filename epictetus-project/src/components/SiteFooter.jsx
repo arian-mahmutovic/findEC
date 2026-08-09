@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import "./SiteFooter.css";
 
 const CONTACT_EMAIL = "hello@epictetusproject.com";
-const YOUTUBE_URL = "https://www.youtube.com/results?search_query=Flamingo";
+const YOUTUBE_URL = "https://www.youtube.com/@EpictetusProject";
 
 export default function SiteFooter() {
     const { user } = useAuth();
@@ -38,7 +38,7 @@ export default function SiteFooter() {
                 <span className="site-footer-copy">&copy; {new Date().getFullYear()}</span>
 
                 <a href={`mailto:${CONTACT_EMAIL}`} className="site-footer-contact">
-                    Contact us
+                    {CONTACT_EMAIL}
                 </a>
 
                 <div className="site-footer-icons">
