@@ -122,6 +122,40 @@
     font-weight: 600;
 }
 
+.no-counselor-cta {
+    margin: 0.5rem 0 0;
+    padding: 0.85rem 1rem;
+    border: 2px solid #111111;
+    border-radius: 12px;
+    background: #f5f6f2;
+}
+
+.no-counselor-cta p {
+    margin: 0 0 0.65rem;
+    color: #333944;
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.no-counselor-cta button {
+    padding: 0.55rem 0.9rem;
+    border: 2px solid #111111;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #111111;
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 140ms ease, transform 140ms ease;
+}
+
+.no-counselor-cta button:hover {
+    background: #abf910;
+    transform: translateY(-2px);
+}
+
 .onboarding-tags {
     display: flex;
     flex-wrap: wrap;

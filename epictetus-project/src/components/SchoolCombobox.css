@@ -53,7 +53,9 @@
 }
 
 .school-combobox-list button {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
     width: 100%;
     box-sizing: border-box;
     padding: 0.6rem 0.7rem;
@@ -71,4 +73,30 @@
 
 .school-combobox-list button:hover {
     background: #f5f6f2;
+}
+
+.school-combobox-meta {
+    color: #5b6270;
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+.school-combobox-empty {
+    position: absolute;
+    z-index: 10;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+
+    padding: 0.75rem 0.9rem;
+
+    background: #ffffff;
+    border: 2px solid #111111;
+    border-radius: 12px;
+    box-shadow: 5px 5px 0 #abf910;
+
+    color: #5b6270;
+    font-size: 0.82rem;
+    font-weight: 500;
+    line-height: 1.45;
 }

@@ -1,15 +1,37 @@
 import { useEffect, useRef, useState } from 'react';
-import { SCHOOLS } from '../data/schools';
+import { searchSchools } from '../services/schools';
 import './SchoolCombobox.css';
 
-export default function SchoolCombobox({ value, onChange, placeholder, id }) {
+export default function SchoolCombobox({ value, onChange, onPick, placeholder, id }) {
     const [open, setOpen] = useState(false);
+    const [matches, setMatches] = useState([]);
+    const [loading, setLoading] = useState(false);
     const containerRef = useRef(null);
 
-    const query = value.trim().toLowerCase();
-    const matches = query.length > 0
-        ? SCHOOLS.filter((school) => school.toLowerCase().includes(query)).slice(0, 8)
-        : [];
+    useEffect(() => {
+        const query = value.trim();
+
+        if (query.length < 2) {
+            setMatches([]);
+            setLoading(false);
+            return;
+        }
+
+        let cancelled = false;
+        setLoading(true);
+
+        const timeout = setTimeout(async () => {
+            const { data } = await searchSchools(query);
+            if (cancelled) return;
+            setMatches(data);
+            setLoading(false);
+        }, 250);
+
+        return () => {
+            cancelled = true;
+            clearTimeout(timeout);
+        };
+    }, [value]);
 
     useEffect(() => {
         function handleClickOutside(e) {
@@ -21,6 +43,8 @@ export default function SchoolCombobox({ value, onChange, placeholder, id }) {
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
+
+    const showNoMatches = open && value.trim().length >= 2 && !loading && matches.length === 0;
 
     return (
         <div className="school-combobox" ref={containerRef}>
@@ -40,20 +64,29 @@ export default function SchoolCombobox({ value, onChange, placeholder, id }) {
             {open && matches.length > 0 && (
                 <ul className="school-combobox-list" role="listbox">
                     {matches.map((school) => (
-                        <li key={school}>
+                        <li key={school.id}>
                             <button
                                 type="button"
                                 onMouseDown={(e) => {
                                     e.preventDefault();
-                                    onChange(school);
+                                    onChange(school.name);
+                                    onPick?.(school);
                                     setOpen(false);
                                 }}
                             >
-                                {school}
+                                {school.name}
+                                <span className="school-combobox-meta">{school.city}, {school.state}</span>
                             </button>
                         </li>
                     ))}
                 </ul>
+            )}
+
+            {showNoMatches && (
+                <div className="school-combobox-empty">
+                    We couldn&rsquo;t find that school. You can type it manually and continue &mdash;
+                    we&rsquo;ll add it once we verify it.
+                </div>
             )}
         </div>
     );

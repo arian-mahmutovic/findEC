@@ -49,7 +49,7 @@ export async function getCounselorsForSchool(school) {
     const { data, error } = await supabase
         .from("counselor_directory")
         .select("id, name, school")
-        .eq("school", school)
+        .ilike("school", school)
         .order("name");
 
     return { data, error };

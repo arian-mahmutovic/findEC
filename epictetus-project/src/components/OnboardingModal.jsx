@@ -3,11 +3,19 @@ import SchoolCombobox from './SchoolCombobox';
 import { saveUserPreferences } from '../services/preferences';
 import { getCounselorsForSchool, getCounselorById } from '../services/counselors';
 import { INTEREST_TAGS } from '../data/interests';
-import { SCHOOLS } from '../data/schools';
 import './OnboardingModal.css';
+
+const COUNSELOR_EMAIL = 'counselors@epictetusproject.com';
+
+function buildInviteEmail(school) {
+    const subject = `Set up an Epictetus Project counselor account for ${school}`;
+    const body = `Hi,\n\nI'm a student at ${school} using Epictetus Project (epictetusproject.com) to track competitions and scholarship deadlines. I noticed our school doesn't have a counselor account set up yet.\n\nWould you be able to email ${COUNSELOR_EMAIL} to get one set up? It only takes a minute, and it'll let you see which competitions your students are tracking.\n\nThanks!`;
+    return { subject, body };
+}
 
 export default function OnboardingModal({ userId, onComplete }) {
     const [school, setSchool] = useState('');
+    const [isKnownSchool, setIsKnownSchool] = useState(false);
     const [grade, setGrade] = useState('');
     const [interests, setInterests] = useState([]);
     const [counselorId, setCounselorId] = useState('');
@@ -15,6 +23,7 @@ export default function OnboardingModal({ userId, onComplete }) {
     const [loadingCounselors, setLoadingCounselors] = useState(false);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState('');
+    const [emailCopied, setEmailCopied] = useState(false);
 
     useEffect(() => {
         const pendingId = localStorage.getItem('epictetus_pending_counselor_id');
@@ -23,6 +32,7 @@ export default function OnboardingModal({ userId, onComplete }) {
         getCounselorById(pendingId).then((result) => {
             if (result.data) {
                 setSchool(result.data.school);
+                setIsKnownSchool(true);
                 setCounselorId(result.data.id);
             }
             localStorage.removeItem('epictetus_pending_counselor_id');
@@ -30,7 +40,7 @@ export default function OnboardingModal({ userId, onComplete }) {
     }, []);
 
     useEffect(() => {
-        if (!SCHOOLS.includes(school)) {
+        if (!isKnownSchool) {
             setCounselorOptions([]);
             setCounselorId('');
             return;
@@ -48,7 +58,24 @@ export default function OnboardingModal({ userId, onComplete }) {
         });
 
         return () => { cancelled = true; };
-    }, [school]);
+    }, [school, isKnownSchool]);
+
+    function handleSchoolChange(value) {
+        setSchool(value);
+        setIsKnownSchool(false);
+    }
+
+    function handleSchoolPick(pickedSchool) {
+        setSchool(pickedSchool.name);
+        setIsKnownSchool(true);
+    }
+
+    async function handleCopyInviteEmail() {
+        const { subject, body } = buildInviteEmail(school);
+        await navigator.clipboard.writeText(`Subject: ${subject}\n\n${body}`);
+        setEmailCopied(true);
+        setTimeout(() => setEmailCopied(false), 2000);
+    }
 
     function toggleInterest(tag) {
         setInterests((current) =>
@@ -117,7 +144,8 @@ export default function OnboardingModal({ userId, onComplete }) {
                     <SchoolCombobox
                         id="onboarding-school"
                         value={school}
-                        onChange={setSchool}
+                        onChange={handleSchoolChange}
+                        onPick={handleSchoolPick}
                         placeholder="Search for your school…"
                     />
 
@@ -141,10 +169,17 @@ export default function OnboardingModal({ userId, onComplete }) {
                         </>
                     )}
 
-                    {!loadingCounselors && SCHOOLS.includes(school) && counselorOptions.length === 0 && (
-                        <p className="onboarding-hint">
-                            No counselor set up for this school yet — you can add one later.
-                        </p>
+                    {!loadingCounselors && isKnownSchool && counselorOptions.length === 0 && (
+                        <div className="no-counselor-cta">
+                            <p>
+                                No counselors registered for {school} yet. If you&rsquo;d like your
+                                counselor set up, send them this &mdash; they just need to email{' '}
+                                {COUNSELOR_EMAIL}.
+                            </p>
+                            <button type="button" onClick={handleCopyInviteEmail}>
+                                {emailCopied ? 'Copied!' : 'Copy invite email'}
+                            </button>
+                        </div>
                     )}
 
                     <label className="onboarding-label" htmlFor="onboarding-grade">
