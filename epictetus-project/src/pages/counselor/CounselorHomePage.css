@@ -17,6 +17,11 @@
 
 .counselor-page * { box-sizing: border-box; }
 
+.counselor-page ::selection {
+    background: var(--accent);
+    color: #ffffff;
+}
+
 @media (prefers-color-scheme: dark) {
     .counselor-page {
         --accent: #7C3AED;
@@ -120,6 +125,33 @@
     margin: 0.5rem 0 0;
     color: var(--muted);
     font-size: 0.95rem;
+}
+
+/* ==========================================
+   LOADING
+========================================== */
+
+.counselor-loading {
+    display: grid;
+    place-items: center;
+    padding: 100px 24px;
+}
+
+.counselor-loading-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: counselor-pulse 900ms ease-in-out infinite;
+}
+
+@keyframes counselor-pulse {
+    0%, 100% { transform: scale(0.85); opacity: 0.6; }
+    50% { transform: scale(1.15); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .counselor-loading-dot { animation: none; }
 }
 
 /* ==========================================
@@ -506,19 +538,6 @@ button.counselor-table-row:hover {
     font-size: 0.88rem;
 }
 
-.student-panel-email {
-    display: inline-block;
-    margin-top: 0.6rem;
-    color: var(--accent-text);
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-decoration: none;
-}
-
-.student-panel-email:hover {
-    text-decoration: underline;
-}
-
 .student-panel-section {
     margin-top: 2rem;
     padding-top: 1.75rem;
@@ -594,6 +613,445 @@ button.counselor-table-row:hover {
 }
 
 /* ==========================================
+   SUGGESTED NEXT STEP
+========================================== */
+
+.counselor-suggestion {
+    margin-top: 20px;
+    border-color: var(--accent);
+}
+
+.counselor-suggestion-lead {
+    margin: 0;
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.counselor-suggestion-detail {
+    margin: 0.9rem 0 0;
+    padding: 0.9rem 1rem;
+    border-radius: 10px;
+    background: var(--surface-2);
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+.counselor-suggestion-cta {
+    margin: 0.9rem 0 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+.counselor-suggestion-cta a {
+    color: var(--accent-text);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.counselor-suggestion-cta a:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================
+   GETTING STUDENTS / INVITE
+========================================== */
+
+.counselor-getting-students {
+    margin-top: 20px;
+}
+
+.counselor-getting-students p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+}
+
+.counselor-getting-students.is-prominent {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.counselor-getting-students-hint {
+    margin-top: 0.75rem !important;
+    color: var(--text) !important;
+    font-weight: 600;
+}
+
+.counselor-invite {
+    margin-top: 20px;
+}
+
+.counselor-invite > p {
+    margin: 0 0 1.2rem;
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.6;
+}
+
+.counselor-invite-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.counselor-invite-link {
+    flex: 1;
+    min-width: 0;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.82rem;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.counselor-invite-row button,
+.counselor-invite-email-header button {
+    flex: 0 0 auto;
+    padding: 0.65rem 1.1rem;
+    border: none;
+    border-radius: 9px;
+    background: var(--accent);
+    color: #ffffff;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 140ms ease;
+}
+
+.counselor-invite-row button:hover,
+.counselor-invite-email-header button:hover {
+    background: var(--accent-hover);
+}
+
+.counselor-invite-email {
+    margin-top: 1.2rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.counselor-invite-email-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 1rem;
+    background: var(--surface-2);
+}
+
+.counselor-invite-email-header span {
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.counselor-invite-email pre {
+    margin: 0;
+    padding: 1rem;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* ==========================================
+   COUNSELOR ARTICLES
+========================================== */
+
+.counselor-articles {
+    margin-top: 20px;
+}
+
+.counselor-articles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.counselor-article-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.1rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: border-color 140ms ease, transform 140ms ease;
+}
+
+.counselor-article-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.counselor-article-card strong {
+    color: var(--text);
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.counselor-article-card p {
+    margin: 0.5rem 0 0;
+    color: var(--muted);
+    font-size: 0.82rem;
+    line-height: 1.5;
+    flex: 1;
+}
+
+.counselor-article-card span {
+    margin-top: 0.9rem;
+    color: var(--accent-text);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+/* ==========================================
+   ARCHIVE
+========================================== */
+
+.counselor-archive-section {
+    margin-top: 20px;
+}
+
+.counselor-archive-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 1rem;
+}
+
+.counselor-archive-header h2 {
+    margin: 0;
+}
+
+.counselor-archive-header button {
+    padding: 0.55rem 1.1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 140ms ease, background 140ms ease;
+}
+
+.counselor-archive-header button:hover {
+    background: var(--surface-2);
+    border-color: var(--muted);
+}
+
+.counselor-archive-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.counselor-archive-card {
+    padding: 1.1rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface-2);
+}
+
+.counselor-archive-card strong {
+    display: block;
+    color: var(--text);
+    font-size: 0.94rem;
+    font-weight: 700;
+}
+
+.counselor-archive-meta {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+}
+
+.counselor-archive-card .student-panel-tags {
+    margin-top: 0.75rem;
+}
+
+.counselor-archive-stat-line {
+    margin: 0.75rem 0 0;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.counselor-archive-note {
+    margin: 0.6rem 0 0;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--border);
+    color: var(--text);
+    font-size: 0.85rem;
+    line-height: 1.55;
+}
+
+/* ==========================================
+   STUDENT PANEL ACTIONS
+========================================== */
+
+.student-panel-action-row {
+    display: flex;
+    gap: 10px;
+}
+
+.student-panel-action {
+    flex: 1;
+    padding: 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 140ms ease, background 140ms ease;
+}
+
+.student-panel-action:hover {
+    background: var(--surface-2);
+    border-color: var(--muted);
+}
+
+.student-panel-confirm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.student-panel-confirm > p {
+    margin: 0;
+    color: var(--text);
+    font-size: 0.88rem;
+    line-height: 1.55;
+}
+
+.student-panel-confirm label {
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.student-panel-confirm textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--bg);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.85rem;
+    resize: vertical;
+    outline: none;
+}
+
+.student-panel-confirm textarea:focus {
+    border-color: var(--accent);
+}
+
+.student-panel-confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.student-panel-confirm-actions button {
+    padding: 0.6rem 1.1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.student-panel-action-danger {
+    border-color: #e0402a !important;
+    background: #e0402a !important;
+    color: #ffffff !important;
+}
+
+.student-panel-action-danger:hover {
+    background: #c73620 !important;
+}
+
+.student-panel-confirm-actions button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ==========================================
+   ACCOUNT MODAL
+========================================== */
+
+.account-modal-value {
+    margin: 0;
+    color: var(--text);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.account-modal-key-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.account-modal-key {
+    flex: 1;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+}
+
+.account-modal-key-row button {
+    flex: 0 0 auto;
+    padding: 0.65rem 1.1rem;
+    border: none;
+    border-radius: 9px;
+    background: var(--accent);
+    color: #ffffff;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.account-modal-key-row button:hover {
+    background: var(--accent-hover);
+}
+
+.account-modal-key-row + .student-panel-empty {
+    margin-top: 0.75rem;
+}
+
+/* ==========================================
    RESPONSIVE
 ========================================== */
 
@@ -602,6 +1060,10 @@ button.counselor-table-row:hover {
     .counselor-stats { grid-template-columns: repeat(2, 1fr); }
     .counselor-insights { grid-template-columns: 1fr; }
     .tips-list { grid-template-columns: 1fr; }
+    .counselor-articles-grid { grid-template-columns: 1fr; }
+    .counselor-archive-grid { grid-template-columns: 1fr; }
+    .counselor-invite-row { flex-direction: column; align-items: stretch; }
+    .counselor-invite-link { white-space: normal; word-break: break-all; }
 
     .counselor-roster-header {
         flex-direction: column;

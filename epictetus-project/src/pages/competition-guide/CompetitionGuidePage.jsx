@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { supabase } from "../../supabase";
 import { formatDate } from "../../utils/dates";
+import { useAuth } from "../../context/AuthContext";
+import { trackGuideView } from "../../services/guideViews";
 import SiteHeader from "../../components/SiteHeader";
 import SiteFooter from "../../components/SiteFooter";
 import BackToTop from "../../components/BackToTop";
@@ -10,6 +12,7 @@ import './CompetitionGuidePage.css';
 
 export default function CompetitionGuidePage() {
     const { slug } = useParams();
+    const { user } = useAuth();
 
     const [competition, setCompetition] = useState(null);
     const [guide, setGuide] = useState(null);
@@ -38,6 +41,10 @@ export default function CompetitionGuidePage() {
         }
 
         setCompetition(competitionData);
+
+        if (user) {
+            trackGuideView(user.id, competitionData.id);
+        }
 
         const { data: guideData, error: guideError } =
             await supabase

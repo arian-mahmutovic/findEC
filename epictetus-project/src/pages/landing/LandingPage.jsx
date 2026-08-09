@@ -1,6 +1,6 @@
 import './LandingPage.css';
 import { useEffect, useMemo, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import SiteHeader from '../../components/SiteHeader';
 import SiteFooter from '../../components/SiteFooter';
 import BackToTop from '../../components/BackToTop';
@@ -43,6 +43,13 @@ export default function LandingPage() {
             document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
         }
     }, [location.hash]);
+
+    useEffect(() => {
+        const counselorId = new URLSearchParams(location.search).get('counselor');
+        if (counselorId) {
+            localStorage.setItem('epictetus_pending_counselor_id', counselorId);
+        }
+    }, [location.search]);
 
     async function loadCompetitions() {
         const result = await getCompetitions();
@@ -319,6 +326,10 @@ export default function LandingPage() {
 
         <SiteFooter />
         <BackToTop />
+
+        <Link to="/counselor" className="counselor-signin-float">
+            Counselor Sign In
+        </Link>
         </>
     );
 }

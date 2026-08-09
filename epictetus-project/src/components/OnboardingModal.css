@@ -115,6 +115,13 @@
     box-shadow: 3px 3px 0 #abf910;
 }
 
+.onboarding-hint {
+    margin: 0.5rem 0 0;
+    color: #5b6270;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
 .onboarding-tags {
     display: flex;
     flex-wrap: wrap;

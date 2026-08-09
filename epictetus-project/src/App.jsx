@@ -9,8 +9,10 @@ import GuideArticlePage from './pages/guide-article/GuideArticlePage'
 import ResetPasswordPage from './pages/reset-password/ResetPasswordPage'
 import NotFoundPage from './pages/not-found/NotFoundPage'
 import RequireAuth from './components/RequireAuth'
+import RequireCounselorAuth from './components/RequireCounselorAuth'
 import CounselorLoginPage from './pages/counselor/CounselorLoginPage'
 import CounselorHomePage from './pages/counselor/CounselorHomePage'
+import CounselorArticlePage from './pages/counselor/CounselorArticlePage'
 
 function App() {
 
@@ -28,7 +30,11 @@ function App() {
       </Route>
 
       <Route path="/counselor" element={<CounselorLoginPage />} />
-      <Route path="/counselor/dashboard" element={<CounselorHomePage />} />
+
+      <Route element={<RequireCounselorAuth />}>
+        <Route path="/counselor/dashboard" element={<CounselorHomePage />} />
+        <Route path="/counselor/articles/:slug" element={<CounselorArticlePage />} />
+      </Route>
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

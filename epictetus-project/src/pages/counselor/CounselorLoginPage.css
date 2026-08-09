@@ -18,6 +18,11 @@
     background: var(--bg);
 }
 
+.counselor-login-page ::selection {
+    background: var(--accent);
+    color: #ffffff;
+}
+
 @media (prefers-color-scheme: dark) {
     .counselor-login-page {
         --accent: #7C3AED;
@@ -115,6 +120,17 @@
     border-color: var(--accent);
 }
 
+.counselor-login-error {
+    margin: 0.9rem 0 0;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid #e0402a;
+    border-radius: 9px;
+    background: rgba(224, 64, 42, 0.08);
+    color: #e0402a;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
 .counselor-login-card button {
     margin-top: 1.25rem;
     padding: 0.85rem;
@@ -131,8 +147,13 @@
     transition: background 140ms ease;
 }
 
-.counselor-login-card button:hover {
+.counselor-login-card button:hover:not(:disabled) {
     background: var(--accent-hover);
+}
+
+.counselor-login-card button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
 }
 
 .counselor-login-help {
@@ -150,4 +171,19 @@
 
 .counselor-login-help a:hover {
     text-decoration: underline;
+}
+
+.counselor-login-student-link {
+    display: block;
+    margin: 1rem 0 0;
+    color: var(--accent-text);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.counselor-login-student-link:hover {
+    color: var(--accent-hover);
 }

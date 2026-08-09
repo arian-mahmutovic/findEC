@@ -1,15 +1,54 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SchoolCombobox from './SchoolCombobox';
 import { saveUserPreferences } from '../services/preferences';
+import { getCounselorsForSchool, getCounselorById } from '../services/counselors';
 import { INTEREST_TAGS } from '../data/interests';
+import { SCHOOLS } from '../data/schools';
 import './OnboardingModal.css';
 
 export default function OnboardingModal({ userId, onComplete }) {
     const [school, setSchool] = useState('');
     const [grade, setGrade] = useState('');
     const [interests, setInterests] = useState([]);
+    const [counselorId, setCounselorId] = useState('');
+    const [counselorOptions, setCounselorOptions] = useState([]);
+    const [loadingCounselors, setLoadingCounselors] = useState(false);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        const pendingId = localStorage.getItem('epictetus_pending_counselor_id');
+        if (!pendingId) return;
+
+        getCounselorById(pendingId).then((result) => {
+            if (result.data) {
+                setSchool(result.data.school);
+                setCounselorId(result.data.id);
+            }
+            localStorage.removeItem('epictetus_pending_counselor_id');
+        });
+    }, []);
+
+    useEffect(() => {
+        if (!SCHOOLS.includes(school)) {
+            setCounselorOptions([]);
+            setCounselorId('');
+            return;
+        }
+
+        let cancelled = false;
+        setLoadingCounselors(true);
+
+        getCounselorsForSchool(school).then((result) => {
+            if (cancelled) return;
+            const options = result.data || [];
+            setCounselorOptions(options);
+            setCounselorId((current) => (options.some((c) => c.id === current) ? current : ''));
+            setLoadingCounselors(false);
+        });
+
+        return () => { cancelled = true; };
+    }, [school]);
 
     function toggleInterest(tag) {
         setInterests((current) =>
@@ -21,12 +60,21 @@ export default function OnboardingModal({ userId, onComplete }) {
 
     async function submit(overrides = {}) {
         setError('');
+
+        const skippingSchool = overrides.school !== undefined;
+
+        if (!skippingSchool && counselorOptions.length > 0 && !counselorId) {
+            setError('Select your counselor to continue.');
+            return;
+        }
+
         setSaving(true);
 
         const result = await saveUserPreferences(userId, {
             school,
             grade: grade ? Number(grade) : null,
             interests,
+            counselorId: counselorId || null,
             ...overrides
         });
 
@@ -46,7 +94,7 @@ export default function OnboardingModal({ userId, onComplete }) {
     }
 
     function handleSkip() {
-        submit({ school: '', grade: null, interests: [] });
+        submit({ school: '', grade: null, interests: [], counselorId: null });
     }
 
     return (
@@ -72,6 +120,32 @@ export default function OnboardingModal({ userId, onComplete }) {
                         onChange={setSchool}
                         placeholder="Search for your school…"
                     />
+
+                    {counselorOptions.length > 0 && (
+                        <>
+                            <label className="onboarding-label" htmlFor="onboarding-counselor">
+                                Your counselor
+                            </label>
+                            <select
+                                id="onboarding-counselor"
+                                value={counselorId}
+                                onChange={(e) => setCounselorId(e.target.value)}
+                            >
+                                <option value="">Select your counselor…</option>
+                                {counselorOptions.map((counselor) => (
+                                    <option key={counselor.id} value={counselor.id}>
+                                        {counselor.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </>
+                    )}
+
+                    {!loadingCounselors && SCHOOLS.includes(school) && counselorOptions.length === 0 && (
+                        <p className="onboarding-hint">
+                            No counselor set up for this school yet — you can add one later.
+                        </p>
+                    )}
 
                     <label className="onboarding-label" htmlFor="onboarding-grade">
                         Grade <span>(optional)</span>

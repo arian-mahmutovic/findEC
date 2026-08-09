@@ -5,6 +5,12 @@ import { getUserProfile } from '../services/preferences';
 
 const AuthContext = createContext(undefined);
 
+function resolveStudentUser(session) {
+    const sessionUser = session?.user ?? null;
+    if (!sessionUser || sessionUser.user_metadata?.role === 'counselor') return null;
+    return sessionUser;
+}
+
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [profile, setProfile] = useState(null);
@@ -22,14 +28,14 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
         getValidSession().then((session) => {
-            const nextUser = session?.user ?? null;
+            const nextUser = resolveStudentUser(session);
             setUser(nextUser);
             setLoading(false);
             if (nextUser) loadProfile(nextUser.id);
         });
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-            const nextUser = session?.user ?? null;
+            const nextUser = resolveStudentUser(session);
             setUser(nextUser);
             if (nextUser) {
                 loadProfile(nextUser.id);

@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router'
 import { initSessionTracking } from './services/session.js'
 import { AuthProvider } from './context/AuthContext.jsx'
 import { SavedCompetitionsProvider } from './context/SavedCompetitionsContext.jsx'
+import { CounselorAuthProvider } from './context/CounselorAuthContext.jsx'
 
 initSessionTracking()
 
@@ -14,7 +15,9 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <AuthProvider>
         <SavedCompetitionsProvider>
-          <App />
+          <CounselorAuthProvider>
+            <App />
+          </CounselorAuthProvider>
         </SavedCompetitionsProvider>
       </AuthProvider>
     </BrowserRouter>

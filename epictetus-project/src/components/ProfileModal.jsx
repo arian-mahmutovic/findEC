@@ -4,8 +4,10 @@ import { useAuth } from '../context/AuthContext';
 import { deleteAccount } from '../services/auth';
 import { getUserPreferences, saveUserPreferences } from '../services/preferences';
 import { subscribeToNewsletter, unsubscribeFromNewsletter } from '../services/newsletter';
+import { getCounselorsForSchool } from '../services/counselors';
 import SchoolCombobox from './SchoolCombobox';
 import { INTEREST_TAGS } from '../data/interests';
+import { SCHOOLS } from '../data/schools';
 import '../styles/modal-shell.css';
 import './ProfileModal.css';
 
@@ -18,6 +20,9 @@ export default function ProfileModal({ closeForm }) {
     const [grade, setGrade] = useState('');
     const [interests, setInterests] = useState([]);
     const [newsletterOptIn, setNewsletterOptIn] = useState(false);
+    const [counselorId, setCounselorId] = useState('');
+    const [counselorOptions, setCounselorOptions] = useState([]);
+    const [loadingCounselors, setLoadingCounselors] = useState(false);
     const [loadingData, setLoadingData] = useState(true);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState('');
@@ -32,12 +37,33 @@ export default function ProfileModal({ closeForm }) {
         setSchool(profile?.school || '');
         setGrade(profile?.grade ? String(profile.grade) : '');
         setNewsletterOptIn(!!profile?.newsletter_opt_in);
+        setCounselorId(profile?.counselor_id || '');
 
         getUserPreferences(user.id).then((result) => {
             setInterests(result.data?.interests || []);
             setLoadingData(false);
         });
     }, [user, profile]);
+
+    useEffect(() => {
+        if (!SCHOOLS.includes(school)) {
+            setCounselorOptions([]);
+            return;
+        }
+
+        let cancelled = false;
+        setLoadingCounselors(true);
+
+        getCounselorsForSchool(school).then((result) => {
+            if (cancelled) return;
+            const options = result.data || [];
+            setCounselorOptions(options);
+            setCounselorId((current) => (options.some((c) => c.id === current) ? current : ''));
+            setLoadingCounselors(false);
+        });
+
+        return () => { cancelled = true; };
+    }, [school]);
 
     function toggleInterest(tag) {
         setInterests((current) =>
@@ -51,6 +77,12 @@ export default function ProfileModal({ closeForm }) {
         e.preventDefault();
         setError('');
         setNotice('');
+
+        if (counselorOptions.length > 0 && !counselorId) {
+            setError('Select your counselor to continue.');
+            return;
+        }
+
         setSaving(true);
 
         const result = await saveUserPreferences(user.id, {
@@ -58,7 +90,8 @@ export default function ProfileModal({ closeForm }) {
             school,
             grade: grade ? Number(grade) : null,
             interests,
-            newsletterOptIn
+            newsletterOptIn,
+            counselorId: counselorId || null
         });
 
         if (result.error) {
@@ -134,6 +167,30 @@ export default function ProfileModal({ closeForm }) {
                             onChange={setSchool}
                             placeholder="Search for your school…"
                         />
+
+                        {counselorOptions.length > 0 && (
+                            <>
+                                <label className="profile-label" htmlFor="profile-counselor">Your counselor</label>
+                                <select
+                                    id="profile-counselor"
+                                    value={counselorId}
+                                    onChange={(e) => setCounselorId(e.target.value)}
+                                >
+                                    <option value="">Select your counselor…</option>
+                                    {counselorOptions.map((counselor) => (
+                                        <option key={counselor.id} value={counselor.id}>
+                                            {counselor.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </>
+                        )}
+
+                        {!loadingCounselors && SCHOOLS.includes(school) && counselorOptions.length === 0 && (
+                            <p className="modal-privacy-note">
+                                No counselor set up for this school yet — you can add one later.
+                            </p>
+                        )}
 
                         <label className="profile-label" htmlFor="profile-grade">
                             Grade <span>(optional)</span>
