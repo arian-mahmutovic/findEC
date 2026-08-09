@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import { MOCK_STUDENTS } from "./mockStudents";
 import StudentDetailPanel from "./StudentDetailPanel";
 import { formatDate } from "../../utils/dates";
+import ParticleBackground from "../../components/ParticleBackground";
 
 function joinWithAnd(items) {
     if (items.length === 0) return "";
@@ -95,6 +96,8 @@ export default function CounselorHomePage() {
 
     return (
         <main className="counselor-page">
+
+            <ParticleBackground />
 
             <nav className="counselor-nav">
 

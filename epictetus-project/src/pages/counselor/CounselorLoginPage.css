@@ -28,6 +28,9 @@
 }
 
 .counselor-login-card {
+    position: relative;
+    z-index: 1;
+
     width: min(100%, 400px);
     box-sizing: border-box;
     padding: 2.75rem 2.25rem;

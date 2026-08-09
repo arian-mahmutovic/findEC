@@ -1,6 +1,7 @@
 import "./CounselorLoginPage.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
+import ParticleBackground from "../../components/ParticleBackground";
 
 const CONTACT_EMAIL = "counselors@epictetusproject.com";
 
@@ -15,6 +16,8 @@ export default function CounselorLoginPage() {
 
     return (
         <main className="counselor-login-page">
+
+            <ParticleBackground />
 
             <div className="counselor-login-card">
 
