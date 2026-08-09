@@ -4,10 +4,18 @@ import { supabase } from "../../supabase";
 import { formatDate } from "../../utils/dates";
 import { useAuth } from "../../context/AuthContext";
 import { trackGuideView } from "../../services/guideViews";
+import { trackEvent } from "../../services/analytics";
+import { trackRegistrationClick } from "../../services/applications";
+import {
+    isSubscribedToDeadlineReminder,
+    subscribeToDeadlineReminder,
+    unsubscribeFromDeadlineReminder
+} from "../../services/notifications";
 import SiteHeader from "../../components/SiteHeader";
 import SiteFooter from "../../components/SiteFooter";
 import BackToTop from "../../components/BackToTop";
 import SaveStarButton from "../../components/SaveStarButton";
+import AddToCalendar from "../../components/AddToCalendar";
 import './CompetitionGuidePage.css';
 
 export default function CompetitionGuidePage() {
@@ -19,6 +27,8 @@ export default function CompetitionGuidePage() {
     const [articles, setArticles] = useState([]);
     const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [notifySubscribed, setNotifySubscribed] = useState(false);
+    const [notifyBusy, setNotifyBusy] = useState(false);
 
     useEffect(() => {
         loadCompetition();
@@ -44,6 +54,10 @@ export default function CompetitionGuidePage() {
 
         if (user) {
             trackGuideView(user.id, competitionData.id);
+            trackEvent("competition_viewed", { userId: user.id, competitionId: competitionData.id });
+
+            const { subscribed } = await isSubscribedToDeadlineReminder(user.id, competitionData.id);
+            setNotifySubscribed(subscribed);
         }
 
         const { data: guideData, error: guideError } =
@@ -85,6 +99,30 @@ export default function CompetitionGuidePage() {
 
         setVideos(videoData || []);
         setLoading(false);
+    }
+
+    function handleRegisterClick() {
+        if (!user) return;
+
+        trackEvent("registration_clicked", { userId: user.id, competitionId: competition.id });
+        trackRegistrationClick(user.id, competition.id);
+    }
+
+    async function handleNotifyClick() {
+        if (!user || notifyBusy) return;
+
+        setNotifyBusy(true);
+
+        if (notifySubscribed) {
+            await unsubscribeFromDeadlineReminder(user.id, competition.id);
+            setNotifySubscribed(false);
+        } else {
+            await subscribeToDeadlineReminder(user.id, competition.id);
+            setNotifySubscribed(true);
+            trackEvent("notify_me_subscribed", { userId: user.id, competitionId: competition.id });
+        }
+
+        setNotifyBusy(false);
     }
 
     if (loading) {
@@ -151,7 +189,7 @@ export default function CompetitionGuidePage() {
 
                 <div className="hero-status" aria-label="Guide status">
                     <span className="status-pulse" />
-                    Updated guide
+                    {competition.updated_at ? `Updated ${formatDate(competition.updated_at)}` : "Updated"}
                 </div>
             </section>
 
@@ -336,6 +374,7 @@ export default function CompetitionGuidePage() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="primary-button"
+                                onClick={handleRegisterClick}
                             >
                                 Register now <span aria-hidden="true">↗</span>
                             </a>
@@ -347,8 +386,18 @@ export default function CompetitionGuidePage() {
 
                         <div className="competition-actions">
                             <SaveStarButton competitionId={competition.id} variant="label" />
-                            <button type="button" className="notification-button">Notify me</button>
+                            <button
+                                type="button"
+                                className={`notification-button ${notifySubscribed ? 'is-notifying' : ''}`}
+                                onClick={handleNotifyClick}
+                                disabled={notifyBusy}
+                                aria-pressed={notifySubscribed}
+                            >
+                                {notifySubscribed ? 'Notifying ✓' : 'Notify me'}
+                            </button>
                         </div>
+
+                        <AddToCalendar competition={competition} registrationLink={guide?.registration_link} />
 
                         {competition.website && (
                             <a href={competition.website} target="_blank" rel="noopener noreferrer" className="official-site-link">

@@ -91,11 +91,38 @@ export async function getRoster(counselorId) {
                 competition_id,
                 last_viewed_at,
                 competitions ( name, category )
+            ),
+            competition_applications (
+                id,
+                competition_id,
+                applied_at,
+                result,
+                result_status,
+                result_submitted_at,
+                competitions ( name, category )
             )
         `)
         .eq("counselor_id", counselorId);
 
     return { data, error };
+
+}
+
+export async function verifyApplicationResult(applicationId) {
+
+    const { error } = await supabase
+        .rpc("verify_application_result", { target_application_id: applicationId });
+
+    return { error };
+
+}
+
+export async function dismissApplicationResult(applicationId) {
+
+    const { error } = await supabase
+        .rpc("dismiss_application_result", { target_application_id: applicationId });
+
+    return { error };
 
 }
 

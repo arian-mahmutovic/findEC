@@ -12,6 +12,7 @@ import ProfileModal from "../../components/ProfileModal";
 import BackToTop from "../../components/BackToTop";
 import SiteFooter from "../../components/SiteFooter";
 import SaveStarButton from "../../components/SaveStarButton";
+import ReminderBanner from "../../components/ReminderBanner";
 import { formatDate } from "../../utils/dates";
 
 const CONTACT_EMAIL = "hello@epictetusproject.com";
@@ -186,6 +187,7 @@ export default function HomePage() {
 
             </section>
 
+            <ReminderBanner userId={user.id} />
 
             {/* ===========================
                 DASHBOARD STATS

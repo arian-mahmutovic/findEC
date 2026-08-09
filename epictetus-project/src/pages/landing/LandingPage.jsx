@@ -29,9 +29,19 @@ export default function LandingPage() {
 
     const [search, setSearch] = useState('');
     const [competitions, setCompetitions] = useState([]);
+    const [atTop, setAtTop] = useState(true);
 
     useEffect(() => {
         loadCompetitions();
+    }, []);
+
+    useEffect(() => {
+        function onScroll() {
+            setAtTop(window.scrollY < 80);
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
     useEffect(() => {
@@ -327,9 +337,11 @@ export default function LandingPage() {
         <SiteFooter />
         <BackToTop />
 
-        <Link to="/counselor" className="counselor-signin-float">
-            Counselor Sign In
-        </Link>
+        {atTop && (
+            <Link to="/counselor" className="counselor-signin-float">
+                Counselor Sign In
+            </Link>
+        )}
         </>
     );
 }

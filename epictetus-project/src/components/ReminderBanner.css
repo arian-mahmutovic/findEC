@@ -1,0 +1,89 @@
+.reminder-banner {
+    max-width: 900px;
+    margin: 28px auto 0;
+    padding: 1.4rem 1.6rem;
+    border: 2.5px solid var(--dp-ink);
+    border-radius: 16px;
+    background: var(--dp-surface);
+    box-shadow: 6px 6px 0 var(--dp-amber);
+}
+
+.reminder-banner-text {
+    margin: 0;
+    color: var(--dp-ink);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.reminder-banner-subtext {
+    margin: 0.5rem 0 0;
+    color: var(--dp-muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.reminder-banner-actions,
+.reminder-banner-results {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 1rem;
+}
+
+.reminder-banner-primary,
+.reminder-banner-secondary {
+    padding: 0.65rem 1.2rem;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+.reminder-banner-primary {
+    border: 2px solid var(--dp-ink);
+    background: var(--dp-ink);
+    color: var(--dp-lime);
+}
+
+.reminder-banner-secondary {
+    border: 2px solid var(--dp-ink);
+    background: #ffffff;
+    color: var(--dp-ink);
+}
+
+.reminder-banner-primary:hover:not(:disabled),
+.reminder-banner-secondary:hover:not(:disabled) {
+    transform: translate(-2px, -2px);
+    box-shadow: 3px 3px 0 var(--dp-lime);
+}
+
+.reminder-banner-primary:disabled,
+.reminder-banner-secondary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.reminder-banner-expanded {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(17, 17, 17, 0.14);
+}
+
+.reminder-banner-expanded p {
+    margin: 0;
+    color: var(--dp-muted);
+    font-size: 0.9rem;
+}
+
+.reminder-banner-link {
+    display: inline-block;
+    margin-top: 0.6rem;
+    color: var(--dp-ink);
+    font-size: 0.88rem;
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}

@@ -13,6 +13,8 @@ import RequireCounselorAuth from './components/RequireCounselorAuth'
 import CounselorLoginPage from './pages/counselor/CounselorLoginPage'
 import CounselorHomePage from './pages/counselor/CounselorHomePage'
 import CounselorArticlePage from './pages/counselor/CounselorArticlePage'
+import GoRedirectPage from './pages/go/GoRedirectPage'
+import QrCodesPage from './pages/qr-codes/QrCodesPage'
 
 function App() {
 
@@ -20,6 +22,8 @@ function App() {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
+      <Route path="/go/:slug" element={<GoRedirectPage />} />
+      <Route path="/qr-codes" element={<QrCodesPage />} />
 
       <Route element={<RequireAuth />}>
         <Route path="/home" element={<HomePage />} />

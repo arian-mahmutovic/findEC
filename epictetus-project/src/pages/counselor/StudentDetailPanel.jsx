@@ -1,11 +1,21 @@
 import { useState } from "react";
 import { formatDate } from "../../utils/dates";
 
-export default function StudentDetailPanel({ student, onClose, onUnlink, onArchive }) {
+const RESULT_LABELS = {
+    participated: "Participated",
+    finalist: "Finalist",
+    winner: "Winner",
+    didnt_advance: "Didn't advance",
+    didnt_participate: "Didn't participate",
+    prefer_not_to_say: "Prefer not to say"
+};
+
+export default function StudentDetailPanel({ student, onClose, onUnlink, onArchive, onVerifyResult, onDismissResult }) {
     const [confirmingUnlink, setConfirmingUnlink] = useState(false);
     const [archiving, setArchiving] = useState(false);
     const [achievementsNote, setAchievementsNote] = useState("");
     const [saving, setSaving] = useState(false);
+    const [processingResultId, setProcessingResultId] = useState(null);
 
     async function handleUnlinkConfirm() {
         setSaving(true);
@@ -17,6 +27,18 @@ export default function StudentDetailPanel({ student, onClose, onUnlink, onArchi
         setSaving(true);
         await onArchive(student, achievementsNote);
         setSaving(false);
+    }
+
+    async function handleVerify(applicationId) {
+        setProcessingResultId(applicationId);
+        await onVerifyResult(applicationId);
+        setProcessingResultId(null);
+    }
+
+    async function handleDismiss(applicationId) {
+        setProcessingResultId(applicationId);
+        await onDismissResult(applicationId);
+        setProcessingResultId(null);
     }
 
     return (
@@ -85,6 +107,51 @@ export default function StudentDetailPanel({ student, onClose, onUnlink, onArchi
                                     <span className="student-panel-deadline">
                                         Viewed {formatDate(guide.lastViewedAt)}
                                     </span>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+
+                <div className="student-panel-section">
+                    <h3>Reported Results ({student.reportedResults.length})</h3>
+
+                    {student.reportedResults.length === 0 ? (
+                        <p className="student-panel-empty">No self-reported results yet.</p>
+                    ) : (
+                        <ul className="student-panel-list student-panel-results">
+                            {student.reportedResults.map((result) => (
+                                <li key={result.id} className="student-panel-result">
+                                    <div className="student-panel-result-top">
+                                        <div>
+                                            <strong>{result.name}</strong>
+                                            <span>{RESULT_LABELS[result.result] || result.result}</span>
+                                        </div>
+                                        <span className={`result-status-badge result-status-${result.resultStatus}`}>
+                                            {result.resultStatus === "self_reported" && "Self-reported"}
+                                            {result.resultStatus === "verified" && "Verified"}
+                                            {result.resultStatus === "dismissed" && "Dismissed"}
+                                        </span>
+                                    </div>
+
+                                    {result.resultStatus === "self_reported" && (
+                                        <div className="student-panel-result-actions">
+                                            <button
+                                                type="button"
+                                                onClick={() => handleVerify(result.id)}
+                                                disabled={processingResultId === result.id}
+                                            >
+                                                Verify
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleDismiss(result.id)}
+                                                disabled={processingResultId === result.id}
+                                            >
+                                                Dismiss
+                                            </button>
+                                        </div>
+                                    )}
                                 </li>
                             ))}
                         </ul>

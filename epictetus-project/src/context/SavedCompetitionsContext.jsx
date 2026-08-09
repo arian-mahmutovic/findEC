@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
 import { getSavedCompetitions, saveCompetition, unsaveCompetition } from '../services/savedCompetitions';
+import { trackEvent } from '../services/analytics';
 
 const SavedCompetitionsContext = createContext(undefined);
 
@@ -49,6 +50,7 @@ export function SavedCompetitionsProvider({ children }) {
             await unsaveCompetition(user.id, competitionId);
         } else {
             await saveCompetition(user.id, competitionId);
+            trackEvent("competition_saved", { userId: user.id, competitionId });
         }
 
         refresh();

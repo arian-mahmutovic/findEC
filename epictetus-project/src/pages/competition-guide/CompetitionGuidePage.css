@@ -608,7 +608,11 @@
 
 .sidebar-sticky {
     position: sticky;
-    top: 24px;
+    top: 110px;
+    max-height: calc(100vh - 134px);
+    padding: 0 10px 10px 0;
+    margin: 0 -10px -10px 0;
+    overflow-y: auto;
 }
 
 .command-card {
@@ -734,10 +738,49 @@
     transform: translateY(-2px);
 }
 
+.notification-button.is-notifying {
+    background: var(--guide-lime);
+}
+
+.notification-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 .official-site-link {
     margin-top: 22px;
     color: var(--guide-text);
     border-bottom-color: var(--guide-lime);
+}
+
+.calendar-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    margin-top: 9px;
+}
+
+.calendar-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 8px 7px;
+    border: 2px solid var(--guide-text);
+    border-radius: 9px;
+    background: #ffffff;
+    color: var(--guide-text);
+    font: inherit;
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 140ms ease, background 140ms ease;
+}
+
+.calendar-button:hover {
+    background: var(--guide-lime);
+    transform: translateY(-2px);
 }
 
 .section-nav {

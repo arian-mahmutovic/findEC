@@ -902,6 +902,85 @@ button.counselor-table-row:hover {
 }
 
 /* ==========================================
+   STUDENT PANEL — REPORTED RESULTS
+========================================== */
+
+.student-panel-results {
+    gap: 14px;
+}
+
+.student-panel-result {
+    display: flex !important;
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 10px;
+    padding: 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface-2);
+}
+
+.student-panel-result-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.result-status-badge {
+    flex: 0 0 auto;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.result-status-self_reported {
+    background: var(--accent-soft);
+    color: var(--accent-text);
+}
+
+.result-status-verified {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.result-status-dismissed {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.student-panel-result-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.student-panel-result-actions button {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 140ms ease, background 140ms ease;
+}
+
+.student-panel-result-actions button:hover:not(:disabled) {
+    background: var(--bg);
+    border-color: var(--accent);
+}
+
+.student-panel-result-actions button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ==========================================
    STUDENT PANEL ACTIONS
 ========================================== */
 

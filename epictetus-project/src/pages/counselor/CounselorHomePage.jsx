@@ -8,7 +8,9 @@ import {
     unlinkStudent,
     archiveStudent,
     getArchivedStudents,
-    counselorSignOut
+    counselorSignOut,
+    verifyApplicationResult,
+    dismissApplicationResult
 } from "../../services/counselors";
 import StudentDetailPanel from "./StudentDetailPanel";
 import CounselorAccountModal from "./CounselorAccountModal";
@@ -60,6 +62,18 @@ function mapStudentRow(row) {
         ...(row.guide_views || []).map((gv) => gv.last_viewed_at)
     ].filter(Boolean).sort();
 
+    const reportedResults = (row.competition_applications || [])
+        .filter((app) => app.competitions && app.result)
+        .map((app) => ({
+            id: app.id,
+            competitionId: app.competition_id,
+            name: app.competitions.name,
+            category: app.competitions.category,
+            result: app.result,
+            resultStatus: app.result_status,
+            submittedAt: app.result_submitted_at
+        }));
+
     return {
         id: row.id,
         name: row.full_name || "Unnamed student",
@@ -69,6 +83,7 @@ function mapStudentRow(row) {
         interests: prefs?.interests || [],
         savedCompetitions,
         guidesDone,
+        reportedResults,
         lastActive: activityTimestamps.length ? activityTimestamps[activityTimestamps.length - 1] : null
     };
 }
@@ -119,6 +134,23 @@ export default function CounselorHomePage() {
         setSelectedStudent(null);
         setStudents((current) => current.filter((s) => s.id !== student.id));
         setArchivedStudents([]);
+    }
+
+    async function handleVerifyResult(applicationId) {
+        await verifyApplicationResult(applicationId);
+        await refreshSelectedStudentResults();
+    }
+
+    async function handleDismissResult(applicationId) {
+        await dismissApplicationResult(applicationId);
+        await refreshSelectedStudentResults();
+    }
+
+    async function refreshSelectedStudentResults() {
+        const result = await getRoster(counselor.id);
+        const mapped = (result.data || []).map(mapStudentRow);
+        setStudents(mapped);
+        setSelectedStudent((current) => current && mapped.find((s) => s.id === current.id));
     }
 
     async function handleToggleArchiveView() {
@@ -673,6 +705,8 @@ export default function CounselorHomePage() {
                     onClose={() => setSelectedStudent(null)}
                     onUnlink={handleUnlink}
                     onArchive={handleArchive}
+                    onVerifyResult={handleVerifyResult}
+                    onDismissResult={handleDismissResult}
                 />
             )}
 
