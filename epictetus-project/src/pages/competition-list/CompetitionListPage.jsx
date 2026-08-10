@@ -15,6 +15,9 @@ export default function CompetitionListPage() {
     const [error, setError] = useState(false);
     const [search, setSearch] = useState(searchParams.get("q") || "");
     const [activeCategory, setActiveCategory] = useState("All");
+    const [activeLocation, setActiveLocation] = useState("All");
+    const [activeCost, setActiveCost] = useState("All");
+    const [activeFormat, setActiveFormat] = useState("All");
 
     useEffect(() => {
         loadCompetitionsData();
@@ -42,6 +45,11 @@ export default function CompetitionListPage() {
         return ["All", ...unique];
     }, [competitions]);
 
+    const locations = useMemo(() => {
+        const unique = new Set(competitions.map((c) => c.location_type).filter(Boolean));
+        return ["All", ...unique];
+    }, [competitions]);
+
     const filteredCompetitions = useMemo(() => {
         const term = search.trim().toLowerCase();
 
@@ -49,21 +57,43 @@ export default function CompetitionListPage() {
             const matchesCategory =
                 activeCategory === "All" || competition.category === activeCategory;
 
+            const matchesLocation =
+                activeLocation === "All" || competition.location_type === activeLocation;
+
+            const costText = (competition.cost || "").toLowerCase();
+            const isFree = costText.startsWith("free");
+            const matchesCost =
+                activeCost === "All" || (activeCost === "Free" ? isFree : !isFree);
+
+            const teamText = (competition.team_requirement || "").toLowerCase();
+            const matchesFormat =
+                activeFormat === "All" ||
+                (activeFormat === "Individual" && teamText.includes("individual")) ||
+                (activeFormat === "Team" && teamText.includes("team"));
+
             const matchesSearch =
                 !term ||
                 [competition.name, competition.organization, competition.category]
                     .filter(Boolean)
                     .some((field) => field.toLowerCase().includes(term));
 
-            return matchesCategory && matchesSearch;
+            return matchesCategory && matchesLocation && matchesCost && matchesFormat && matchesSearch;
         });
-    }, [competitions, search, activeCategory]);
+    }, [competitions, search, activeCategory, activeLocation, activeCost, activeFormat]);
 
-    const hasActiveFilters = search.trim() !== "" || activeCategory !== "All";
+    const hasActiveFilters =
+        search.trim() !== "" ||
+        activeCategory !== "All" ||
+        activeLocation !== "All" ||
+        activeCost !== "All" ||
+        activeFormat !== "All";
 
     function clearFilters() {
         setSearch("");
         setActiveCategory("All");
+        setActiveLocation("All");
+        setActiveCost("All");
+        setActiveFormat("All");
     }
 
     return (
@@ -107,6 +137,51 @@ export default function CompetitionListPage() {
                         ))}
                     </div>
                 )}
+
+                <div className="list-filter-groups">
+
+                    {locations.length > 1 && (
+                        <div className="list-chip-row list-chip-row-secondary" role="group" aria-label="Filter by format">
+                            {locations.map((location) => (
+                                <button
+                                    key={location}
+                                    type="button"
+                                    className={`list-chip list-chip-secondary ${activeLocation === location ? "is-active" : ""}`}
+                                    onClick={() => setActiveLocation(location)}
+                                >
+                                    {location}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+
+                    <div className="list-chip-row list-chip-row-secondary" role="group" aria-label="Filter by cost">
+                        {["All", "Free", "Paid"].map((cost) => (
+                            <button
+                                key={cost}
+                                type="button"
+                                className={`list-chip list-chip-secondary ${activeCost === cost ? "is-active" : ""}`}
+                                onClick={() => setActiveCost(cost)}
+                            >
+                                {cost}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="list-chip-row list-chip-row-secondary" role="group" aria-label="Filter by team size">
+                        {["All", "Individual", "Team"].map((format) => (
+                            <button
+                                key={format}
+                                type="button"
+                                className={`list-chip list-chip-secondary ${activeFormat === format ? "is-active" : ""}`}
+                                onClick={() => setActiveFormat(format)}
+                            >
+                                {format}
+                            </button>
+                        ))}
+                    </div>
+
+                </div>
             </section>
 
             {!loading && !error && competitions.length > 0 && (

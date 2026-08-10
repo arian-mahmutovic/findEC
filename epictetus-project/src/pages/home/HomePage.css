@@ -373,12 +373,34 @@
     font-weight: 800;
 }
 
+.recommendation-card-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+}
+
+.match-badge {
+    background: #ffffff;
+}
+
+.match-badge.is-strong {
+    background: var(--dp-lime);
+}
+
 .recommendation-card h3 {
     margin: 0.9rem 0 0;
     font-size: 1rem;
     font-weight: 750;
     line-height: 1.3;
     min-height: 42px;
+}
+
+.recommendation-card-reason {
+    margin: 0.5rem 0 0;
+    color: var(--dp-muted);
+    font-size: 0.78rem;
+    line-height: 1.4;
 }
 
 .recommendation-card-actions {
@@ -488,6 +510,52 @@
     color: var(--dp-ink);
     font-size: 0.75rem;
     font-weight: 800;
+}
+
+/* ==========================================
+   PROGRESS FUNNEL
+========================================== */
+
+.progress-funnel {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.progress-funnel-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 0.7rem 0.3rem;
+    border: 2px solid var(--dp-ink);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.progress-funnel-step strong {
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+
+.progress-funnel-step span {
+    color: var(--dp-muted);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.progress-milestone {
+    margin: 1rem 0 0;
+    padding: 0.8rem 0.9rem;
+    border: 2px solid var(--dp-ink);
+    border-radius: 10px;
+    background: var(--dp-amber);
+    color: var(--dp-ink);
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.4;
 }
 
 /* ==========================================

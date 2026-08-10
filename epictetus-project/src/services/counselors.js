@@ -77,6 +77,7 @@ export async function getRoster(counselorId) {
         .select(`
             id,
             full_name,
+            email,
             school,
             grade,
             created_at,

@@ -58,6 +58,33 @@ export async function snoozeApplicationReminder(userId, competitionId) {
 
 }
 
+export async function getProgressCounts(userId) {
+
+    const [registeredResult, appliedResult, resultedResult] = await Promise.all([
+        supabase
+            .from("registration_clicks")
+            .select("*", { count: "exact", head: true })
+            .eq("user_id", userId),
+        supabase
+            .from("competition_applications")
+            .select("*", { count: "exact", head: true })
+            .eq("user_id", userId)
+            .not("applied_at", "is", null),
+        supabase
+            .from("competition_applications")
+            .select("*", { count: "exact", head: true })
+            .eq("user_id", userId)
+            .not("result", "is", null)
+    ]);
+
+    return {
+        registered: registeredResult.count || 0,
+        applied: appliedResult.count || 0,
+        resulted: resultedResult.count || 0
+    };
+
+}
+
 export async function getStudentReminders(userId) {
 
     const [clicksResult, applicationsResult] = await Promise.all([

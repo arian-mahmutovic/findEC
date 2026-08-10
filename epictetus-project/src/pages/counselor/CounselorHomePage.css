@@ -101,6 +101,17 @@
     border-color: var(--muted);
 }
 
+.counselor-nav-link {
+    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.counselor-nav-link:hover {
+    text-decoration: underline;
+}
+
 /* ==========================================
    CONTENT
 ========================================== */
@@ -125,6 +136,11 @@
     margin: 0.5rem 0 0;
     color: var(--muted);
     font-size: 0.95rem;
+}
+
+.counselor-impact-line {
+    margin: 0.35rem 0 0 !important;
+    font-size: 0.82rem !important;
 }
 
 /* ==========================================
@@ -187,6 +203,136 @@
     font-size: 1.5rem;
     font-weight: 700;
     letter-spacing: -0.02em;
+}
+
+/* ==========================================
+   YOUR IMPACT
+========================================== */
+
+.counselor-impact {
+    margin-top: 20px;
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background:
+        radial-gradient(circle at 0% 0%, var(--accent-soft), transparent 55%),
+        linear-gradient(155deg, var(--surface) 0%, var(--surface-2) 100%);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 12px 28px -18px var(--accent);
+}
+
+.counselor-impact h2 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+
+.counselor-impact-subhead {
+    margin: 0.3rem 0 1.3rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+}
+
+.impact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr 1.3fr;
+    gap: 16px;
+}
+
+.impact-card {
+    padding: 1.2rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+    transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.impact-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -14px rgba(0, 0, 0, 0.25);
+}
+
+.impact-card h3 {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 1rem;
+    color: var(--accent-text);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.impact-card-ring {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.8rem;
+}
+
+.impact-ring {
+    overflow: visible;
+    border-radius: 50%;
+    box-shadow: 0 6px 16px -4px rgba(124, 58, 237, 0.4);
+}
+
+.impact-ring text { font-family: inherit; }
+
+.impact-ring-fill {
+    transition: stroke-dashoffset 500ms ease;
+}
+
+.impact-card-ring p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.impact-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.impact-bar-row {
+    display: grid;
+    grid-template-columns: 72px 1fr 24px;
+    align-items: center;
+    gap: 10px;
+}
+
+.impact-bar-label {
+    overflow: hidden;
+    color: var(--text);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.impact-bar-track {
+    height: 9px;
+    border-radius: 999px;
+    background: var(--border);
+    overflow: hidden;
+}
+
+.impact-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent-hover), var(--accent));
+    transition: width 500ms ease;
+}
+
+.impact-bar-value {
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-align: right;
 }
 
 /* ==========================================
@@ -292,6 +438,16 @@ button.counselor-table-row:hover {
     font-weight: 600;
 }
 
+.counselor-table-flag {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-right: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    vertical-align: middle;
+}
+
 .counselor-table-interests {
     white-space: normal !important;
 }
@@ -322,6 +478,21 @@ button.counselor-table-row:hover {
     align-items: start;
 }
 
+.counselor-insights-full {
+    grid-column: 1 / -1;
+}
+
+.counselor-week {
+    margin-top: 20px;
+}
+
+.counselor-week-line {
+    margin: 0;
+    color: var(--text);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
 .counselor-panel-card {
     padding: 1.5rem;
     border: 1px solid var(--border);
@@ -341,6 +512,136 @@ button.counselor-table-row:hover {
     color: var(--muted);
     font-size: 0.88rem;
     font-style: italic;
+}
+
+.counselor-attention {
+    margin-top: 20px;
+    border-color: var(--accent);
+}
+
+.attention-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+}
+
+.attention-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface-2);
+}
+
+.attention-card-deadline { border-left-color: #e0402a; }
+.attention-card-inactive { border-left-color: var(--muted); }
+.attention-card-match { border-left-color: var(--accent); }
+
+.attention-card-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    border: none;
+    background: transparent;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.attention-card-icon {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text);
+}
+
+.attention-card-deadline .attention-card-icon { color: #e0402a; }
+.attention-card-match .attention-card-icon { color: var(--accent-text); }
+
+.attention-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+
+.attention-card-body strong {
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.attention-card-body span {
+    color: var(--muted);
+    font-size: 0.82rem;
+    line-height: 1.4;
+}
+
+.attention-card-reminder {
+    display: inline-block;
+    align-self: flex-start;
+    max-width: 100%;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition: background 140ms ease;
+}
+
+.attention-card-reminder:hover {
+    background: var(--accent-soft);
+}
+
+.attention-card-reminder.is-disabled {
+    color: var(--muted);
+    font-weight: 600;
+    font-style: italic;
+    cursor: default;
+    pointer-events: none;
+}
+
+.counselor-wins {
+    margin-top: 20px;
+}
+
+.wins-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.wins-list li {
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface-2);
+    color: var(--text);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.wins-list strong {
+    font-weight: 700;
 }
 
 .match-subsection + .match-subsection {
@@ -447,6 +748,35 @@ button.counselor-table-row:hover {
 
 .counselor-tips {
     margin-top: 20px;
+}
+
+.counselor-tips-collapsible {
+    margin-top: 20px;
+}
+
+.counselor-tips-collapsible summary {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    list-style: revert;
+}
+
+.counselor-tips-collapsible[open] summary {
+    margin-bottom: 1.1rem;
+}
+
+.counselor-tips-collapsible-body h3 {
+    margin: 1.5rem 0 1rem;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.counselor-tips-collapsible-body h3:first-child {
+    margin-top: 0;
 }
 
 .tips-list {
@@ -1137,6 +1467,7 @@ button.counselor-table-row:hover {
 @media (max-width: 800px) {
     .counselor-nav-user > span { display: none; }
     .counselor-stats { grid-template-columns: repeat(2, 1fr); }
+    .impact-grid { grid-template-columns: 1fr; }
     .counselor-insights { grid-template-columns: 1fr; }
     .tips-list { grid-template-columns: 1fr; }
     .counselor-articles-grid { grid-template-columns: 1fr; }

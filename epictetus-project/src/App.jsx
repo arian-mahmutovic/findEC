@@ -12,6 +12,7 @@ import RequireAuth from './components/RequireAuth'
 import RequireCounselorAuth from './components/RequireCounselorAuth'
 import CounselorLoginPage from './pages/counselor/CounselorLoginPage'
 import CounselorHomePage from './pages/counselor/CounselorHomePage'
+import CounselorCompetitionsPage from './pages/counselor/CounselorCompetitionsPage'
 import CounselorArticlePage from './pages/counselor/CounselorArticlePage'
 import GoRedirectPage from './pages/go/GoRedirectPage'
 import QrCodesPage from './pages/qr-codes/QrCodesPage'
@@ -37,6 +38,7 @@ function App() {
 
       <Route element={<RequireCounselorAuth />}>
         <Route path="/counselor/dashboard" element={<CounselorHomePage />} />
+        <Route path="/counselor/competitions" element={<CounselorCompetitionsPage />} />
         <Route path="/counselor/articles/:slug" element={<CounselorArticlePage />} />
       </Route>
 

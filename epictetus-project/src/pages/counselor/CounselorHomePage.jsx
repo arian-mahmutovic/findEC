@@ -12,6 +12,8 @@ import {
     verifyApplicationResult,
     dismissApplicationResult
 } from "../../services/counselors";
+import { getCompetitions } from "../../services/competitions";
+import { countNewMatches } from "../../utils/matchScore";
 import StudentDetailPanel from "./StudentDetailPanel";
 import CounselorAccountModal from "./CounselorAccountModal";
 import ParticleBackground from "../../components/ParticleBackground";
@@ -20,6 +22,47 @@ import { formatDate } from "../../utils/dates";
 import { COUNSELOR_ARTICLES } from "./counselorArticles";
 
 const SUGGESTION_WINDOW_DAYS = 21;
+const ATTENTION_DEADLINE_WINDOW_DAYS = 7;
+const INACTIVITY_WINDOW_DAYS = 30;
+const WIN_RESULTS = new Set(["winner", "finalist"]);
+const RESULT_LABELS = {
+    participated: "Participated",
+    finalist: "Finalist",
+    winner: "Winner",
+    didnt_advance: "Didn't advance",
+    didnt_participate: "Didn't participate",
+    prefer_not_to_say: "Prefer not to say"
+};
+
+function getGreeting() {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good morning";
+    if (hour < 18) return "Good afternoon";
+    return "Good evening";
+}
+
+function AttentionIcon({ type }) {
+    if (type === "deadline") {
+        return (
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2" />
+                <path d="M12 7v5l3.5 2" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+        );
+    }
+    if (type === "inactive") {
+        return (
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+            </svg>
+        );
+    }
+    return (
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="m12 3 1.8 4.9L19 9.5l-4.5 3 1.3 5.1L12 15l-3.8 2.6 1.3-5.1L5 9.5l5.2-1.6Z" fill="currentColor" />
+        </svg>
+    );
+}
 
 function joinWithAnd(items) {
     if (items.length === 0) return "";
@@ -57,10 +100,14 @@ function mapStudentRow(row) {
             lastViewedAt: gv.last_viewed_at
         }));
 
-    const activityTimestamps = [
-        ...(row.saved_competitions || []).map((sc) => sc.created_at),
-        ...(row.guide_views || []).map((gv) => gv.last_viewed_at)
-    ].filter(Boolean).sort();
+    const applications = (row.competition_applications || [])
+        .filter((app) => app.competitions && app.applied_at)
+        .map((app) => ({
+            id: app.id,
+            competitionId: app.competition_id,
+            name: app.competitions.name,
+            appliedAt: app.applied_at
+        }));
 
     const reportedResults = (row.competition_applications || [])
         .filter((app) => app.competitions && app.result)
@@ -74,15 +121,24 @@ function mapStudentRow(row) {
             submittedAt: app.result_submitted_at
         }));
 
+    const activityTimestamps = [
+        ...(row.saved_competitions || []).map((sc) => sc.created_at),
+        ...(row.guide_views || []).map((gv) => gv.last_viewed_at),
+        ...applications.map((app) => app.appliedAt),
+        ...reportedResults.map((r) => r.submittedAt)
+    ].filter(Boolean).sort();
+
     return {
         id: row.id,
         name: row.full_name || "Unnamed student",
+        email: row.email || null,
         grade: row.grade || null,
         gradeLabel: formatGrade(row.grade),
         school: row.school,
         interests: prefs?.interests || [],
         savedCompetitions,
         guidesDone,
+        applications,
         reportedResults,
         lastActive: activityTimestamps.length ? activityTimestamps[activityTimestamps.length - 1] : null
     };
@@ -93,6 +149,7 @@ export default function CounselorHomePage() {
     const { counselor } = useCounselorAuth();
 
     const [students, setStudents] = useState([]);
+    const [allCompetitions, setAllCompetitions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
     const [selectedStudent, setSelectedStudent] = useState(null);
@@ -109,8 +166,12 @@ export default function CounselorHomePage() {
 
     async function loadRoster() {
         setLoading(true);
-        const result = await getRoster(counselor.id);
-        setStudents((result.data || []).map(mapStudentRow));
+        const [rosterResult, competitionsResult] = await Promise.all([
+            getRoster(counselor.id),
+            getCompetitions()
+        ]);
+        setStudents((rosterResult.data || []).map(mapStudentRow));
+        setAllCompetitions(competitionsResult.data || []);
         setLoading(false);
     }
 
@@ -188,6 +249,26 @@ export default function CounselorHomePage() {
         };
     }, [students]);
 
+    const engagementPct = stats.total > 0 ? Math.round((stats.activeThisWeek / stats.total) * 100) : 0;
+
+    const categoryBreakdown = useMemo(() => {
+        const counts = new Map();
+        students.forEach((s) => s.savedCompetitions.forEach((c) => {
+            if (!c.category) return;
+            counts.set(c.category, (counts.get(c.category) || 0) + 1);
+        }));
+        const entries = Array.from(counts.entries()).sort((a, b) => b[1] - a[1]).slice(0, 4);
+        const max = entries.length ? entries[0][1] : 0;
+        return { entries, max };
+    }, [students]);
+
+    const outcomeFunnel = useMemo(() => {
+        const applied = students.reduce((sum, s) => sum + s.applications.length, 0);
+        const resulted = students.reduce((sum, s) => sum + s.reportedResults.length, 0);
+        const saved = stats.totalSaved;
+        return { saved, applied, resulted, max: Math.max(saved, 1) };
+    }, [students, stats.totalSaved]);
+
     const interestGroups = useMemo(() => {
         const groups = new Map();
 
@@ -220,24 +301,26 @@ export default function CounselorHomePage() {
             .slice(0, 4);
     }, [students]);
 
-    const highlightedStudent = useMemo(() => {
-        const student = [...students].sort(
-            (a, b) => b.savedCompetitions.length - a.savedCompetitions.length
-        )[0];
+    const weekInReview = useMemo(() => {
+        const weekAgo = dayjs().subtract(7, "day");
+        const isRecent = (timestamp) => timestamp && dayjs(timestamp).isAfter(weekAgo);
 
-        if (!student || student.savedCompetitions.length === 0) return null;
+        const newSaves = students.reduce(
+            (sum, s) => sum + s.savedCompetitions.filter((c) => isRecent(c.savedAt)).length, 0
+        );
+        const newApplications = students.reduce(
+            (sum, s) => sum + s.applications.filter((a) => isRecent(a.appliedAt)).length, 0
+        );
+        const newResults = students.reduce(
+            (sum, s) => sum + s.reportedResults.filter((r) => isRecent(r.submittedAt)).length, 0
+        );
 
-        const categoryCounts = new Map();
-        student.savedCompetitions.forEach((competition) => {
-            categoryCounts.set(competition.category, (categoryCounts.get(competition.category) || 0) + 1);
-        });
+        const parts = [];
+        if (newSaves > 0) parts.push(`${newSaves} new competition${newSaves === 1 ? "" : "s"} saved`);
+        if (newApplications > 0) parts.push(`${newApplications} application${newApplications === 1 ? "" : "s"} confirmed`);
+        if (newResults > 0) parts.push(`${newResults} result${newResults === 1 ? "" : "s"} reported`);
 
-        const topCategory = Array.from(categoryCounts.entries())
-            .sort((a, b) => b[1] - a[1])[0]?.[0];
-
-        const otherInterests = student.interests.filter((interest) => interest !== topCategory);
-
-        return { ...student, topCategory, otherInterests };
+        return parts;
     }, [students]);
 
     const suggestion = useMemo(() => {
@@ -275,6 +358,83 @@ export default function CounselorHomePage() {
         };
     }, [students]);
 
+    const attentionQueue = useMemo(() => {
+        const now = dayjs();
+
+        const items = students.map((student) => {
+            const savedIds = student.savedCompetitions.map((c) => c.competitionId);
+
+            const upcomingDeadline = student.savedCompetitions
+                .filter((c) => c.deadline)
+                .map((c) => ({ ...c, daysLeft: dayjs(c.deadline).diff(now, "day") }))
+                .filter((c) => c.daysLeft >= 0 && c.daysLeft <= ATTENTION_DEADLINE_WINDOW_DAYS)
+                .sort((a, b) => a.daysLeft - b.daysLeft)[0];
+
+            if (upcomingDeadline) {
+                return {
+                    student,
+                    priority: 0,
+                    type: "deadline",
+                    reason: `${upcomingDeadline.name} deadline in ${upcomingDeadline.daysLeft} day${upcomingDeadline.daysLeft === 1 ? "" : "s"}`,
+                    context: `Deadline ${formatDate(upcomingDeadline.deadline)}`
+                };
+            }
+
+            const isInactive = !student.lastActive || dayjs(student.lastActive).isBefore(now.subtract(INACTIVITY_WINDOW_DAYS, "day"));
+
+            if (isInactive) {
+                return {
+                    student,
+                    priority: 1,
+                    type: "inactive",
+                    reason: student.savedCompetitions.length === 0
+                        ? "Hasn't saved any competitions yet"
+                        : `No activity in over ${INACTIVITY_WINDOW_DAYS} days`,
+                    context: null
+                };
+            }
+
+            const newMatches = countNewMatches(allCompetitions, student.interests, savedIds);
+
+            if (newMatches > 0) {
+                return {
+                    student,
+                    priority: 2,
+                    type: "match",
+                    reason: `${newMatches} new matching opportunit${newMatches === 1 ? "y" : "ies"} found`,
+                    context: null
+                };
+            }
+
+            return null;
+        }).filter(Boolean);
+
+        return items
+            .sort((a, b) => a.priority - b.priority)
+            .slice(0, 6);
+    }, [students, allCompetitions]);
+
+    const attentionStudentIds = useMemo(
+        () => new Set(attentionQueue.map((item) => item.student.id)),
+        [attentionQueue]
+    );
+
+    const wins = useMemo(() => {
+        return students
+            .flatMap((student) => student.reportedResults
+                .filter((r) => WIN_RESULTS.has(r.result))
+                .map((r) => ({ ...r, studentName: student.name })))
+            .sort((a, b) => dayjs(b.submittedAt).diff(dayjs(a.submittedAt)))
+            .slice(0, 4);
+    }, [students]);
+
+    function buildReminderMailto(item) {
+        const firstName = item.student.name.split(" ")[0];
+        const subject = `Checking in — ${item.reason}`;
+        const body = `Hi ${firstName},\n\nJust checking in — ${item.reason.charAt(0).toLowerCase() + item.reason.slice(1)}. Let me know if you want to talk through next steps.\n\n${counselor.name}`;
+        return `mailto:${item.student.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
     const inviteLink = counselor ? `${window.location.origin}/?counselor=${counselor.id}` : "";
 
     const inviteEmailBody = counselor
@@ -309,6 +469,7 @@ export default function CounselorHomePage() {
 
                 <div className="counselor-nav-user">
                     <span>{counselor.school}</span>
+                    <Link to="/counselor/competitions" className="counselor-nav-link">Competitions</Link>
                     <button type="button" onClick={() => setShowAccount(true)}>My Account</button>
                     <button type="button" onClick={handleSignOut}>Sign out</button>
                 </div>
@@ -318,10 +479,11 @@ export default function CounselorHomePage() {
             <div className="counselor-content">
 
                 <header className="counselor-page-header">
-                    <h1>Your Students</h1>
+                    <h1>{getGreeting()}, {counselor.name.split(" ")[0]}.</h1>
                     <p>
-                        {students.length} student{students.length === 1 ? "" : "s"} {students.length === 1 ? "has" : "have"} linked
-                        their account to you, {counselor.name}.
+                        {attentionQueue.length > 0
+                            ? `${attentionQueue.length} student${attentionQueue.length === 1 ? "" : "s"} need${attentionQueue.length === 1 ? "s" : ""} your attention this week.`
+                            : `You're caught up — nothing needs your attention today.`}
                     </p>
                 </header>
 
@@ -332,28 +494,168 @@ export default function CounselorHomePage() {
                 ) : (
                     <>
 
-                        <section className="counselor-stats">
+                        <section className="counselor-panel-card counselor-attention">
+                            <h2>Needs Your Attention</h2>
 
-                            <div className="counselor-stat">
-                                <span>Students</span>
-                                <strong>{stats.total}</strong>
+                            {attentionQueue.length === 0 ? (
+                                <p className="counselor-empty-inline">You&rsquo;re caught up. Nothing requires action today.</p>
+                            ) : (
+                                <div className="attention-grid">
+                                    {attentionQueue.map((item) => (
+                                        <div key={item.student.id} className={`attention-card attention-card-${item.type}`}>
+                                            <button
+                                                type="button"
+                                                className="attention-card-main"
+                                                onClick={() => setSelectedStudent(item.student)}
+                                            >
+                                                <span className="attention-card-icon">
+                                                    <AttentionIcon type={item.type} />
+                                                </span>
+                                                <span className="attention-card-body">
+                                                    <strong>{item.student.name}</strong>
+                                                    <span>{item.reason}</span>
+                                                </span>
+                                            </button>
+                                            {item.student.email ? (
+                                                <a
+                                                    href={buildReminderMailto(item)}
+                                                    className="attention-card-reminder"
+                                                >
+                                                    Email {item.student.email}
+                                                </a>
+                                            ) : (
+                                                <span className="attention-card-reminder is-disabled">
+                                                    No email on file
+                                                </span>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </section>
+
+                        {wins.length > 0 && (
+                            <section className="counselor-panel-card counselor-wins">
+                                <h2>Wins</h2>
+                                <ul className="wins-list">
+                                    {wins.map((win) => (
+                                        <li key={win.id}>
+                                            <strong>{win.studentName}</strong> — {RESULT_LABELS[win.result] || win.result} at {win.name}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </section>
+                        )}
+
+                        {weekInReview.length > 0 && (
+                            <section className="counselor-panel-card counselor-week">
+                                <h2>This Week</h2>
+                                <p className="counselor-week-line">{weekInReview.join(" · ")}</p>
+                            </section>
+                        )}
+
+                        <section className="counselor-impact">
+                            <h2>Your Impact</h2>
+                            <p className="counselor-impact-subhead">What Epictetus has actually done for your students.</p>
+
+                            <div className="impact-grid">
+
+                                <div className="impact-card impact-card-ring">
+                                    <svg viewBox="0 0 100 100" width="112" height="112" className="impact-ring">
+                                        <defs>
+                                            <linearGradient id="impactRingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stopColor="var(--accent)" />
+                                                <stop offset="100%" stopColor="var(--accent-hover)" />
+                                            </linearGradient>
+                                        </defs>
+                                        <circle cx="50" cy="50" r="40" fill="none" stroke="var(--border)" strokeWidth="8" />
+                                        <circle
+                                            cx="50" cy="50" r="40" fill="none" stroke="url(#impactRingGradient)" strokeWidth="8"
+                                            strokeDasharray={2 * Math.PI * 40}
+                                            strokeDashoffset={2 * Math.PI * 40 * (1 - engagementPct / 100)}
+                                            strokeLinecap="round"
+                                            transform="rotate(-90 50 50)"
+                                            className="impact-ring-fill"
+                                        />
+                                        <text
+                                            x="50" y="50" textAnchor="middle" dominantBaseline="central"
+                                            fontSize="22" fontWeight="800" fill="var(--text)"
+                                        >
+                                            {engagementPct}%
+                                        </text>
+                                    </svg>
+                                    <p>{stats.activeThisWeek} of {stats.total} students active this week</p>
+                                </div>
+
+                                <div className="impact-card">
+                                    <h3>
+                                        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                                            <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2" />
+                                            <circle cx="12" cy="12" r="2.5" fill="currentColor" />
+                                            <path d="m15.5 8.5-2.2 4.8-4.8 2.2 2.2-4.8Z" fill="currentColor" />
+                                        </svg>
+                                        What They&rsquo;re Pursuing
+                                    </h3>
+                                    {categoryBreakdown.entries.length === 0 ? (
+                                        <p className="counselor-empty-inline">No saved competitions yet.</p>
+                                    ) : (
+                                        <div className="impact-bars">
+                                            {categoryBreakdown.entries.map(([category, count]) => (
+                                                <div className="impact-bar-row" key={category}>
+                                                    <span className="impact-bar-label">{category}</span>
+                                                    <div className="impact-bar-track">
+                                                        <div
+                                                            className="impact-bar-fill"
+                                                            style={{ width: `${(count / categoryBreakdown.max) * 100}%` }}
+                                                        />
+                                                    </div>
+                                                    <span className="impact-bar-value">{count}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="impact-card">
+                                    <h3>
+                                        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                                            <path d="M4 16 9.5 9l4 4.5L20 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                            <path d="M14.5 6H20v5.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                        From Saved to Result
+                                    </h3>
+                                    <div className="impact-bars">
+                                        <div className="impact-bar-row">
+                                            <span className="impact-bar-label">Saved</span>
+                                            <div className="impact-bar-track">
+                                                <div className="impact-bar-fill" style={{ width: "100%" }} />
+                                            </div>
+                                            <span className="impact-bar-value">{outcomeFunnel.saved}</span>
+                                        </div>
+                                        <div className="impact-bar-row">
+                                            <span className="impact-bar-label">Applied</span>
+                                            <div className="impact-bar-track">
+                                                <div
+                                                    className="impact-bar-fill"
+                                                    style={{ width: `${(outcomeFunnel.applied / outcomeFunnel.max) * 100}%` }}
+                                                />
+                                            </div>
+                                            <span className="impact-bar-value">{outcomeFunnel.applied}</span>
+                                        </div>
+                                        <div className="impact-bar-row">
+                                            <span className="impact-bar-label">Result</span>
+                                            <div className="impact-bar-track">
+                                                <div
+                                                    className="impact-bar-fill"
+                                                    style={{ width: `${(outcomeFunnel.resulted / outcomeFunnel.max) * 100}%` }}
+                                                />
+                                            </div>
+                                            <span className="impact-bar-value">{outcomeFunnel.resulted}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-
-                            <div className="counselor-stat">
-                                <span>Active This Week</span>
-                                <strong>{stats.activeThisWeek}</strong>
-                            </div>
-
-                            <div className="counselor-stat">
-                                <span>Saved Competitions</span>
-                                <strong>{stats.totalSaved}</strong>
-                            </div>
-
-                            <div className="counselor-stat">
-                                <span>Avg. Saved / Student</span>
-                                <strong>{stats.avgSaved}</strong>
-                            </div>
-
                         </section>
 
                         <section className="counselor-roster">
@@ -394,7 +696,12 @@ export default function CounselorHomePage() {
                                             key={student.id}
                                             onClick={() => setSelectedStudent(student)}
                                         >
-                                            <span className="counselor-table-name">{student.name}</span>
+                                            <span className="counselor-table-name">
+                                                {attentionStudentIds.has(student.id) && (
+                                                    <span className="counselor-table-flag" title="Needs attention" aria-hidden="true" />
+                                                )}
+                                                {student.name}
+                                            </span>
                                             <span>{student.gradeLabel}</span>
                                             <span className="counselor-table-interests">
                                                 {student.interests.slice(0, 2).join(", ")}
@@ -435,7 +742,7 @@ export default function CounselorHomePage() {
 
                         <section className="counselor-insights">
 
-                            <div className="counselor-panel-card">
+                            <div className="counselor-panel-card counselor-insights-full">
                                 <h2>Students With Matching Interests</h2>
 
                                 <div className="match-subsection">
@@ -473,34 +780,6 @@ export default function CounselorHomePage() {
                                         </div>
                                     )}
                                 </div>
-                            </div>
-
-                            <div className="counselor-panel-card">
-                                <h2>Highlighted Student</h2>
-
-                                {highlightedStudent ? (
-                                    <button
-                                        type="button"
-                                        className="highlighted-student"
-                                        onClick={() => setSelectedStudent(highlightedStudent)}
-                                    >
-                                        <div className="highlighted-student-top">
-                                            <strong>{highlightedStudent.name}</strong>
-                                            <span>{highlightedStudent.gradeLabel} &middot; {highlightedStudent.school}</span>
-                                        </div>
-
-                                        <p>
-                                            Progressing through {highlightedStudent.topCategory} competitions rapidly
-                                            {highlightedStudent.otherInterests.length > 0 && (
-                                                <> &mdash; shows high interest in {joinWithAnd(highlightedStudent.otherInterests)} as well.</>
-                                            )}
-                                        </p>
-
-                                        <span className="highlighted-student-cta">View profile &rsaquo;</span>
-                                    </button>
-                                ) : (
-                                    <p className="counselor-empty-inline">No standout activity yet.</p>
-                                )}
                             </div>
 
                         </section>
@@ -546,88 +825,90 @@ export default function CounselorHomePage() {
                             </div>
                         </section>
 
-                        <section className="counselor-panel-card counselor-tips">
-                            <h2>How to Use This Page</h2>
+                        <details className="counselor-panel-card counselor-tips-collapsible">
+                            <summary>Tips &amp; Why This Matters</summary>
 
-                            <ul className="tips-list">
-                                <li>
-                                    <strong>Shared interests or saved competitions</strong>
-                                    <p>
-                                        When two or more students save the same competition, consider connecting
-                                        them&mdash;many contests allow team entries, and peer accountability keeps
-                                        momentum going.
-                                    </p>
-                                </li>
+                            <div className="counselor-tips-collapsible-body">
 
-                                <li>
-                                    <strong>After a student shows interest</strong>
-                                    <p>
-                                        A saved competition is a good moment to check in. Ask what&rsquo;s drawing
-                                        them to it and help them map a timeline for requirements, recommendation
-                                        letters, or auditions.
-                                    </p>
-                                </li>
+                                <h3>How to use this page</h3>
+                                <ul className="tips-list">
+                                    <li>
+                                        <strong>Shared interests or saved competitions</strong>
+                                        <p>
+                                            When two or more students save the same competition, consider connecting
+                                            them&mdash;many contests allow team entries, and peer accountability keeps
+                                            momentum going.
+                                        </p>
+                                    </li>
 
-                                <li>
-                                    <strong>Turning interest into a path</strong>
-                                    <p>
-                                        Use each student&rsquo;s interest tags to point them toward clubs, electives,
-                                        or local programs that build toward it&mdash;robotics team for STEM, Model UN
-                                        for Law &amp; Policy, a writing workshop for Arts.
-                                    </p>
-                                </li>
+                                    <li>
+                                        <strong>After a student shows interest</strong>
+                                        <p>
+                                            A saved competition is a good moment to check in. Ask what&rsquo;s drawing
+                                            them to it and help them map a timeline for requirements, recommendation
+                                            letters, or auditions.
+                                        </p>
+                                    </li>
 
-                                <li>
-                                    <strong>Students with nothing saved yet</strong>
-                                    <p>
-                                        Not everyone dives in right away. A quick nudge toward two or three
-                                        competitions in their stated interests is often enough to get them started.
-                                    </p>
-                                </li>
-                            </ul>
-                        </section>
+                                    <li>
+                                        <strong>Turning interest into a path</strong>
+                                        <p>
+                                            Use each student&rsquo;s interest tags to point them toward clubs, electives,
+                                            or local programs that build toward it&mdash;robotics team for STEM, Model UN
+                                            for Law &amp; Policy, a writing workshop for Arts.
+                                        </p>
+                                    </li>
 
-                        <section className="counselor-panel-card counselor-tips">
-                            <h2>Why This Matters For You</h2>
+                                    <li>
+                                        <strong>Students with nothing saved yet</strong>
+                                        <p>
+                                            Not everyone dives in right away. A quick nudge toward two or three
+                                            competitions in their stated interests is often enough to get them started.
+                                        </p>
+                                    </li>
+                                </ul>
 
-                            <ul className="tips-list">
-                                <li>
-                                    <strong>Specific, provable outcomes</strong>
-                                    <p>
-                                        When students you support place in competitions or win scholarships, that&rsquo;s
-                                        concrete data for your director, your board, or your own year-end review&mdash;not
-                                        just a record of effort.
-                                    </p>
-                                </li>
+                                <h3>Why this matters for you</h3>
+                                <ul className="tips-list">
+                                    <li>
+                                        <strong>Specific, provable outcomes</strong>
+                                        <p>
+                                            When students you support place in competitions or win scholarships, that&rsquo;s
+                                            concrete data for your director, your board, or your own year-end review&mdash;not
+                                            just a record of effort.
+                                        </p>
+                                    </li>
 
-                                <li>
-                                    <strong>Time you don&rsquo;t have to spend chasing</strong>
-                                    <p>
-                                        Instead of tracking down a full caseload to ask what they&rsquo;re working on,
-                                        this page surfaces it for you, so your limited one-on-one time goes to the
-                                        conversations that actually need it.
-                                    </p>
-                                </li>
+                                    <li>
+                                        <strong>Time you don&rsquo;t have to spend chasing</strong>
+                                        <p>
+                                            Instead of tracking down a full caseload to ask what they&rsquo;re working on,
+                                            this page surfaces it for you, so your limited one-on-one time goes to the
+                                            conversations that actually need it.
+                                        </p>
+                                    </li>
 
-                                <li>
-                                    <strong>Stronger letters, written faster</strong>
-                                    <p>
-                                        A specific, current detail&mdash;&ldquo;she spent the fall preparing for
-                                        Regeneron&rdquo;&mdash;makes a recommendation sharper than anything reconstructed
-                                        from memory months later.
-                                    </p>
-                                </li>
+                                    <li>
+                                        <strong>Stronger letters, written faster</strong>
+                                        <p>
+                                            A specific, current detail&mdash;&ldquo;she spent the fall preparing for
+                                            Regeneron&rdquo;&mdash;makes a recommendation sharper than anything reconstructed
+                                            from memory months later.
+                                        </p>
+                                    </li>
 
-                                <li>
-                                    <strong>Trust that compounds</strong>
-                                    <p>
-                                        A short, specific check-in tells a student and their parents you&rsquo;re
-                                        actually paying attention&mdash;the kind of thing that earns goodwill well
-                                        beyond graduation.
-                                    </p>
-                                </li>
-                            </ul>
-                        </section>
+                                    <li>
+                                        <strong>Trust that compounds</strong>
+                                        <p>
+                                            A short, specific check-in tells a student and their parents you&rsquo;re
+                                            actually paying attention&mdash;the kind of thing that earns goodwill well
+                                            beyond graduation.
+                                        </p>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </details>
 
                         <section className="counselor-panel-card counselor-articles">
                             <h2>Counselor Guides</h2>

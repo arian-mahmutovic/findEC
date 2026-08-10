@@ -6,11 +6,6 @@ import { useAuth } from "../../context/AuthContext";
 import { trackGuideView } from "../../services/guideViews";
 import { trackEvent } from "../../services/analytics";
 import { trackRegistrationClick } from "../../services/applications";
-import {
-    isSubscribedToDeadlineReminder,
-    subscribeToDeadlineReminder,
-    unsubscribeFromDeadlineReminder
-} from "../../services/notifications";
 import SiteHeader from "../../components/SiteHeader";
 import SiteFooter from "../../components/SiteFooter";
 import BackToTop from "../../components/BackToTop";
@@ -27,8 +22,6 @@ export default function CompetitionGuidePage() {
     const [articles, setArticles] = useState([]);
     const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [notifySubscribed, setNotifySubscribed] = useState(false);
-    const [notifyBusy, setNotifyBusy] = useState(false);
 
     useEffect(() => {
         loadCompetition();
@@ -55,9 +48,6 @@ export default function CompetitionGuidePage() {
         if (user) {
             trackGuideView(user.id, competitionData.id);
             trackEvent("competition_viewed", { userId: user.id, competitionId: competitionData.id });
-
-            const { subscribed } = await isSubscribedToDeadlineReminder(user.id, competitionData.id);
-            setNotifySubscribed(subscribed);
         }
 
         const { data: guideData, error: guideError } =
@@ -108,22 +98,7 @@ export default function CompetitionGuidePage() {
         trackRegistrationClick(user.id, competition.id);
     }
 
-    async function handleNotifyClick() {
-        if (!user || notifyBusy) return;
-
-        setNotifyBusy(true);
-
-        if (notifySubscribed) {
-            await unsubscribeFromDeadlineReminder(user.id, competition.id);
-            setNotifySubscribed(false);
-        } else {
-            await subscribeToDeadlineReminder(user.id, competition.id);
-            setNotifySubscribed(true);
-            trackEvent("notify_me_subscribed", { userId: user.id, competitionId: competition.id });
-        }
-
-        setNotifyBusy(false);
-    }
+    function handleNotifyClick() {}
 
     if (loading) {
         return (
@@ -388,12 +363,10 @@ export default function CompetitionGuidePage() {
                             <SaveStarButton competitionId={competition.id} variant="label" />
                             <button
                                 type="button"
-                                className={`notification-button ${notifySubscribed ? 'is-notifying' : ''}`}
+                                className="notification-button"
                                 onClick={handleNotifyClick}
-                                disabled={notifyBusy}
-                                aria-pressed={notifySubscribed}
                             >
-                                {notifySubscribed ? 'Notifying ✓' : 'Notify me'}
+                                Notify me
                             </button>
                         </div>
 

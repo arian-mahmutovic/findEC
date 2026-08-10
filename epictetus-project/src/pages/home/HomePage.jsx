@@ -7,6 +7,7 @@ import { useSavedCompetitions } from "../../context/SavedCompetitionsContext";
 import { signOut } from "../../services/auth";
 import { getCompetitions, getRecentGuideArticles } from "../../services/competitions";
 import { getUserPreferences } from "../../services/preferences";
+import { getProgressCounts } from "../../services/applications";
 import OnboardingModal from "../../components/OnboardingModal";
 import ProfileModal from "../../components/ProfileModal";
 import BackToTop from "../../components/BackToTop";
@@ -14,6 +15,7 @@ import SiteFooter from "../../components/SiteFooter";
 import SaveStarButton from "../../components/SaveStarButton";
 import ReminderBanner from "../../components/ReminderBanner";
 import { formatDate } from "../../utils/dates";
+import { getMatchTier, getMatchReason } from "../../utils/matchScore";
 
 const CONTACT_EMAIL = "hello@epictetusproject.com";
 const YOUTUBE_URL = "https://www.youtube.com/@EpictetusProject";
@@ -27,6 +29,7 @@ export default function HomePage() {
     const [preferences, setPreferences] = useState(null);
     const [competitions, setCompetitions] = useState([]);
     const [articles, setArticles] = useState([]);
+    const [progressCounts, setProgressCounts] = useState({ registered: 0, applied: 0, resulted: 0 });
     const [loading, setLoading] = useState(true);
     const [showOnboarding, setShowOnboarding] = useState(false);
     const [showProfile, setShowProfile] = useState(false);
@@ -47,16 +50,18 @@ export default function HomePage() {
     async function loadDashboard() {
         setLoading(true);
 
-        const [prefsRes, compsRes, articlesRes] = await Promise.all([
+        const [prefsRes, compsRes, articlesRes, progressRes] = await Promise.all([
             getUserPreferences(user.id),
             getCompetitions(),
-            getRecentGuideArticles(4)
+            getRecentGuideArticles(4),
+            getProgressCounts(user.id)
         ]);
 
         setPreferences(prefsRes.data);
         setShowOnboarding(!prefsRes.data);
         setCompetitions(compsRes.data || []);
         setArticles(articlesRes.data || []);
+        setProgressCounts(progressRes);
         setLoading(false);
     }
 
@@ -68,14 +73,34 @@ export default function HomePage() {
     const interests = useMemo(() => preferences?.interests || [], [preferences]);
 
     const recommended = useMemo(() => {
-        const byInterest = competitions.filter(
-            (c) => interests.includes(c.category) && !savedIds.has(c.id)
-        );
-        const pool = byInterest.length > 0
-            ? byInterest
-            : competitions.filter((c) => !savedIds.has(c.id));
+        const unsaved = competitions.filter((c) => !savedIds.has(c.id));
+
+        const matched = unsaved
+            .map((c) => ({ competition: c, tier: getMatchTier(c, interests) }))
+            .filter((entry) => entry.tier !== null)
+            .sort((a, b) => (a.tier === b.tier ? 0 : a.tier === "Strong Match" ? -1 : 1));
+
+        const pool = matched.length > 0 ? matched : unsaved.map((c) => ({ competition: c, tier: null }));
         return pool.slice(0, 3);
     }, [competitions, interests, savedIds]);
+
+    const nextMilestone = useMemo(() => {
+        if (savedRows.length === 0) {
+            return "Save a competition that matches your interests to get started.";
+        }
+        if (progressCounts.registered === 0) {
+            return "Visit a saved competition's registration page to take the next step.";
+        }
+        if (progressCounts.applied === 0) {
+            return "We'll check in a day or two after you register to confirm you applied.";
+        }
+        if (progressCounts.resulted === 0) {
+            return "Report how it went once you hear back from a competition.";
+        }
+        return recommended.length > 0
+            ? `Keep exploring — ${recommended.length} new opportunit${recommended.length === 1 ? "y" : "ies"} match your interests.`
+            : "You're on track. Check back for new opportunities.";
+    }, [savedRows, progressCounts, recommended]);
 
     const upcomingDeadlines = useMemo(() => {
         const today = dayjs();
@@ -247,13 +272,22 @@ export default function HomePage() {
                         ) : (
                             <div className="recommendation-grid">
 
-                                {recommended.map((competition) => (
+                                {recommended.map(({ competition, tier }) => (
 
                                     <div className="recommendation-card" key={competition.id}>
 
-                                        {competition.category && <span>{competition.category}</span>}
+                                        <div className="recommendation-card-top">
+                                            {competition.category && <span>{competition.category}</span>}
+                                            {tier && <span className={`match-badge ${tier === "Strong Match" ? "is-strong" : ""}`}>{tier}</span>}
+                                        </div>
 
                                         <h3>{competition.name}</h3>
+
+                                        {tier && (
+                                            <p className="recommendation-card-reason">
+                                                {getMatchReason(competition, interests)}
+                                            </p>
+                                        )}
 
                                         <div className="recommendation-card-actions">
                                             <Link to={`/competitions/${competition.slug}`}>
@@ -331,12 +365,40 @@ export default function HomePage() {
                                     </div>
 
                                     <span className="deadline-days">
-                                        {dayjs(competition.registration_end_date).diff(dayjs(), "day")}d
+                                        {dayjs(competition.registration_end_date).diff(dayjs(), "day")}d left
                                     </span>
                                 </Link>
 
                             ))
                         )}
+
+                    </div>
+
+
+                    <div className="dashboard-widget">
+
+                        <h3>Your Progress</h3>
+
+                        <div className="progress-funnel">
+                            <div className="progress-funnel-step">
+                                <strong>{savedRows.length}</strong>
+                                <span>Saved</span>
+                            </div>
+                            <div className="progress-funnel-step">
+                                <strong>{progressCounts.registered}</strong>
+                                <span>Started</span>
+                            </div>
+                            <div className="progress-funnel-step">
+                                <strong>{progressCounts.applied}</strong>
+                                <span>Applied</span>
+                            </div>
+                            <div className="progress-funnel-step">
+                                <strong>{progressCounts.resulted}</strong>
+                                <span>Result</span>
+                            </div>
+                        </div>
+
+                        <p className="progress-milestone">{nextMilestone}</p>
 
                     </div>
 

@@ -156,6 +156,29 @@
     color: var(--cg-lime-ink);
 }
 
+.list-filter-groups {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 14px;
+}
+
+.list-chip-row-secondary {
+    margin-top: 0;
+    gap: 6px;
+}
+
+.list-chip-secondary {
+    padding: 5px 12px;
+    font-size: 0.72rem;
+    opacity: 0.85;
+}
+
+.list-chip-secondary.is-active {
+    opacity: 1;
+}
+
 /* =========================
    FILTER BAR
 ========================= */
