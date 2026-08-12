@@ -1,7 +1,7 @@
 import CompetitionCard from "./CompetitionCard";
 import './CompetitionListPage.css';
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { getCompetitions } from "../../services/competitions";
 import SiteHeader from "../../components/SiteHeader";
 import SiteFooter from "../../components/SiteFooter";
@@ -18,6 +18,7 @@ export default function CompetitionListPage() {
     const [activeLocation, setActiveLocation] = useState("All");
     const [activeCost, setActiveCost] = useState("All");
     const [activeFormat, setActiveFormat] = useState("All");
+    const [viewMode, setViewMode] = useState("cards");
 
     useEffect(() => {
         loadCompetitionsData();
@@ -192,11 +193,30 @@ export default function CompetitionListPage() {
                         {activeCategory !== "All" && <> in {activeCategory}</>}
                     </span>
 
-                    {hasActiveFilters && (
-                        <button type="button" className="list-clear-btn" onClick={clearFilters}>
-                            Clear filters
-                        </button>
-                    )}
+                    <div className="list-filter-bar-actions">
+                        {hasActiveFilters && (
+                            <button type="button" className="list-clear-btn" onClick={clearFilters}>
+                                Clear filters
+                            </button>
+                        )}
+
+                        <div className="list-view-toggle" role="group" aria-label="Switch view">
+                            <button
+                                type="button"
+                                className={viewMode === "cards" ? "is-active" : ""}
+                                onClick={() => setViewMode("cards")}
+                            >
+                                Cards
+                            </button>
+                            <button
+                                type="button"
+                                className={viewMode === "list" ? "is-active" : ""}
+                                onClick={() => setViewMode("list")}
+                            >
+                                List
+                            </button>
+                        </div>
+                    </div>
                 </div>
             )}
 
@@ -237,16 +257,65 @@ export default function CompetitionListPage() {
                     <button type="button" className="list-retry-btn" onClick={clearFilters}>
                         Clear filters
                     </button>
+                    <p className="list-suggest-note">
+                        Want to suggest a competition? Tell us at{" "}
+                        <a href="mailto:hello@epictetusproject.com">hello@epictetusproject.com</a>
+                        {" "}&mdash; we value your help making the site more helpful.
+                    </p>
                 </div>
             )}
 
-            {!loading && !error && filteredCompetitions.length > 0 && (
+            {!loading && !error && filteredCompetitions.length > 0 && viewMode === "cards" && (
                 <section className="competition-grid">
                     {filteredCompetitions.map((competition) => (
                         <CompetitionCard
                             key={competition.id ?? competition.slug ?? competition.name}
                             {...competition}
                         />
+                    ))}
+                </section>
+            )}
+
+            {!loading && !error && filteredCompetitions.length > 0 && viewMode === "list" && (
+                <section className="competition-list-rows">
+                    {filteredCompetitions.map((competition) => (
+                        <div className="competition-list-row" key={competition.id ?? competition.slug ?? competition.name}>
+                            <div className="competition-list-row-info">
+                                <h2>{competition.name}</h2>
+
+                                {competition.description && (
+                                    <p className="competition-list-row-desc">{competition.description}</p>
+                                )}
+
+                                {(competition.category || competition.prestige_level || competition.registration_status) && (
+                                    <div className="competition-badges">
+                                        {competition.category && <span className="badge category-badge">{competition.category}</span>}
+                                        {competition.prestige_level && (
+                                            <span className="badge prestige-badge" title={competition.prestige_level}>
+                                                {competition.prestige_level}
+                                            </span>
+                                        )}
+                                        {competition.registration_status && (
+                                            <span className={`badge registration-status-badge ${competition.registration_status === "Open" ? "open" : competition.registration_status === "Closed" ? "closed" : ""}`}>
+                                                {competition.registration_status}
+                                            </span>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="competition-list-row-actions">
+                                <Link to={`/competitions/${competition.slug}`}>
+                                    <button type="button" className="competition-card-button">View guide</button>
+                                </Link>
+
+                                {competition.website_url && (
+                                    <a href={competition.website_url} target="_blank" rel="noopener noreferrer">
+                                        <button type="button">Official website</button>
+                                    </a>
+                                )}
+                            </div>
+                        </div>
                     ))}
                 </section>
             )}

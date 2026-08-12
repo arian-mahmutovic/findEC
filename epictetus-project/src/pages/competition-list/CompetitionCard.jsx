@@ -35,7 +35,7 @@ export default function CompetitionCard({
             {(category || prestige_level || registration_status) && (
                 <div className="competition-badges">
                     {category && <span className="badge category-badge">{category}</span>}
-                    {prestige_level && <span className="badge prestige-badge">{prestige_level}</span>}
+                    {prestige_level && <span className="badge prestige-badge" title={prestige_level}>{prestige_level}</span>}
                     {registration_status && (
                         <span className={`badge registration-status-badge ${statusClass}`}>
                             {registration_status}
@@ -89,7 +89,7 @@ export default function CompetitionCard({
                         {prize && (
                             <div className="competition-prize">
                                 <strong>Prize</strong>
-                                <p>{prize}</p>
+                                <p title={prize}>{prize}</p>
                             </div>
                         )}
 

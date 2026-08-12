@@ -23,13 +23,18 @@
     color: #ffffff;
 }
 
-@media (prefers-color-scheme: dark) {
-    .counselor-login-page {
-        --accent: #7C3AED;
-        --accent-hover: #6D28D9;
-        --accent-soft: #2E1065;
-        --accent-text: #C4B5FD;
-    }
+[data-theme="dark"] .counselor-login-page {
+    --accent: #8B5CF6;
+    --accent-hover: #A78BFA;
+    --accent-soft: #2E1065;
+    --accent-text: #C4B5FD;
+}
+
+.counselor-login-theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2;
 }
 
 .counselor-login-card {

@@ -43,7 +43,7 @@ nav.site-header-nav {
     background: none;
 }
 
-.site-header-nav a {
+.site-header-nav a:not(.site-header-icon-btn) {
     color: var(--sh-ink);
     font-size: 0.92rem;
     font-weight: 800;
@@ -53,13 +53,13 @@ nav.site-header-nav {
     transition: background 140ms ease, color 140ms ease;
 }
 
-.site-header-nav a:hover,
-.site-header-nav a:focus-visible {
+.site-header-nav a:not(.site-header-icon-btn):hover,
+.site-header-nav a:not(.site-header-icon-btn):focus-visible {
     background: var(--sh-ink);
     color: var(--sh-lime);
 }
 
-.site-header-nav .site-header-icon-btn {
+.site-header-icon-btn {
     display: grid;
     place-items: center;
     width: 36px;
@@ -68,10 +68,11 @@ nav.site-header-nav {
     border: 2px solid var(--sh-ink);
     border-radius: 50%;
     background: var(--sh-ink);
+    cursor: pointer;
     transition: transform 140ms ease;
 }
 
-.site-header-nav .site-header-icon-btn:hover {
+.site-header-icon-btn:hover {
     background: var(--sh-ink);
     transform: translateY(-2px) scale(1.06);
 }
@@ -80,6 +81,10 @@ nav.site-header-nav {
     width: 18px;
     height: 18px;
     fill: var(--sh-lime);
+}
+
+.site-header-theme-toggle {
+    flex: 0 0 auto;
 }
 
 .site-header-nav-button {

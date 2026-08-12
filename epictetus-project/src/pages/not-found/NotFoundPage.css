@@ -1,24 +1,35 @@
 .not-found-page {
+    --nf-bg: #ffffff;
+    --nf-ink: #111111;
+    --nf-faint: #5b6270;
+    --nf-lime: #abf910;
+
     min-height: 100vh;
     box-sizing: border-box;
     display: grid;
     place-items: center;
     padding: 48px 24px;
-    background: #ffffff;
-    color: #111111;
+    background: var(--nf-bg);
+    color: var(--nf-ink);
     font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .not-found-page * { box-sizing: border-box; }
 
+[data-theme="dark"] .not-found-page {
+    --nf-bg: #0d0e10;
+    --nf-ink: #f3f4ef;
+    --nf-faint: #9aa0ab;
+}
+
 .not-found-card {
     width: min(100%, 480px);
     text-align: center;
     padding: 3rem 2.5rem;
-    border: 2.5px solid #111111;
+    border: 2.5px solid var(--nf-ink);
     border-radius: 22px;
-    background: #ffffff;
-    box-shadow: 10px 10px 0 #abf910;
+    background: var(--nf-bg);
+    box-shadow: 10px 10px 0 var(--nf-lime);
 }
 
 .not-found-eyebrow {
@@ -26,7 +37,7 @@
     align-items: center;
     gap: 8px;
     padding: 6px 14px;
-    border: 2px solid #111111;
+    border: 2px solid var(--nf-ink);
     border-radius: 999px;
     font-size: 0.7rem;
     font-weight: 800;
@@ -40,7 +51,7 @@
     height: 7px;
     border-radius: 50%;
     background: #e0402a;
-    border: 1.5px solid #111111;
+    border: 1.5px solid var(--nf-ink);
 }
 
 .not-found-card h1 {
@@ -53,7 +64,7 @@
 
 .not-found-card p {
     margin: 14px 0 0;
-    color: #5b6270;
+    color: var(--nf-faint);
     font-size: 0.98rem;
     font-weight: 600;
     line-height: 1.6;
@@ -63,10 +74,10 @@
     display: inline-flex;
     margin-top: 28px;
     padding: 0.9rem 1.8rem;
-    border: 2px solid #111111;
+    border: 2px solid var(--nf-ink);
     border-radius: 999px;
-    background: #111111;
-    color: #abf910;
+    background: var(--nf-ink);
+    color: var(--nf-lime);
     font-weight: 800;
     font-size: 0.9rem;
     text-decoration: none;
@@ -75,5 +86,11 @@
 
 .not-found-link:hover {
     transform: translate(-2px, -2px);
-    box-shadow: 4px 4px 0 #abf910;
+    box-shadow: 4px 4px 0 var(--nf-lime);
+}
+
+[data-theme="dark"] .not-found-link {
+    background: var(--nf-lime);
+    border-color: var(--nf-lime);
+    color: #111111;
 }

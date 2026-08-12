@@ -8,6 +8,10 @@
     --accent-hover: #6D28D9;
     --accent-soft: #EDE9FE;
     --accent-text: #6D28D9;
+    --status-verified-bg: #dcfce7;
+    --status-verified-text: #15803d;
+    --status-dismissed-bg: #fee2e2;
+    --status-dismissed-text: #b91c1c;
 
     min-height: 100vh;
     background: var(--bg);
@@ -22,13 +26,15 @@
     color: #ffffff;
 }
 
-@media (prefers-color-scheme: dark) {
-    .counselor-page {
-        --accent: #7C3AED;
-        --accent-hover: #6D28D9;
-        --accent-soft: #2E1065;
-        --accent-text: #C4B5FD;
-    }
+[data-theme="dark"] .counselor-page {
+    --accent: #8B5CF6;
+    --accent-hover: #A78BFA;
+    --accent-soft: #2E1065;
+    --accent-text: #C4B5FD;
+    --status-verified-bg: #123822;
+    --status-verified-text: #4ade80;
+    --status-dismissed-bg: #3a1412;
+    --status-dismissed-text: #f87171;
 }
 
 /* ==========================================
@@ -110,6 +116,30 @@
 
 .counselor-nav-link:hover {
     text-decoration: underline;
+}
+
+.counselor-theme-toggle {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    cursor: pointer;
+    transition: border-color 140ms ease, background 140ms ease;
+}
+
+.counselor-theme-toggle:hover {
+    background: var(--surface-2);
+    border-color: var(--muted);
+}
+
+.counselor-theme-toggle svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--text);
 }
 
 /* ==========================================
@@ -1272,13 +1302,13 @@ button.counselor-table-row:hover {
 }
 
 .result-status-verified {
-    background: #dcfce7;
-    color: #15803d;
+    background: var(--status-verified-bg);
+    color: var(--status-verified-text);
 }
 
 .result-status-dismissed {
-    background: #fee2e2;
-    color: #b91c1c;
+    background: var(--status-dismissed-bg);
+    color: var(--status-dismissed-text);
 }
 
 .student-panel-result-actions {

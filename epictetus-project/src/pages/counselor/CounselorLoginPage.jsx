@@ -2,6 +2,7 @@ import "./CounselorLoginPage.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import ParticleBackground from "../../components/ParticleBackground";
+import ThemeToggle from "../../components/ThemeToggle";
 import { counselorLogin } from "../../services/counselors";
 
 const CONTACT_EMAIL = "counselors@epictetusproject.com";
@@ -33,6 +34,8 @@ export default function CounselorLoginPage() {
         <main className="counselor-login-page">
 
             <ParticleBackground />
+
+            <ThemeToggle className="counselor-theme-toggle counselor-login-theme-toggle" />
 
             <div className="counselor-login-card">
 

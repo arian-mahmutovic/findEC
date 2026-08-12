@@ -8,6 +8,7 @@ import { getCompetitions } from "../../services/competitions";
 import { getMatchTier } from "../../utils/matchScore";
 import ParticleBackground from "../../components/ParticleBackground";
 import CounselorFooter from "../../components/CounselorFooter";
+import ThemeToggle from "../../components/ThemeToggle";
 import { formatDate } from "../../utils/dates";
 
 function mapStudentBasics(row) {
@@ -91,6 +92,7 @@ export default function CounselorCompetitionsPage() {
 
                 <div className="counselor-nav-user">
                     <Link to="/counselor/dashboard" className="counselor-nav-link">Dashboard</Link>
+                    <ThemeToggle className="counselor-theme-toggle" />
                 </div>
 
             </nav>

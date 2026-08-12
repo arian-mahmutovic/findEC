@@ -7,19 +7,22 @@ import { initSessionTracking } from './services/session.js'
 import { AuthProvider } from './context/AuthContext.jsx'
 import { SavedCompetitionsProvider } from './context/SavedCompetitionsContext.jsx'
 import { CounselorAuthProvider } from './context/CounselorAuthContext.jsx'
+import { ThemeProvider } from './context/ThemeContext.jsx'
 
 initSessionTracking()
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <SavedCompetitionsProvider>
-          <CounselorAuthProvider>
-            <App />
-          </CounselorAuthProvider>
-        </SavedCompetitionsProvider>
-      </AuthProvider>
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <SavedCompetitionsProvider>
+            <CounselorAuthProvider>
+              <App />
+            </CounselorAuthProvider>
+          </SavedCompetitionsProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </ThemeProvider>
   </StrictMode>,
 )

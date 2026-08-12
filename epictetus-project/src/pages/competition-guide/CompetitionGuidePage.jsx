@@ -11,6 +11,7 @@ import SiteFooter from "../../components/SiteFooter";
 import BackToTop from "../../components/BackToTop";
 import SaveStarButton from "../../components/SaveStarButton";
 import AddToCalendar from "../../components/AddToCalendar";
+import CompetitionRoadmap from "../../components/CompetitionRoadmap";
 import './CompetitionGuidePage.css';
 
 export default function CompetitionGuidePage() {
@@ -185,10 +186,12 @@ export default function CompetitionGuidePage() {
                         </section>
                     )}
 
+                    <CompetitionRoadmap competitionId={competition.id} sectionIndex="02" />
+
                     {guide?.timeline?.length > 0 && (
                         <section id="timeline" className="guide-section timeline-section">
                             <div className="section-heading">
-                                <span className="section-index">02</span>
+                                <span className="section-index">03</span>
                                 <div>
                                     <span className="section-kicker">The runway</span>
                                     <h2 className="section-title">Timeline</h2>
@@ -213,7 +216,7 @@ export default function CompetitionGuidePage() {
                     {(guide?.tips?.length > 0 || guide?.common_mistakes?.length > 0) && (
                         <section id="prepare" className="guide-section strategy-section">
                             <div className="section-heading">
-                                <span className="section-index">03</span>
+                                <span className="section-index">04</span>
                                 <div>
                                     <span className="section-kicker">Field notes</span>
                                     <h2 className="section-title">Prepare with intent</h2>
@@ -242,7 +245,7 @@ export default function CompetitionGuidePage() {
                     {articles.length > 0 && (
                         <section id="guides" className="guide-section resources-section">
                             <div className="section-heading">
-                                <span className="section-index">04</span>
+                                <span className="section-index">05</span>
                                 <div>
                                     <span className="section-kicker">Deep dives</span>
                                     <h2 className="section-title">Guides</h2>
@@ -266,7 +269,7 @@ export default function CompetitionGuidePage() {
                     {videos.length > 0 && (
                         <section id="videos" className="guide-section resources-section videos-section">
                             <div className="section-heading">
-                                <span className="section-index">05</span>
+                                <span className="section-index">06</span>
                                 <div>
                                     <span className="section-kicker">Watch and learn</span>
                                     <h2 className="section-title">Videos</h2>
@@ -297,7 +300,7 @@ export default function CompetitionGuidePage() {
                     {guide?.faq?.length > 0 && (
                         <section id="faq" className="guide-section faq-section">
                             <div className="section-heading">
-                                <span className="section-index">06</span>
+                                <span className="section-index">07</span>
                                 <div>
                                     <span className="section-kicker">Clear the air</span>
                                     <h2 className="section-title">FAQ</h2>
@@ -381,11 +384,12 @@ export default function CompetitionGuidePage() {
 
                     <nav className="section-nav" aria-label="Jump to section">
                         <a href="#overview">01</a>
-                        <a href="#timeline">02</a>
-                        <a href="#prepare">03</a>
-                        <a href="#guides">04</a>
-                        <a href="#videos">05</a>
-                        <a href="#faq">06</a>
+                        <a href="#roadmap">02</a>
+                        <a href="#timeline">03</a>
+                        <a href="#prepare">04</a>
+                        <a href="#guides">05</a>
+                        <a href="#videos">06</a>
+                        <a href="#faq">07</a>
                     </nav>
                     </div>
 

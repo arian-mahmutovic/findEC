@@ -2,7 +2,7 @@
     display: grid;
     place-items: center;
     min-height: 100vh;
-    background: #ffffff;
+    background: var(--bg, #ffffff);
 }
 
 .auth-loading-dot {
@@ -10,7 +10,7 @@
     height: 14px;
     border-radius: 50%;
     background: #abf910;
-    border: 2px solid #111111;
+    border: 2px solid var(--text, #111111);
     animation: auth-loading-pulse 900ms ease-in-out infinite;
 }
 

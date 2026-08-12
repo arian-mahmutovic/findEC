@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router";
 import { COUNSELOR_ARTICLES } from "./counselorArticles";
 import ParticleBackground from "../../components/ParticleBackground";
 import CounselorFooter from "../../components/CounselorFooter";
+import ThemeToggle from "../../components/ThemeToggle";
 
 export default function CounselorArticlePage() {
     const { slug } = useParams();
@@ -33,6 +34,10 @@ export default function CounselorArticlePage() {
                 <div className="counselor-nav-brand">
                     <Link to="/counselor/dashboard">Epictetus Project</Link>
                     <span>Counselor Portal</span>
+                </div>
+
+                <div className="counselor-nav-user">
+                    <ThemeToggle className="counselor-theme-toggle" />
                 </div>
             </nav>
 

@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { signOut } from "../services/auth";
 import NewsletterModal from "./NewsletterModal";
 import ProfileModal from "./ProfileModal";
+import ThemeToggle from "./ThemeToggle";
 import "./SiteHeader.css";
 
 const YOUTUBE_URL = "https://www.youtube.com/@EpictetusProject";
@@ -62,6 +63,8 @@ export default function SiteHeader({ actions }) {
                         <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9.5v5l4.5-2.5Z" fill="#111111"/></svg>
                     </a>
                 </nav>
+
+                <ThemeToggle className="site-header-icon-btn site-header-theme-toggle" />
 
                 {user ? (
                     <div className="site-header-actions">

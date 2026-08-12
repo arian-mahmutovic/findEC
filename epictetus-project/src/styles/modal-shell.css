@@ -19,20 +19,35 @@
 }
 
 .signup-modal {
+    --ms-bg: #ffffff;
+    --ms-surface-2: #f5f6f2;
+    --ms-ink: #111111;
+    --ms-muted: #333944;
+    --ms-faint: #5b6270;
+    --ms-lime: #abf910;
+
     position: relative;
     width: min(100%, 440px);
     max-height: calc(100vh - 48px);
     overflow-y: auto;
 
-    background: #ffffff;
-    color: #111111;
-    border: 2.5px solid #111111;
+    background: var(--ms-bg);
+    color: var(--ms-ink);
+    border: 2.5px solid var(--ms-ink);
     border-radius: 22px;
-    box-shadow: 10px 10px 0 #abf910;
+    box-shadow: 10px 10px 0 var(--ms-lime);
 
     padding: 2.5rem;
     box-sizing: border-box;
     font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+[data-theme="dark"] .signup-modal {
+    --ms-bg: #17181b;
+    --ms-surface-2: #1e2023;
+    --ms-ink: #f3f4ef;
+    --ms-muted: #c6cad3;
+    --ms-faint: #9aa0ab;
 }
 
 .signup-modal.signup-modal-wide {
@@ -44,7 +59,7 @@
     align-items: center;
     gap: 8px;
     padding: 6px 12px;
-    border: 2px solid #111111;
+    border: 2px solid var(--ms-ink);
     border-radius: 999px;
     font-size: 0.68rem;
     font-weight: 800;
@@ -57,8 +72,8 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #abf910;
-    border: 1.5px solid #111111;
+    background: var(--ms-lime);
+    border: 1.5px solid var(--ms-ink);
 }
 
 .signup-modal h2 {
@@ -70,7 +85,7 @@
 
 .signup-modal > p {
     margin-top: 0.6rem;
-    color: #5b6270;
+    color: var(--ms-faint);
     font-size: 0.92rem;
     font-weight: 600;
     line-height: 1.6;
@@ -86,11 +101,11 @@
     width: 36px;
     height: 36px;
 
-    border: 2px solid #111111;
+    border: 2px solid var(--ms-ink);
     border-radius: 50%;
 
-    background: #ffffff;
-    color: #111111;
+    background: var(--ms-bg);
+    color: var(--ms-ink);
 
     font-size: 0.85rem;
     cursor: pointer;
@@ -98,7 +113,8 @@
 }
 
 .close-button:hover {
-    background: #abf910;
+    background: var(--ms-lime);
+    color: #111111;
     transform: rotate(90deg);
 }
 
@@ -117,11 +133,11 @@
     padding: 0.95rem 1.1rem;
     box-sizing: border-box;
 
-    border: 2px solid #111111;
+    border: 2px solid var(--ms-ink);
     border-radius: 12px;
 
-    background: #ffffff;
-    color: #111111;
+    background: var(--ms-bg);
+    color: var(--ms-ink);
     font: inherit;
     font-weight: 600;
 
@@ -135,13 +151,13 @@
 }
 
 .signup-modal input::placeholder {
-    color: #5b6270;
+    color: var(--ms-faint);
     font-weight: 500;
 }
 
 .signup-modal input:focus,
 .signup-modal select:focus {
-    box-shadow: 3px 3px 0 #abf910;
+    box-shadow: 3px 3px 0 var(--ms-lime);
 }
 
 .form-error {
@@ -158,17 +174,17 @@
 .form-notice {
     margin: 0;
     padding: 0.7rem 0.9rem;
-    border: 2px solid #111111;
+    border: 2px solid var(--ms-ink);
     border-radius: 10px;
     background: rgba(171, 249, 16, 0.18);
-    color: #111111;
+    color: var(--ms-ink);
     font-size: 0.85rem;
     font-weight: 700;
 }
 
 .modal-privacy-note {
     margin: 0.9rem 0 0;
-    color: #5b6270;
+    color: var(--ms-faint);
     font-size: 0.78rem;
     font-weight: 600;
     line-height: 1.5;
@@ -180,11 +196,11 @@
     margin-top: 0.3rem;
     padding: 1rem;
 
-    border: 2px solid #111111;
+    border: 2px solid var(--ms-ink);
     border-radius: 12px;
 
-    background: #111111;
-    color: #abf910;
+    background: var(--ms-ink);
+    color: var(--ms-lime);
     font-weight: 800;
     font-size: 0.98rem;
     cursor: pointer;
@@ -193,7 +209,13 @@
 
 .signup-button:hover:not(:disabled) {
     transform: translate(-2px, -2px);
-    box-shadow: 4px 4px 0 #abf910;
+    box-shadow: 4px 4px 0 var(--ms-lime);
+}
+
+[data-theme="dark"] .signup-button {
+    background: var(--ms-lime);
+    border-color: var(--ms-lime);
+    color: #111111;
 }
 
 .signup-button:disabled {

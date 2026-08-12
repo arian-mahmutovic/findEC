@@ -24,7 +24,7 @@
     border: none;
     border-radius: 8px;
     background: transparent;
-    color: #5b6270;
+    color: var(--ms-faint);
     cursor: pointer;
     transition: background 140ms ease, color 140ms ease;
 }
@@ -35,8 +35,8 @@
 }
 
 .password-toggle:hover {
-    background: #f5f6f2;
-    color: #111111;
+    background: var(--ms-surface-2);
+    color: var(--ms-ink);
 }
 
 .forgot-password-link {
@@ -47,7 +47,7 @@
     background: transparent;
     padding: 0;
 
-    color: #5b6270;
+    color: var(--ms-faint);
     font: inherit;
     font-size: 0.8rem;
     font-weight: 700;
@@ -57,7 +57,7 @@
 }
 
 .forgot-password-link:hover {
-    color: #111111;
+    color: var(--ms-ink);
 }
 
 .forgot-password-link:disabled {
@@ -73,7 +73,7 @@
     background: transparent;
     padding: 0;
 
-    color: #5b6270;
+    color: var(--ms-faint);
     font: inherit;
     font-size: 0.8rem;
     font-weight: 700;
@@ -83,7 +83,7 @@
 }
 
 .resend-confirmation-link:hover {
-    color: #111111;
+    color: var(--ms-ink);
 }
 
 .resend-confirmation-link:disabled {
@@ -99,7 +99,7 @@
     gap: 8px;
     margin-top: -0.2rem;
 
-    color: #333944;
+    color: var(--ms-muted);
     font-size: 0.83rem;
     font-weight: 600;
     line-height: 1.4;
@@ -121,11 +121,11 @@
     width: 100%;
     padding: 0.9rem;
 
-    border: 2px solid #111111;
+    border: 2px solid var(--ms-ink);
     border-radius: 12px;
 
-    background: #ffffff;
-    color: #111111;
+    background: var(--ms-bg);
+    color: var(--ms-ink);
     font: inherit;
     font-weight: 700;
     cursor: pointer;
@@ -133,7 +133,7 @@
 }
 
 .google-button:hover {
-    background: #f5f6f2;
+    background: var(--ms-surface-2);
 }
 
 /* ---------- Divider ---------- */
@@ -154,7 +154,7 @@
 }
 
 .divider span {
-    color: #5b6270;
+    color: var(--ms-faint);
     font-size: 0.85rem;
     font-weight: 700;
 }
@@ -164,7 +164,7 @@
 .login-link {
     margin-top: 1.6rem;
     text-align: center;
-    color: #5b6270;
+    color: var(--ms-faint);
     font-size: 0.9rem;
     font-weight: 600;
 }
@@ -173,7 +173,7 @@
     margin-left: 0.4rem;
     border: none;
     background: transparent;
-    color: #111111;
+    color: var(--ms-ink);
     font-weight: 800;
     cursor: pointer;
     text-decoration: underline;
@@ -181,5 +181,5 @@
 }
 
 .login-link button:hover {
-    color: #5b6270;
+    color: var(--ms-faint);
 }

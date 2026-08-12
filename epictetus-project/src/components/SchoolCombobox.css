@@ -7,11 +7,11 @@
     box-sizing: border-box;
     padding: 0.95rem 1.1rem;
 
-    border: 2px solid #111111;
+    border: 2px solid var(--border, #111111);
     border-radius: 12px;
 
-    background: #ffffff;
-    color: #111111;
+    background: var(--surface, #ffffff);
+    color: var(--text, #111111);
     font: inherit;
     font-weight: 600;
 
@@ -20,7 +20,7 @@
 }
 
 .school-combobox input::placeholder {
-    color: #5b6270;
+    color: var(--muted, #5b6270);
     font-weight: 500;
 }
 
@@ -42,8 +42,8 @@
     max-height: 220px;
     overflow-y: auto;
 
-    background: #ffffff;
-    border: 2px solid #111111;
+    background: var(--surface, #ffffff);
+    border: 2px solid var(--border, #111111);
     border-radius: 12px;
     box-shadow: 5px 5px 0 #abf910;
 }
@@ -63,7 +63,7 @@
     border: none;
     border-radius: 8px;
     background: transparent;
-    color: #111111;
+    color: var(--text, #111111);
     font: inherit;
     font-size: 0.9rem;
     font-weight: 600;
@@ -72,11 +72,11 @@
 }
 
 .school-combobox-list button:hover {
-    background: #f5f6f2;
+    background: var(--surface-2, #f5f6f2);
 }
 
 .school-combobox-meta {
-    color: #5b6270;
+    color: var(--muted, #5b6270);
     font-size: 0.78rem;
     font-weight: 500;
 }
@@ -90,12 +90,12 @@
 
     padding: 0.75rem 0.9rem;
 
-    background: #ffffff;
-    border: 2px solid #111111;
+    background: var(--surface, #ffffff);
+    border: 2px solid var(--border, #111111);
     border-radius: 12px;
     box-shadow: 5px 5px 0 #abf910;
 
-    color: #5b6270;
+    color: var(--muted, #5b6270);
     font-size: 0.82rem;
     font-weight: 500;
     line-height: 1.45;

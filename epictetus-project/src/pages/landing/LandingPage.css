@@ -30,6 +30,29 @@
 
 .landing-page * { box-sizing: border-box; }
 
+[data-theme="dark"] .landing-page {
+    --lp-bg: #0d0e10;
+    --lp-surface: #17181b;
+    --lp-ink: #f3f4ef;
+    --lp-muted: #c6cad3;
+    --lp-faint: #9aa0ab;
+    --lp-border: #f3f4ef;
+    background:
+        url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA1NjAgNTYwJyBmaWxsPSdub25lJyBzdHJva2U9J3JnYmEoMjU1LDI1NSwyNTUsMC4xNiknIHN0cm9rZS13aWR0aD0nMS4xJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnPgo8c3ltYm9sIGlkPSdib29rJyB2aWV3Qm94PScwIDAgMjQgMjQnPjxwYXRoIGQ9J000IDE5LjVBMi41IDIuNSAwIDAgMSA2LjUgMTdIMjAnLz48cGF0aCBkPSdNNi41IDJIMjB2MjBINi41QTIuNSAyLjUgMCAwIDEgNCAxOS41di0xNUEyLjUgMi41IDAgMCAxIDYuNSAyWicvPjwvc3ltYm9sPgo8c3ltYm9sIGlkPSdtZWRhbCcgdmlld0JveD0nMCAwIDI0IDI0Jz48Y2lyY2xlIGN4PScxMicgY3k9JzE1JyByPSc2Jy8+PHBhdGggZD0nTTkgM2g2bC0xLjUgN2gtM1onLz48cGF0aCBkPSdNMTAuMiAxMCA4IDNNMTMuOCAxMCAxNiAzJy8+PC9zeW1ib2w+CjxzeW1ib2wgaWQ9J2ZsYXNrJyB2aWV3Qm94PScwIDAgMjQgMjQnPjxwYXRoIGQ9J005IDJoNk0xMCAydjZsLTUgMTBhMiAyIDAgMCAwIDIgM2gxMGEyIDIgMCAwIDAgMi0zbC01LTEwVjInLz48cGF0aCBkPSdNNy41IDE1aDknLz48L3N5bWJvbD4KPHN5bWJvbCBpZD0nYmFkZ2UnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHBhdGggZD0nbTEyIDIgMyA2IDYuNS45LTQuNyA0LjZMMTggMjBsLTYtMy40TDYgMjBsMS4yLTYuNUwyLjUgOC45IDkgOFonLz48L3N5bWJvbD4KPHN5bWJvbCBpZD0ndHJvcGh5JyB2aWV3Qm94PScwIDAgMjQgMjQnPjxwYXRoIGQ9J004IDIxaDhNMTIgMTd2NE03IDRoMTB2NWE1IDUgMCAwIDEtMTAgMFonLz48cGF0aCBkPSdNMTcgNWgzYTIgMiAwIDAgMSAwIDRoLTFNNyA1SDRhMiAyIDAgMCAwIDAgNGgxJy8+PHBhdGggZD0nbTEyIDggLjggMS42IDEuOC4yLTEuMyAxLjMuMyAxLjgtMS42LS45LTEuNi45LjMtMS44LTEuMy0xLjMgMS44LS4yWicvPjwvc3ltYm9sPgo8c3ltYm9sIGlkPSdwZXJzb24nIHZpZXdCb3g9JzAgMCAyNCAyNCc+PGNpcmNsZSBjeD0nMTInIGN5PSc4JyByPSc0Jy8+PHBhdGggZD0nTTQgMjF2LTJhNCA0IDAgMCAxIDQtNGg4YTQgNCAwIDAgMSA0IDR2MicvPjxwYXRoIGQ9J20xMSAxMyAxIDIgMS0yLTEgNi0xLTZaJy8+PC9zeW1ib2w+CjxzeW1ib2wgaWQ9J2JyaWVmY2FzZScgdmlld0JveD0nMCAwIDI0IDI0Jz48cmVjdCB4PScyJyB5PSc3JyB3aWR0aD0nMjAnIGhlaWdodD0nMTQnIHJ4PScyJy8+PHBhdGggZD0nTTE2IDIxVjVhMiAyIDAgMCAwLTItMmgtNGEyIDIgMCAwIDAtMiAydjE2Jy8+PC9zeW1ib2w+CjxzeW1ib2wgaWQ9J2dlYXInIHZpZXdCb3g9JzAgMCAyNCAyNCc+PGNpcmNsZSBjeD0nMTInIGN5PScxMicgcj0nMycvPjxwYXRoIGQ9J00xMiAydjNNMTIgMTl2M000LjIgNC4ybDIuMSAyLjFNMTcuNyAxNy43bDIuMSAyLjFNMiAxMmgzTTE5IDEyaDNNNC4yIDE5LjhsMi4xLTIuMU0xNy43IDYuM2wyLjEtMi4xJy8+PC9zeW1ib2w+CjxzeW1ib2wgaWQ9J2NpcmN1aXQnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PGNpcmNsZSBjeD0nNicgY3k9JzYnIHI9JzEuNicvPjxjaXJjbGUgY3g9JzE4JyBjeT0nNicgcj0nMS42Jy8+PGNpcmNsZSBjeD0nNicgY3k9JzE4JyByPScxLjYnLz48Y2lyY2xlIGN4PScxOCcgY3k9JzE4JyByPScxLjYnLz48Y2lyY2xlIGN4PScxMicgY3k9JzEyJyByPScxLjgnLz48cGF0aCBkPSdNNiA3LjZWMTJoNC40TTE4IDcuNlYxMmgtNC40TTYgMTYuNFYxMk0xOCAxNi40VjEyJy8+PC9zeW1ib2w+CjxnIHRyYW5zZm9ybT0ndHJhbnNsYXRlKDEwLDEwKSByb3RhdGUoLTgpIHNjYWxlKDEuNyknPjx1c2UgaHJlZj0nI2Jvb2snIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcvPjwvZz4KPGcgdHJhbnNmb3JtPSd0cmFuc2xhdGUoMTUwLDIwKSByb3RhdGUoMTUpIHNjYWxlKDEuNSknPjx1c2UgaHJlZj0nI2dlYXInIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcvPjwvZz4KPGcgdHJhbnNmb3JtPSd0cmFuc2xhdGUoMzAwLDEwKSByb3RhdGUoLTYpIHNjYWxlKDEuNiknPjx1c2UgaHJlZj0nI2ZsYXNrJyB3aWR0aD0nMjQnIGhlaWdodD0nMjQnLz48L2c+CjxnIHRyYW5zZm9ybT0ndHJhbnNsYXRlKDQzMCwyNSkgcm90YXRlKDApIHNjYWxlKDEuNCknPjx1c2UgaHJlZj0nI2NpcmN1aXQnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcvPjwvZz4KPGcgdHJhbnNmb3JtPSd0cmFuc2xhdGUoMTUsMTYwKSByb3RhdGUoOCkgc2NhbGUoMS42KSc+PHVzZSBocmVmPScjdHJvcGh5JyB3aWR0aD0nMjQnIGhlaWdodD0nMjQnLz48L2c+CjxnIHRyYW5zZm9ybT0ndHJhbnNsYXRlKDE2MCwxNTApIHJvdGF0ZSgtMTApIHNjYWxlKDEuNSknPjx1c2UgaHJlZj0nI21lZGFsJyB3aWR0aD0nMjQnIGhlaWdodD0nMjQnLz48L2c+CjxnIHRyYW5zZm9ybT0ndHJhbnNsYXRlKDMxMCwxNzApIHJvdGF0ZSg2KSBzY2FsZSgxLjUpJz48dXNlIGhyZWY9JyNicmllZmNhc2UnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcvPjwvZz4KPGcgdHJhbnNmb3JtPSd0cmFuc2xhdGUoNDQwLDE1NSkgcm90YXRlKC0xMikgc2NhbGUoMS42KSc+PHVzZSBocmVmPScjYmFkZ2UnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcvPjwvZz4KPGcgdHJhbnNmb3JtPSd0cmFuc2xhdGUoMjAsMzAwKSByb3RhdGUoLTQpIHNjYWxlKDEuNSknPjx1c2UgaHJlZj0nI3BlcnNvbicgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0Jy8+PC9nPgo8ZyB0cmFuc2Zvcm09J3RyYW5zbGF0ZSgxNTUsMzEwKSByb3RhdGUoMTApIHNjYWxlKDEuNyknPjx1c2UgaHJlZj0nI2Jvb2snIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcvPjwvZz4KPGcgdHJhbnNmb3JtPSd0cmFuc2xhdGUoMzAwLDI5NSkgcm90YXRlKC04KSBzY2FsZSgxLjQpJz48dXNlIGhyZWY9JyNnZWFyJyB3aWR0aD0nMjQnIGhlaWdodD0nMjQnLz48L2c+CjxnIHRyYW5zZm9ybT0ndHJhbnNsYXRlKDQzNSwzMjApIHJvdGF0ZSg1KSBzY2FsZSgxLjYpJz48dXNlIGhyZWY9JyNmbGFzaycgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0Jy8+PC9nPgo8ZyB0cmFuc2Zvcm09J3RyYW5zbGF0ZSgyNSw0NDApIHJvdGF0ZSgwKSBzY2FsZSgxLjMpJz48dXNlIGhyZWY9JyNjaXJjdWl0JyB3aWR0aD0nMjQnIGhlaWdodD0nMjQnLz48L2c+CjxnIHRyYW5zZm9ybT0ndHJhbnNsYXRlKDE2MCw0NTApIHJvdGF0ZSgtNikgc2NhbGUoMS42KSc+PHVzZSBocmVmPScjdHJvcGh5JyB3aWR0aD0nMjQnIGhlaWdodD0nMjQnLz48L2c+CjxnIHRyYW5zZm9ybT0ndHJhbnNsYXRlKDMwNSw0MzUpIHJvdGF0ZSgxMikgc2NhbGUoMS41KSc+PHVzZSBocmVmPScjbWVkYWwnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcvPjwvZz4KPGcgdHJhbnNmb3JtPSd0cmFuc2xhdGUoNDMwLDQ0NSkgcm90YXRlKC04KSBzY2FsZSgxLjUpJz48dXNlIGhyZWY9JyNiYWRnZScgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0Jy8+PC9nPgo8L3N2Zz4K") 0 0 / 480px 480px repeat,
+        radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1.4px) 0 0 / 26px 26px,
+        var(--lp-bg);
+}
+
+/* Solid "ink" chips read as light pills once --lp-ink flips in dark mode,
+   so their fill/text pairing is re-pinned to the accent instead of inverting. */
+[data-theme="dark"] .lp-search-shell button,
+[data-theme="dark"] .landing-page .competition-card .competition-card-button,
+[data-theme="dark"] .lp-cta > button {
+    background: var(--lp-lime);
+    border-color: var(--lp-lime);
+    color: #111111;
+}
+
 /* =========================
    HERO
 ========================= */
@@ -348,13 +371,13 @@
     border: 2px solid var(--lp-ink);
     border-radius: 999px;
     background: var(--lp-lime);
-    color: var(--lp-ink);
+    color: var(--lp-lime-ink);
     font-size: 0.72rem;
     font-weight: 800;
     letter-spacing: 0.02em;
 }
 
-.landing-page .badge.prestige-badge { background: #ffffff; }
+.landing-page .badge.prestige-badge { background: var(--lp-surface); }
 
 .landing-page .competition-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
@@ -484,7 +507,7 @@
     padding: 0.8rem 1rem;
     border-radius: 10px;
     border: 2.5px solid var(--lp-ink);
-    background: #ffffff;
+    background: var(--lp-surface);
     color: var(--lp-ink);
     font: inherit;
     font-size: 0.82rem;

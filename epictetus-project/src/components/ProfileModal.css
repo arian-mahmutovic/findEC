@@ -1,14 +1,14 @@
 .no-counselor-cta {
     margin: 0.5rem 0 0;
     padding: 0.85rem 1rem;
-    border: 2px solid #111111;
+    border: 2px solid var(--ms-ink);
     border-radius: 12px;
-    background: #f5f6f2;
+    background: var(--ms-surface-2);
 }
 
 .no-counselor-cta p {
     margin: 0 0 0.65rem;
-    color: #333944;
+    color: var(--ms-muted);
     font-size: 0.82rem;
     font-weight: 600;
     line-height: 1.5;
@@ -16,10 +16,10 @@
 
 .no-counselor-cta button {
     padding: 0.55rem 0.9rem;
-    border: 2px solid #111111;
+    border: 2px solid var(--ms-ink);
     border-radius: 9px;
-    background: #ffffff;
-    color: #111111;
+    background: var(--ms-bg);
+    color: var(--ms-ink);
     font: inherit;
     font-size: 0.8rem;
     font-weight: 800;
@@ -29,6 +29,7 @@
 
 .no-counselor-cta button:hover {
     background: #abf910;
+    color: #111111;
     transform: translateY(-2px);
 }
 
@@ -39,7 +40,7 @@
     font-weight: 800;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #111111;
+    color: var(--ms-ink);
 }
 
 .profile-label:first-of-type {
@@ -47,7 +48,7 @@
 }
 
 .profile-label span {
-    color: #5b6270;
+    color: var(--ms-faint);
     font-weight: 600;
     text-transform: none;
     letter-spacing: normal;
@@ -61,10 +62,10 @@
 
 .profile-tag {
     padding: 0.5rem 1rem;
-    border: 2px solid #111111;
+    border: 2px solid var(--ms-ink);
     border-radius: 999px;
     background: transparent;
-    color: #111111;
+    color: var(--ms-ink);
     font: inherit;
     font-size: 0.82rem;
     font-weight: 700;
@@ -78,6 +79,7 @@
 
 .profile-tag.is-active {
     background: #abf910;
+    color: #111111;
 }
 
 .profile-newsletter-row {
@@ -95,7 +97,7 @@
     height: 14px;
     border-radius: 50%;
     background: #abf910;
-    border: 2px solid #111111;
+    border: 2px solid var(--ms-ink);
     animation: profile-pulse 900ms ease-in-out infinite;
 }
 
@@ -116,7 +118,7 @@
     border: none;
     background: transparent;
     padding: 0;
-    color: #9aa1ad;
+    color: var(--ms-faint);
     font: inherit;
     font-size: 0.76rem;
     font-weight: 600;
@@ -138,7 +140,7 @@
 
 .profile-delete-confirm p {
     margin: 0;
-    color: #333944;
+    color: var(--ms-muted);
     font-size: 0.8rem;
     font-weight: 600;
     line-height: 1.5;
@@ -161,13 +163,13 @@
 }
 
 .profile-delete-cancel {
-    border: 1.5px solid #111111;
-    background: #ffffff;
-    color: #111111;
+    border: 1.5px solid var(--ms-ink);
+    background: var(--ms-bg);
+    color: var(--ms-ink);
 }
 
 .profile-delete-cancel:hover {
-    background: #f5f6f2;
+    background: var(--ms-surface-2);
 }
 
 .profile-delete-confirm-button {

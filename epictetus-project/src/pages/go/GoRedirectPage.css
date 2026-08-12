@@ -12,10 +12,11 @@
 }
 
 .go-redirect-dot {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: var(--accent);
+    border: 2px solid var(--text);
     animation: go-redirect-pulse 900ms ease-in-out infinite;
 }
 

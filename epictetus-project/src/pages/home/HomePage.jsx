@@ -14,6 +14,7 @@ import BackToTop from "../../components/BackToTop";
 import SiteFooter from "../../components/SiteFooter";
 import SaveStarButton from "../../components/SaveStarButton";
 import ReminderBanner from "../../components/ReminderBanner";
+import ThemeToggle from "../../components/ThemeToggle";
 import { formatDate } from "../../utils/dates";
 import { getMatchTier, getMatchReason } from "../../utils/matchScore";
 
@@ -169,6 +170,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="dashboard-user">
+                    <ThemeToggle className="dashboard-icon-btn" />
                     <button
                         type="button"
                         className="profile-circle"

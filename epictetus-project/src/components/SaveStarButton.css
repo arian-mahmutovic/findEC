@@ -10,10 +10,10 @@
     height: 42px !important;
     padding: 0 !important;
 
-    border: 2.5px solid #111111;
+    border: 2.5px solid var(--border, #111111);
     border-radius: 10px;
-    background: #ffffff;
-    color: #111111;
+    background: var(--surface, #ffffff);
+    color: var(--text, #111111);
     cursor: pointer;
     transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }
@@ -63,6 +63,7 @@
 
 .save-star-button.save-star-label:hover {
     background: #abf910;
+    color: #111111;
     transform: translateY(-2px);
     box-shadow: none;
 }

@@ -18,6 +18,7 @@ import StudentDetailPanel from "./StudentDetailPanel";
 import CounselorAccountModal from "./CounselorAccountModal";
 import ParticleBackground from "../../components/ParticleBackground";
 import CounselorFooter from "../../components/CounselorFooter";
+import ThemeToggle from "../../components/ThemeToggle";
 import { formatDate } from "../../utils/dates";
 import { COUNSELOR_ARTICLES } from "./counselorArticles";
 
@@ -470,6 +471,7 @@ export default function CounselorHomePage() {
                 <div className="counselor-nav-user">
                     <span>{counselor.school}</span>
                     <Link to="/counselor/competitions" className="counselor-nav-link">Competitions</Link>
+                    <ThemeToggle className="counselor-theme-toggle" />
                     <button type="button" onClick={() => setShowAccount(true)}>My Account</button>
                     <button type="button" onClick={handleSignOut}>Sign out</button>
                 </div>

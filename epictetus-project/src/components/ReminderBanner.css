@@ -5,7 +5,7 @@
     border: 2.5px solid var(--dp-ink);
     border-radius: 16px;
     background: var(--dp-surface);
-    box-shadow: 6px 6px 0 var(--dp-amber);
+    box-shadow: 6px 6px 0 var(--dp-violet);
 }
 
 .reminder-banner-text {
@@ -50,8 +50,14 @@
 
 .reminder-banner-secondary {
     border: 2px solid var(--dp-ink);
-    background: #ffffff;
+    background: var(--dp-surface);
     color: var(--dp-ink);
+}
+
+[data-theme="dark"] .reminder-banner-primary {
+    background: var(--dp-lime);
+    border-color: var(--dp-lime);
+    color: #111111;
 }
 
 .reminder-banner-primary:hover:not(:disabled),

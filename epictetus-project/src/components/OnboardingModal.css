@@ -14,19 +14,34 @@
 }
 
 .onboarding-card {
+    --om-bg: #ffffff;
+    --om-surface-2: var(--om-surface-2);
+    --om-ink: var(--om-ink);
+    --om-muted: var(--om-muted);
+    --om-faint: var(--om-faint);
+    --om-lime: #abf910;
+
     width: min(100%, 520px);
     max-height: calc(100vh - 48px);
     overflow-y: auto;
 
-    background: #ffffff;
-    color: #111111;
-    border: 2.5px solid #111111;
+    background: var(--om-bg);
+    color: var(--om-ink);
+    border: 2.5px solid var(--om-ink);
     border-radius: 22px;
-    box-shadow: 10px 10px 0 #abf910;
+    box-shadow: 10px 10px 0 var(--om-lime);
 
     padding: 2.5rem;
     box-sizing: border-box;
     font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+[data-theme="dark"] .onboarding-card {
+    --om-bg: #17181b;
+    --om-surface-2: #1e2023;
+    --om-ink: #f3f4ef;
+    --om-muted: #c6cad3;
+    --om-faint: #9aa0ab;
 }
 
 .onboarding-eyebrow {
@@ -34,7 +49,7 @@
     align-items: center;
     gap: 8px;
     padding: 6px 12px;
-    border: 2px solid #111111;
+    border: 2px solid var(--om-ink);
     border-radius: 999px;
     font-size: 0.68rem;
     font-weight: 800;
@@ -48,7 +63,7 @@
     height: 7px;
     border-radius: 50%;
     background: #abf910;
-    border: 1.5px solid #111111;
+    border: 1.5px solid var(--om-ink);
 }
 
 .onboarding-card h2 {
@@ -60,7 +75,7 @@
 
 .onboarding-card > p {
     margin-top: 0.6rem;
-    color: #5b6270;
+    color: var(--om-faint);
     font-size: 0.9rem;
     font-weight: 600;
     line-height: 1.6;
@@ -79,7 +94,7 @@
     font-weight: 800;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #111111;
+    color: var(--om-ink);
 }
 
 .onboarding-label:first-of-type {
@@ -87,7 +102,7 @@
 }
 
 .onboarding-label span {
-    color: #5b6270;
+    color: var(--om-faint);
     font-weight: 600;
     text-transform: none;
     letter-spacing: normal;
@@ -98,11 +113,11 @@
     box-sizing: border-box;
     padding: 0.95rem 1.1rem;
 
-    border: 2px solid #111111;
+    border: 2px solid var(--om-ink);
     border-radius: 12px;
 
-    background: #ffffff;
-    color: #111111;
+    background: var(--om-bg);
+    color: var(--om-ink);
     font: inherit;
     font-weight: 600;
 
@@ -117,7 +132,7 @@
 
 .onboarding-hint {
     margin: 0.5rem 0 0;
-    color: #5b6270;
+    color: var(--om-faint);
     font-size: 0.82rem;
     font-weight: 600;
 }
@@ -125,14 +140,14 @@
 .no-counselor-cta {
     margin: 0.5rem 0 0;
     padding: 0.85rem 1rem;
-    border: 2px solid #111111;
+    border: 2px solid var(--om-ink);
     border-radius: 12px;
-    background: #f5f6f2;
+    background: var(--om-surface-2);
 }
 
 .no-counselor-cta p {
     margin: 0 0 0.65rem;
-    color: #333944;
+    color: var(--om-muted);
     font-size: 0.82rem;
     font-weight: 600;
     line-height: 1.5;
@@ -140,10 +155,10 @@
 
 .no-counselor-cta button {
     padding: 0.55rem 0.9rem;
-    border: 2px solid #111111;
+    border: 2px solid var(--om-ink);
     border-radius: 9px;
-    background: #ffffff;
-    color: #111111;
+    background: var(--om-bg);
+    color: var(--om-ink);
     font: inherit;
     font-size: 0.8rem;
     font-weight: 800;
@@ -153,6 +168,7 @@
 
 .no-counselor-cta button:hover {
     background: #abf910;
+    color: #111111;
     transform: translateY(-2px);
 }
 
@@ -164,10 +180,10 @@
 
 .onboarding-tag {
     padding: 0.5rem 1rem;
-    border: 2px solid #111111;
+    border: 2px solid var(--om-ink);
     border-radius: 999px;
     background: transparent;
-    color: #111111;
+    color: var(--om-ink);
     font: inherit;
     font-size: 0.82rem;
     font-weight: 700;
@@ -181,6 +197,7 @@
 
 .onboarding-tag.is-active {
     background: #abf910;
+    color: #111111;
 }
 
 .onboarding-error {
@@ -206,7 +223,7 @@
     border: none;
     background: transparent;
     padding: 0;
-    color: #5b6270;
+    color: var(--om-faint);
     font: inherit;
     font-size: 0.85rem;
     font-weight: 700;
@@ -216,22 +233,28 @@
 }
 
 .onboarding-skip:hover {
-    color: #111111;
+    color: var(--om-ink);
 }
 
 .onboarding-save {
     padding: 0.9rem 1.8rem;
 
-    border: 2px solid #111111;
+    border: 2px solid var(--om-ink);
     border-radius: 12px;
 
-    background: #111111;
+    background: var(--om-ink);
     color: #abf910;
     font: inherit;
     font-weight: 800;
     font-size: 0.95rem;
     cursor: pointer;
     transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+[data-theme="dark"] .onboarding-save {
+    background: var(--om-lime);
+    border-color: var(--om-lime);
+    color: #111111;
 }
 
 .onboarding-save:hover:not(:disabled) {
