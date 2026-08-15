@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import "./ParticleBackground.css";
 
 const PARTICLE_COUNT = 2500;
-const PARTICLE_COLOR = "124, 58, 237";
+const PARTICLE_COLOR = "167, 139, 250";
 const HOVER_RADIUS = 100;
 const MAX_PUSH = 16;
 

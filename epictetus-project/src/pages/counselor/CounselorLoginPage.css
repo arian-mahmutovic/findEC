@@ -4,10 +4,18 @@
 ========================= */
 
 .counselor-login-page {
-    --accent: #7C3AED;
-    --accent-hover: #6D28D9;
-    --accent-soft: #EDE9FE;
-    --accent-text: #6D28D9;
+    /* Counselor portal is always-dark by design. */
+    --bg: #0d0b16;
+    --surface: #17131f;
+    --surface-2: #201a2c;
+    --border: rgba(167, 139, 250, 0.18);
+    --text: #f2eefc;
+    --muted: #a99fc4;
+
+    --accent: #8B5CF6;
+    --accent-hover: #A78BFA;
+    --accent-soft: #271f42;
+    --accent-text: #C4B5FD;
 
     min-height: 100vh;
     display: flex;
@@ -15,26 +23,15 @@
     justify-content: center;
     padding: 24px;
     box-sizing: border-box;
-    background: var(--bg);
+    background:
+        radial-gradient(ellipse 900px 600px at 15% -10%, rgba(139, 92, 246, 0.2), transparent 60%),
+        radial-gradient(ellipse 700px 500px at 100% 110%, rgba(251, 191, 36, 0.07), transparent 60%),
+        var(--bg);
 }
 
 .counselor-login-page ::selection {
     background: var(--accent);
     color: #ffffff;
-}
-
-[data-theme="dark"] .counselor-login-page {
-    --accent: #8B5CF6;
-    --accent-hover: #A78BFA;
-    --accent-soft: #2E1065;
-    --accent-text: #C4B5FD;
-}
-
-.counselor-login-theme-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 2;
 }
 
 .counselor-login-card {
@@ -46,8 +43,9 @@
     padding: 2.75rem 2.25rem;
 
     background: var(--surface);
-    border: 1px solid var(--border);
+    border: 1px solid rgba(167, 139, 250, 0.3);
     border-radius: 14px;
+    box-shadow: 0 24px 60px -24px rgba(139, 92, 246, 0.4);
 }
 
 .counselor-login-brand {
@@ -149,11 +147,14 @@
     font-size: 0.92rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 140ms ease;
+    box-shadow: 0 8px 24px -10px rgba(139, 92, 246, 0.7);
+    transition: background 140ms ease, box-shadow 140ms ease, transform 140ms ease;
 }
 
 .counselor-login-card button:hover:not(:disabled) {
     background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 28px -8px rgba(139, 92, 246, 0.85);
 }
 
 .counselor-login-card button:disabled {
