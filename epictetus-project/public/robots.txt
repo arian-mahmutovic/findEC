@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /home
+Disallow: /competitions
+Disallow: /articles
+Disallow: /counselor/dashboard
+Disallow: /counselor/competitions
+Disallow: /counselor/articles
+Disallow: /reset-password
+Disallow: /go/
+Disallow: /qr-codes
+
+Sitemap: https://epictetusproject.com/sitemap.xml

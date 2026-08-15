@@ -15,6 +15,8 @@ import CounselorCompetitionsPage from './pages/counselor/CounselorCompetitionsPa
 import CounselorArticlePage from './pages/counselor/CounselorArticlePage'
 import GoRedirectPage from './pages/go/GoRedirectPage'
 import QrCodesPage from './pages/qr-codes/QrCodesPage'
+import PrivacyPolicyPage from './pages/legal/PrivacyPolicyPage'
+import TermsOfServicePage from './pages/legal/TermsOfServicePage'
 
 function App() {
 
@@ -24,6 +26,8 @@ function App() {
       <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route path="/go/:slug" element={<GoRedirectPage />} />
       <Route path="/qr-codes" element={<QrCodesPage />} />
+      <Route path="/privacy" element={<PrivacyPolicyPage />} />
+      <Route path="/terms" element={<TermsOfServicePage />} />
 
       <Route element={<RequireAuth />}>
         <Route path="/home" element={<HomePage />} />

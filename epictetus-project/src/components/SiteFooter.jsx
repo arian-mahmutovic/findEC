@@ -37,6 +37,11 @@ export default function SiteFooter() {
 
                 <span className="site-footer-copy">&copy; {new Date().getFullYear()}</span>
 
+                <nav className="site-footer-legal">
+                    <Link to="/privacy">Privacy</Link>
+                    <Link to="/terms">Terms</Link>
+                </nav>
+
                 <a href={`mailto:${CONTACT_EMAIL}`} className="site-footer-contact">
                     {CONTACT_EMAIL}
                 </a>

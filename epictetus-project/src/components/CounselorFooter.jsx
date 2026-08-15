@@ -11,6 +11,11 @@ export default function CounselorFooter() {
 
                 <span className="counselor-footer-copy">&copy; {new Date().getFullYear()} &middot; Counselor Portal</span>
 
+                <nav className="counselor-footer-legal">
+                    <Link to="/privacy">Privacy</Link>
+                    <Link to="/terms">Terms</Link>
+                </nav>
+
                 <a href={`mailto:${CONTACT_EMAIL}`} className="counselor-footer-contact">
                     {CONTACT_EMAIL}
                 </a>

@@ -31,6 +31,21 @@
     font-size: 0.8rem;
 }
 
+.counselor-footer-legal {
+    display: flex;
+    gap: 14px;
+}
+
+.counselor-footer-legal a {
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-decoration: none;
+}
+
+.counselor-footer-legal a:hover {
+    color: var(--accent-text);
+}
+
 .counselor-footer-contact {
     color: var(--muted);
     font-size: 0.8rem;
