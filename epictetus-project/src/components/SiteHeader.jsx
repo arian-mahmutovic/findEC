@@ -46,7 +46,7 @@ export default function SiteHeader({ actions }) {
 
                 <nav className="site-header-nav" aria-label="Primary">
                     {user && <Link to="/home">Dashboard</Link>}
-                    {user && <Link to="/competitions">Competitions</Link>}
+                    {user && location.pathname !== "/competitions" && <Link to="/competitions">Competitions</Link>}
                     <button type="button" className="site-header-nav-button" onClick={() => setShowNewsletter(true)}>
                         Newsletter
                     </button>

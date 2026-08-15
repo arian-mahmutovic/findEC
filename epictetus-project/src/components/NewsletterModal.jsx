@@ -53,8 +53,8 @@ export default function NewsletterModal({ closeForm }) {
                 {success ? (
                     <>
                         <p>
-                            You&rsquo;re in! We&rsquo;ll send new competitions and guides
-                            to <strong>{email}</strong> as they go live.
+                            You&rsquo;re in! We&rsquo;ll send a weekly roundup of new competitions
+                            and guides to <strong>{email}</strong>.
                         </p>
 
                         <button type="button" className="signup-button" onClick={closeForm}>
@@ -64,8 +64,8 @@ export default function NewsletterModal({ closeForm }) {
                 ) : (
                     <>
                         <p>
-                            One email whenever a high-value competition, scholarship, or
-                            new guide goes live&mdash;no spam, unsubscribe any time.
+                            One weekly email with the best new competitions, scholarships,
+                            and guides&mdash;no spam, unsubscribe any time.
                         </p>
 
                         <form onSubmit={handleSubmit}>

@@ -262,7 +262,7 @@ export default function ProfileModal({ closeForm }) {
                                 checked={newsletterOptIn}
                                 onChange={(e) => setNewsletterOptIn(e.target.checked)}
                             />
-                            Email me new competitions and guides as they go live
+                            Email me a weekly roundup of new competitions and guides
                         </label>
 
                         {notice && <p className="form-notice">{notice}</p>}

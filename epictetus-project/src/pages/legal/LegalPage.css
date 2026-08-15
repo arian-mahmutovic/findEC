@@ -66,17 +66,6 @@
     font-weight: 600;
 }
 
-.legal-notice {
-    margin: 20px 0 0;
-    padding: 14px 18px;
-    border: 2px dashed var(--lg-border);
-    border-radius: 14px;
-    color: var(--lg-faint);
-    font-size: 0.85rem;
-    font-weight: 500;
-    line-height: 1.6;
-}
-
 .legal-body {
     margin-top: 36px;
     font-size: 0.98rem;
